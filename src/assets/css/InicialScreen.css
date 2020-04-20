@@ -1,0 +1,23 @@
+
+
+.logo_inicialScreen{
+    display: block;
+    text-align: center;
+    font-size: 30px;
+    color:rgb(1, 1, 102);
+ 
+}
+
+.imagen-InicialScreen{
+    margin-left: 100px;
+}
+
+.imagen-inicio{
+    display: inline-block;
+    
+    
+}
+
+.contenido-iniciosesion{
+    display: inline;
+}
