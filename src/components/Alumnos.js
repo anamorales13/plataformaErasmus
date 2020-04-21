@@ -4,6 +4,7 @@ import Global from '../Global';
 
 import {Link, Redirect} from 'react-router-dom';
 
+/*hola */
 class Alumnos extends Component {
 
     url= Global.url;
