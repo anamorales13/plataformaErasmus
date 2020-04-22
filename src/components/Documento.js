@@ -10,7 +10,7 @@ import imagen from '../assets/images/doc-default.png';
 
 class Documento extends Component {
 
-/*hola*/
+/*hola2*/
     render() {
 
         return (
