@@ -11,6 +11,7 @@ var md_upload = multipart({ uploadDir: './upload/oficialDocument'});
 
 
 //RUTAS VALIDAS
-
+routerDocOficial.get('/documentos/:user', DocumentoController.getDocumentos);
+routerDocOficial.post('/documentos/:user', DocumentoController.save);
 
 module.exports= routerDocOficial;

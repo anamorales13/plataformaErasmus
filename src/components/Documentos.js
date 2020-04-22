@@ -4,22 +4,17 @@ import axios from 'axios';
 import Moment from 'react-moment';
 
 
+
 /*IMAGENES - BOTONES */
 import btn1 from '../assets/images/word.png';
 import btn2 from '../assets/images/pdf.png';
 import btn3 from '../assets/images/powerpoint.jpg';
 import btn4 from '../assets/images/default.png';
 
-import Header from './Header';
-
-
-
 
 class Documentos extends Component {
 
     url = GlobalDocumentos.url;
-
- 
 
     state = {
         documentos: [],

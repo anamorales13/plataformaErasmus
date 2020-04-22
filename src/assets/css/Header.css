@@ -46,14 +46,14 @@ header nav{
 }
 
 .menu nav ul li a:hover{
-    background: #555;
-    color:white;
+    /*background:#84A9AC;*/
+    color:black;
     font-weight: 600;
     text-decoration: none;
 }
 
 .menu nav ul li .active{
-    background-color: rgb(14, 23, 105);
+    background-color: #3b6978;
     color:white;
 }
 

@@ -5,117 +5,53 @@ import GlobalDocumentos from '../GlobalDocumentos';
 import Documentos from './Documentos';
 import axios from 'axios';
 import swal from 'sweetalert';
-
+import '../assets/css/documentos.css';
+import imagen from '../assets/images/doc-default.png';
 
 class Documento extends Component {
 
-    
-
-    titleRef = React.createRef();
-    fileRef = React.createRef();
-
-    url = GlobalDocumentos.url;
-    
-    state = {
-        documento: {},
-        status: null,
-       
-    };
-
-
-
-    changeState = () => {
-        this.setState({
-            documento: {
-                title: this.titleRef.current.value,
-                url: this.fileRef.current.value,
-               
-
-            }
-        });
-    }
-
- 
-
-    saveDocument = (e) => {
-        e.preventDefault();
-
-        // 1- Rellenar el state con el formulario
-        this.changeState();
-        axios.post(this.url + 'saveDoc', this.state.documento)
-            .then(res => {
-                if (res.data.documento) {
-
-                    this.setState({
-                        documento: res.data.documento,
-                        status: 'sucess'
-                    });
-                    swal(
-                        'Documento creado con exito',
-                        'El documento ha sido creado correctamente',
-                        'success'
-                    )
-                   
-                //ERROR!
-                } else {
-
-                    this.setState({
-                        status: 'failed'
-                    });
-                }
-          
-            
-            });
-    }
-
 
     render() {
- 
+
         return (
-            
-            
-            <div >
-            
-            <Documentos/>
-
-                <div id="content" className="informacion">
-                    <h1> DOCUMENTOS OFICIALES </h1>
-                    <div className="ayuda">
-
-                        <h2>Subir documento:</h2>
-                    </div>
-                    <div className="formularios">
-                        <form onSubmit={this.saveDocument}>
-                            <div >
-
-                                <label for="tittle">Titulo del Documento:</label>
-                                <select id="tittle" name="tittle" ref={this.titleRef}>
-                                    <option>Learning Agreement</option>
-                                    <option>CPRA</option>
-                                    <option>Extractos de notas</option>
-                                </select>
-
-                            </div>
-                            <div >
-                                <label htmlFor="file0"> URL </label>
-                                <input type="file" name="file0" onChange={this.fileChange} ref={this.fileRef} />
-
-                            </div>
-
-                            <input type="submit" value="SUBIR" className="btn" ></input>
-                        </form>
-                    </div>
-
+            <div className="grid-row">
+                <div>
+                    <h1 className="titulo-doc">DOCUMENTOS OFICIALES</h1>
                 </div>
-
-
-                <Sidebar />
+                <div>
+                    <h2 className="subtitulo"> · Antes</h2>
+                    <div className="grid-col">
+                        <div>
+                            <article className="card-doc">
+                                <h5 className="subdoc"> CPRA </h5>
+                                <img src={imagen} className="imagen-doc"></img>
+                            </article>
+                        </div>
+                        <div>
+                        <article className="card-doc">
+                            <h5 className="subdoc"> Learning Agreement </h5>
+                            </article>
+                        </div>
+                        <div>
+                        
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>prueba</h3>
+                </div>
+                <div>
+                    <h2 className="subtitulo-doc"> · Después</h2>
+                </div>
+                <div>
+                    <h3>prueba</h3>
+                </div>
             </div>
 
 
         );
-   
-}
+
+    }
 
 }
 

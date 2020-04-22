@@ -16,4 +16,4 @@ const oficialDocument = Schema({
  });
 
 
- module.exports= mongoose.model('oficialDocument', DocumentosSchema);
+ module.exports= mongoose.model('oficialDocument', oficialDocument);
