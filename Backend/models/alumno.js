@@ -4,6 +4,16 @@ var mongoose= require('mongoose');
 var Schema = mongoose.Schema;
 
 
+const documentosOficialSchema = new Schema({
+    nombre: String,
+    fecha: {type:Date, default: Date.now},
+    url: String,
+   /* estado: {
+        type: String,
+        enum: ["NO PRESENTADO", "ACEPTADO" ,"ENTRAMITE","NO ACEPTADO"]
+    }*/
+    estado:String
+});
 
 var AlumnosSchema=Schema ({   
 
@@ -14,7 +24,8 @@ var AlumnosSchema=Schema ({
     email: String,
     telefono: String,
     UniDestino: String,
-    image: String
+    image: String,
+    documentos: [documentosOficialSchema]
       
 });
 

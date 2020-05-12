@@ -10,7 +10,10 @@ var session = require("express-session");
 var app = express();
 
 app.use(session({
-    secret: "1352ljdainekg875d"
+    secret: "1352ljdainekg875d",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
 }))
 
 var bcrypt = require('bcrypt-nodejs');
@@ -63,6 +66,8 @@ var controllers = {
             alumno.email = params.email;
             alumno.apellidos = params.apellidos;
             alumno.image = 'user-default.jpg';
+            alumno.documentos.push({ nombre: 'CPRA', estado: 'No Presentado' }, { nombre: 'Learning Agreement', estado: "No Presentado " },
+                { nombre: 'Modificación CPRA', estado: 'No Presentado' }, { nombre: 'Modificación LA', estado: 'No Presentado' });
 
             if (params.uniDestino) {
                 alumno.uniDestino = params.uniDestino;
@@ -194,7 +199,7 @@ var controllers = {
         var userId = req.params.id;
         var params = req.body;
 
-        
+
         passwString = params.password;
 
         console.log("hola");
@@ -515,8 +520,62 @@ var controllers = {
 
 
 
-    }
+    },
 
+    addDocumentos: (req, res) => {
+        var userId = req.params.id;
+        var update = req.body;
+
+        Alumno.findOne({ _id: userId }, (err, user) => {
+          if (err) {
+              return res.status(500).send({
+                  message: 'Error en la petición'
+              });
+          }
+          if (!user) {
+              return res.status(404).send({
+                  message: 'El usuario no existe'
+              });
+          }
+          
+          console.log(update.nombre);
+         user.documentos.push({nombre: req.body.nombre, estado: req.body.estado});
+            user.save(function (err) {
+               if (err){
+                   console.log("error");
+               }else{
+                   console.log('Success!');
+               }
+              
+             });
+       
+       }); 
+
+
+
+    },
+
+    cambiarEstado: (req, res) => {
+        Alumno.updateOne({ _id: userId, "documentos.nombre": 'LA' },
+            { $set: { "documentos.$.estado": req.body.estado } }, (err, userUpdate) => {
+                if (err) {
+                    return res.status(500).send({
+                        message: 'Error en la peticion'
+                    });
+                }
+                if (!userUpdate) {
+                    return res.status(404).send({
+                        message: 'No se ha podido actualizar el usuario'
+                    });
+                }
+
+                return res.status(200).send({
+                    message: 'Sucess'
+                });
+
+
+            })
+    }
 };
 
 module.exports = controllers;

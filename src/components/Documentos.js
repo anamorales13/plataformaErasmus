@@ -16,20 +16,28 @@ class Documentos extends Component {
 
     url = GlobalDocumentos.url;
 
-    state = {
-        documentos: [],
-        status: null
-    };
+   
 
-    componentWillMount(){
-       
-         this.getDocumentos();
-     }
+    constructor(props){
+        super(props);
+        this.state = {
+            identity: JSON.parse(localStorage.getItem('user')),
+            documentos: [],
+            status: null,
+             
+        };
+        
+    }
+
     
+    componentWillMount() {
+        this.getDocumentos();
+    }
 
-    getDocumentos = () => {
-       
-        axios.get(this.url + "documentos" + "/" + this.usuario)
+
+    getDocumentos  ()  {
+      console.log("hola" + this.state.identity)
+        axios.get(this.url + "documentos" + "/" + this.state.identity.usuario)
             .then(res => {
                 this.setState({
                     documentos: res.data.documento,
@@ -69,7 +77,7 @@ class Documentos extends Component {
                                          
                                     </div>
                                     <div>
-                                       {documentos.title}
+                                       <a>{documentos.title}</a>
                                     </div>
                                 </td>
                               

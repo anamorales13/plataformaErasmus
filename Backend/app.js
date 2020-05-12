@@ -13,7 +13,7 @@ var app= express(); //esto va a ser la app en si, es lo que
 // 3- Cargar ficheros rutas
 var alumnos_routes= require('./routes/alumno');
 var documentos_routes=require('./routes/documento');
-var oficialDocumento_routes=require('./routes/oficialDocument');
+
 //var documento_routes=require('./routes/documento');
 
 // 4- cargar middlewares: siempre se ejecuta antes de 
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 // 6 -añadir prefijos a rutas / Cargar rutas
  app.use('/apiErasmus', alumnos_routes);
  app.use('/apiDocumentos', documentos_routes);
- app.use('/apiOficial', oficialDocumento_routes);
+ 
  //app.use('/apiErasmusDoc', documento_routes);
 
 

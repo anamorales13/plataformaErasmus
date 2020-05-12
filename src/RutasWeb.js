@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Inicio from './components/Inicio';
 import Informacion from "./components/Informacion";
 import Header from './components/Header';
-import Documento from './components/Documento';
+import Documento from './components/DocumentoOficial';
 import Dropbox from './components/Dropbox';
 import MiPerfil from './components/views/MiPerfil';
 import EditPerfil from './components/views/EditPefil';

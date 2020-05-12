@@ -25,6 +25,8 @@ router.post('/upload-image-user/:id',/* [md_auth.ensureAuth,*/ md_uploadd, Alumn
 router.get('/get-image-user/:imageFile', AlumnoController.getImageFile );
 router.delete('/delete-image/:id',md_uploadd, AlumnoController.deleteImageFile);
 router.post('/compararPassword/:id', AlumnoController.comparePassword);
+router.post('/documentos/:id', AlumnoController.addDocumentos);
+router.put('/cambioEstado/:id', AlumnoController.cambiarEstado);
 
 
 
