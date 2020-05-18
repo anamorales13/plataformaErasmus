@@ -13,6 +13,7 @@ const DocumentosSchema = Schema({
     tipoDocumento:String,
     comentario: String, 
     date: {type:Date, default: Date.now},
+    link:String,
     /*alumno: {
        type: Schema.Types.ObjectId,
        ref: "Alumno"

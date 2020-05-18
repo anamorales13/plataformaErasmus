@@ -3,7 +3,7 @@ import NuevoDocumento from './NuevoDocumento';
 
 import GlobalDocumentos from '../GlobalDocumentos';
 import Documentos from './Documentos';
-
+import '../assets/css/dropbox.css';
 
 
 
@@ -17,34 +17,74 @@ class Dropbox extends Component {
         status: null
     };
 
-    
+
 
     render() {
         return (
-            <div>
 
-
-                <div id="content" className="informacion">
-                    <h1> DROPBOX </h1>
-
-                    
-                    {/* LISTA DE DOCUMENTOS: */}
-                    <div className="documento-item">
-                        <table className="table-titulos">
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Última modificación</th>
-                            </tr>
-                        </table>
+            <div className="grid-documentos">
+                <div className="titulo-doc">
+                    <h1>DROPBOX</h1>
+                </div>
+                <div className=" grid-documentos-col">
+                    <div>
+                    <div className=" documento-item">
+                                <table className="table-titulos">
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Última modificación</th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <Documentos />
                     </div>
-                    <Documentos />
+                    <div>
+                    <NuevoDocumento />
+                    </div>
 
                 </div>
 
-                {/* NUEVO DOCUMENTO */}
-                <NuevoDocumento />
-
             </div>
+
+
+
+           /*  <div>
+
+
+                <div id="content" className="grid-documentos">
+                    <div>
+                        <h1> DROPBOX </h1>
+                    </div>
+
+                    <div>
+                    <div className="grid-documentos-col">
+                        
+                        <div>
+                            <div className=" documento-item">
+                                <table className="table-titulos">
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Última modificación</th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <Documentos />
+                        </div>
+                        <div>
+                            <NuevoDocumento />
+                        </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+              
+
+
+            </div>*/
 
         );
 

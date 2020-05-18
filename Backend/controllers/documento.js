@@ -31,10 +31,12 @@ var controllers = {
             documento.title = params.title;
 
            if (params.url) {
-                var file = params.url;
-                var file_split = file.split('\.');
-                var file_ext = file_split[1];
-                console.log("file_ext:" + file_ext);
+            var file = params.url;
+            var file_split = file.split('\.');
+            var file_ext = file_split[1];
+            console.log("file_ext:" + file_ext);
+
+    
                 if (file_ext == "txt" || file_ext == "doc") {
                     //documento.url='../assets/images/word.png';
                     documento.tipoDocumento = "word.png";
@@ -47,8 +49,10 @@ var controllers = {
                 } else if (file == "png" || file_ext == "jpg" || file_ext == "jpeg" || file_ext != "gif") {
                     documento.tipoDocumento = "imagen";
                 }
+
+        
              documento.url=params.url;
-            } else {
+           } else {
                 //documento.url = '../assets/images/default.png';
                 documento.tipoDocumento = "default.png";
                 documento.url="default.png";
@@ -88,6 +92,31 @@ var controllers = {
             });
         }
     },
+    delete: (req, res) =>{
+        var docString= req.params.title;
+       
+        Documento.findOneAndDelete({title: {$eq: docString}})
+                .exec((err, documento) =>{
+                    if(err){
+                        return res.status(500).send({
+                            status:'error',
+                            message:'Error en la peticion'
+                        });
+                    }
+
+                    if(!documento){
+                        return res.status(404).send({
+                            status:'error',
+                            message: 'No se encuentra el documento registrado'
+                        })
+                    }
+                    
+                    return res.status(200).send({
+                        status:'sucess',
+                        message: 'Documento eliminado correctamente'
+                    })
+                })
+    },
 
     getDocumentos: (req, res) => {
 
@@ -123,6 +152,9 @@ var controllers = {
    upload: (req, res) => {
 
         var filename = 'Imagen no subida';
+        var docId= req.params.id;
+    var documento= new Documento();
+        console.log(docId);
 
         if (!req.files) {
             return res.status(400).send({
@@ -139,18 +171,44 @@ var controllers = {
         var extension_split = file_name.split('\.');
         var file_ext = extension_split[1];
 
-       if (file_ext != 'png' && file_ext != "jpg" && file_ext != "jpeg" && file_ext != "gif") {
+      /* if (file_ext != 'png' && file_ext != "jpg" && file_ext != "jpeg" && file_ext != "gif") {
             fs.unlink(file_path, (err) => {  //eliminar un fichero
                 return res.status(200).send({
                     status: 'error',
                     message: 'La extensión de la imagen no es válida'
                 });
             });
-        } else {
+        } else {*/
+            
+           Documento.findOne({_id: docId}, (err, documentoUpdated)=>{
+               if(err){
+                   return res.status(500).send({
+                       message:' Error en la peticion'
+                   });
+               }
+               if(!documentoUpdated){
+                   return res.status(404).send({
+                       message:'No se ha podido  actualizar el documento'
+                   });
+               }
+               documento=documentoUpdated;
+               documento.url= file_name;
 
-            var documentoId = req.params.id;
-           // console.log("documentoId:" + req.params.id)
-            Documento.findOneAndUpdate({ _id: documentoId }, { url: file_name }, { new: true }, (err, documentoUpdated) => {
+               documento.save((errn,docStored) =>{
+                   if(errn || !docStored){
+                       return res.status(500).send({
+                           status:'error',
+                           message: 'El documento se ha guardado'
+                       });
+                   }
+                   return res.status(200).send({
+                    status: 'sucess',
+                    documento: documentoUpdated
+                });
+               })
+           })
+            
+           /* Documento.findOneAndUpdate({ _id: docId }, { url: file_name }, { new: true }, (err, documentoUpdated) => {
                 if (err || !documentoUpdated) {
                     return res.status(200).send({
                         status: 'error',
@@ -163,8 +221,8 @@ var controllers = {
                     documento: documentoUpdated
                 });
 
-            });
-        }
+            });*/
+       // }
 
        
 
@@ -174,7 +232,7 @@ var controllers = {
 
  getImage: (req, res) =>{
         var file = req.params.image;
-        var path_file = './upload/documentos/'+file;
+        var path_file = './upload/documents/'+file;
 
         fs.exists(path_file, (exists) =>{
         

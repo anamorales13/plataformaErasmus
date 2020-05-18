@@ -11,6 +11,8 @@ body{
   grid-template-rows: 140px auto;
 }
 
+
+
 #header{
   height: 75px;
   width: 100%;
@@ -127,46 +129,51 @@ color: rgb(6, 78, 129);
 }
 
 #nuevoDocumento{
-  width: 25%;
-  float:right;
+  margin-top: 30px;
+  width:80%;
+  
 
 }
 
 .nuevoDocumento{
-  background: #f7f7f7;
+  /*background:rgba(230, 228, 228, 0.664);*/
+  background-color: transparent;
   padding:20px;
-  margin-top:-540px;
-  margin-right: 15px;
-  border:1px solid rgb(177, 177, 177);
+  border:1px solid black;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  display: inline-block;
+  text-align: center;
 }
 
 .nuevoDocumento label{
   display:inline-block;
   font-weight: bold;
-  width: 80px;
-  margin-top:10px;
+ /* width: 80px;*/
+ /* margin-top:10px;*/
   color: rgb(68, 68, 68);
 }
 
-.nuevoDocumento h2{
-  font-weight: bold;
+.nuevoDocumento h3{
+  
   font-size: 20px;
   margin-left: 20px;
 }
 
-.nuevoDocumento input{
-  width: 60%;
+
+.form-input-nuevo {
+  background-color: white;
+  width:80%;
   min-height: 30px;
   border: 1px solid #ccc;
-  padding: 3px 10px;
+  padding: 5px 10px ;
   border-radius: 3px;
   margin-bottom: 5px;
   margin-top: 10px;
-  margin-left: 15px;
   transition: 150ms all;
-  display: inline-block;
+  
+  
+  
 }
-
 
 
 .inicio h2{
@@ -326,7 +333,7 @@ input[type="submit"]{
 
 input[type="submit"]:hover{
   cursor: pointer;
-  color: black;
+ /* color: black;**/
 }
 
   .form-nuevo{
@@ -466,16 +473,12 @@ input[type="submit"]:hover{
 
 
   .documento-item{
-   
-   
-   margin-left:80px;
-   
-    padding-top: 10px;
+    text-align: center;
+
+    /*padding-top: 10px;
     text-align:left;
-    /*float:left;*/
-    margin-right: 10px;
-  
-  
+    margin-left:80px;
+    margin-right: 10px;*/
   }
   
   .documento-item .image-wrap{
@@ -519,7 +522,7 @@ input[type="submit"]:hover{
   .documento-table table{
     display:table;
     border-spacing: 1px;
-    text-align: center;
+    
   }
 
   .documento-table  tr, td {
@@ -663,6 +666,21 @@ text-decoration: none;
    text-decoration: none;
    border-radius: 4px;
 }
+
+-btn-login{
+  background-color: black;
+}
+
+.titulo-doc{
+  text-align: center;
+  font-style: initial;
+  font-size: 38px;
+  color: #222831;
+  border-bottom: 1px solid grey;
+  margin-left: 1.3em;
+  
+}
+
 
   /* RESPONSIVE */ 
 

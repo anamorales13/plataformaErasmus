@@ -7,6 +7,7 @@ import swal from 'sweetalert';
 import ButtonIcon from '@material-ui/core/Button';
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 import Modal from 'react-modal'
+import "../assets/css/dropbox.css";
 
 
 class NuevoDocumento extends Component {
@@ -17,33 +18,37 @@ class NuevoDocumento extends Component {
 
     url = GlobalDocumentos.url;
 
-    state = {
-        documento: {},
-        status: null,
-        selectedFile: null,
-        open: 'false'
+    constructor(props) {
+        super(props);
+        this.state = {
+            documento: {},
+            status: null,
+            selectedFile: null,
+            open: 'false',
+            identity: JSON.parse(localStorage.getItem('user')),
 
 
-    };
+        };
+    }
 
     changeState = () => {
         this.setState({
             documento: {
                 title: this.titleRef.current.value,
                 url: this.fileRef.current.value,
-                comentario: this.contentRef.current.value,
-                nombre: "maldonado.morales",
+                // comentario: this.contentRef.current.value,
+                nombre: this.state.identity.usuario,
                 tipoDocumento: null
             }
         });
     }
 
-    openModal=()=>{
-        this.setState({open: 'true'});
+    openModal = () => {
+        this.setState({ open: 'true' });
     }
 
-    onCloseModal =() =>{
-        this.setState({open: 'false'})
+    onCloseModal = () => {
+        this.setState({ open: 'false' })
     }
 
 
@@ -52,7 +57,15 @@ class NuevoDocumento extends Component {
 
         // 1- Rellenar el state con el formulario
         this.changeState();
-       
+
+        const formData = new FormData();
+
+        formData.append(
+            'file0',
+            this.state.selectedFile,
+            this.state.selectedFile.name
+        );
+
         axios.post(this.url + 'saveDoc', this.state.documento)
             .then(res => {
                 if (res.data.documento) {
@@ -66,37 +79,37 @@ class NuevoDocumento extends Component {
                         'El documento ha sido creado correctamente',
                         'success'
                     )
-                   // console.log("!!!!documento:" + this.state.documento.tipoDocumento);
-                    if (this.state.documento.tipoDocumento == "imagen") {
-                        var docId = this.state.documento._id;
-                        const formData = new FormData();
+                    // console.log("!!!!documento:" + this.state.documento.tipoDocumento);
+                    // if (this.state.documento.tipoDocumento == "imagen") {
+                    var docId = this.state.documento._id;
+                    // const formData = new FormData();
 
-                        formData.append(
-                            'file0',
-                            this.state.selectedFile,
-                            this.state.selectedFile.name
-                        );
+                    /* formData.append(
+                         'file0',
+                         this.state.selectedFile,
+                         this.state.selectedFile.name
+                     );*/
 
-                        console.log("upload")
-                        axios.post(this.url + 'upload-image/' + docId, formData)
-                            .then(res => {
-                                if (res.data.documento) {
-                                    this.setState({
-                                        documento: res.data.documento,
-                                        status: 'sucess'
-                                    });
-                                } else {
-                                    this.setState({
-                                        documento: res.data.documento,
-                                        status: 'failed'
-                                    });
-                                }
-                            });
-                    } else {
-                        this.setState({
-                            status: 'sucess'
-                        })
-                    }
+                    console.log("upload")
+                    axios.post(this.url + 'upload-image/' + docId, formData)
+                        .then(res => {
+                            if (res.data.documento) {
+                                this.setState({
+                                    documento: res.data.documento,
+                                    status: 'sucess'
+                                });
+                            } else {
+                                this.setState({
+                                    documento: res.data.documento,
+                                    status: 'failed'
+                                });
+                            }
+                        });
+                    /*  } else {
+                          this.setState({
+                              status: 'sucess'
+                          })
+                      }*/
 
                     //ERROR!
                 } else {
@@ -112,6 +125,7 @@ class NuevoDocumento extends Component {
     }
 
     fileChange = (event) => {
+       
         this.setState({
 
             selectedFile: event.target.files[0] //aqui tengo el fichero que quiero subir.
@@ -126,69 +140,26 @@ class NuevoDocumento extends Component {
             window.location.reload(true);
 
         }
-        const {open} =this.state.open;
+        const { open } = this.state.open;
 
         return (
-
             <aside id="nuevoDocumento">
-                <div className="nuevoDocumento">
-                   {/*  <AddCircleRoundedIcon onClick={this.openModal} style={{ fontSize: 50 }} />
-
-                    <Modal open={this.state.open} onClose={this.onCloseModal}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>NUEVO DOCUMENTO</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <form onSubmit={this.saveDocument}>
-
-                                <div >
-
-                                    <label for="tittle">Titulo:</label>
-                                    <input type="text" id="tittle" name="tittle" ref={this.titleRef} />
-
-                                </div>
-                                <div>
-                                    <label htmlFor="content"> Comentario: </label>
-                                    <textarea name="content" ref={this.contentRef}></textarea>
-                                </div>
-                                <div >
-                                    <label htmlFor="file0"> URL: </label>
-                                    <input type="file" name="file0" onChange={this.fileChange} ref={this.fileRef} />
-
-                                </div>
-
-                                <input type="submit" value="SUBIR" className="btn" ></input>
-
-                            </form>
-                        </Modal.Body>
-                    </Modal>
-*/}
-
-
-                    <h2>  ---- NUEVO DOCUMENTO ----</h2>
-                    <form onSubmit={this.saveDocument}>
-
-                        <div >
-
-                            <label for="tittle">Titulo:</label>
-                            <input type="text" id="tittle" name="tittle" ref={this.titleRef} />
-
-                        </div>
-                        <div>
-                            <label htmlFor="content"> Comentario: </label>
-                            <textarea name="content" ref={this.contentRef}></textarea>
-                        </div>
-                        <div >
-                            <label htmlFor="file0"> URL: </label>
-                            <input type="file" name="file0" onChange={this.fileChange} ref={this.fileRef} />
-
-                        </div>
-
-                        <input type="submit" value="SUBIR" className="btn" ></input>
-                        
-                    </form>
-                </div>
+            <div className="nuevoDocumento">
+            <h3>SUBIR ARCHIVO</h3>
+             <form onSubmit={this.saveDocument}>
+                 <div  className="form-subir">
+                     {/*<label for="tittle">Titulo:</label>*/}
+                     <input type="text" id="tittle" name="tittle" ref={this.titleRef}  placeholder="Titulo" className="form-input-nuevo"/>
+                 </div>
+                 <div id="div_file" className="form-subir">
+                    {/*} <label htmlFor="file0"> URL: </label>*/}
+                     <input type="file" name="file0" onChange={this.fileChange} ref={this.fileRef} className="form-input-nuevo" />
+                 </div>
+                 <input type="submit" value="SUBIR" className="btn-submit" ></input>
+             </form>
+             </div>
             </aside>
+           
         );
     }
 }

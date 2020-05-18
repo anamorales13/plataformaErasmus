@@ -20,14 +20,7 @@
     grid-template-rows: 150px 150px 150px;
 }
 
-.titulo-doc{
-    text-align: center;
-    font-style: initial;
-    font-size: 38px;
-    color: #222831;
-    border-bottom: 1px solid grey;
-    margin-left: 1.3em;
-}
+
 
 .subtitulo{
     font-family: 'Google Sans', Rotobot, arial, sans-serif;

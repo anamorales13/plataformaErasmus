@@ -3,7 +3,11 @@ import GlobalDocumentos from '../GlobalDocumentos';
 import axios from 'axios';
 import Moment from 'react-moment';
 
+import ButtonIcon from "@material-ui/core/Button";
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
+import swal from 'sweetalert';
 
 /*IMAGENES - BOTONES */
 import btn1 from '../assets/images/word.png';
@@ -46,6 +50,20 @@ class Documentos extends Component {
             });
     }
 
+    delete(title){
+        axios.delete(this.url+"delete/"+ title)
+            .then(res=>{
+                this.setState({
+                    status:'sucess'
+                })
+            })
+            swal(
+                'Documento eliminado con exito',
+                'El documento ha sido eliminado correctamente',
+                'success'
+            )
+    }
+
     render() {
         
 
@@ -77,7 +95,7 @@ class Documentos extends Component {
                                          
                                     </div>
                                     <div>
-                                       <a>{documentos.title}</a>
+                                       <a  target="_blank" href={this.url+'/get-image/'+documentos.url}>{documentos.title}</a>
                                     </div>
                                 </td>
                               
@@ -88,6 +106,11 @@ class Documentos extends Component {
 
 
                                 </td>
+                                <td>
+                                <ButtonIcon onClick={() => {if( window.confirm('\n'+ 'Estas segudo de eliminar el archivo ' + documentos.title + '?'))this.delete(documentos.title);}}
+                                className="btn-delete" startIcon={<DeleteIcon/>}></ButtonIcon>
+                                </td>
+                                
                             </tr>
                         </table>
 
