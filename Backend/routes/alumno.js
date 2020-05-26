@@ -9,9 +9,7 @@ var md_auth= require('../Middleware/authenticated');
 
 var multipart= require('connect-multiparty');
 var md_uploadd= multipart({uploadDir: './upload/users'});
-
-/*var multiparty = require('connect-multiparty'); 
-var md_upload = multiparty({ uploadDir: './upload/alumnos'});*/
+var md_uploaddoc= multipart({uploadDir: './upload/users/documentos'});
 
 
 //RUTAS VALIDAS
@@ -27,7 +25,11 @@ router.delete('/delete-image/:id',md_uploadd, AlumnoController.deleteImageFile);
 router.post('/compararPassword/:id', AlumnoController.comparePassword);
 router.post('/documentos/:id', AlumnoController.addDocumentos);
 router.put('/cambioEstado/:id', AlumnoController.cambiarEstado);
+router.put('/upload-image/:id/:name', md_uploaddoc, AlumnoController.upload);
 
+router.get('/get-image/:image', AlumnoController.getImage);
+
+router.get('/getdocumentos/:id', AlumnoController.getDocumentos);
 
 
 

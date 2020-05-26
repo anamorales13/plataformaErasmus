@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import logo from '../assets/images/logoUni.png';
+import logo from '../assets/images/logov3.png';
 import { NavLink } from 'react-router-dom';
 import '../assets/css/Header.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,6 +8,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { Redirect, Link } from 'react-router-dom';
 import InicioSesion from './InicioSesion';
 import Global from '../Global';
+
+
+
 class Header extends Component {
 
     contador = '1';
@@ -68,7 +71,10 @@ class Header extends Component {
             <header /*id="header"*/ className="background">
 
                 {/***** LOGO  ****  */}
-                <div>  <a href="#" id="logo">LOGO</a></div>
+                <div >  <a href="/inicio" id="logo">
+                    <img src={logo} id="logo-img"></img>
+                </a>
+                </div>
 
                 <div className="menu_bar">
                     <a href="#" id="btn-menu" onClick={this.botonmenu}>
@@ -76,41 +82,41 @@ class Header extends Component {
                     </a>
                 </div>
                 <div className="menu">
-                <nav /*id="menu"*/ id="menuvar">
+                    <nav /*id="menu"*/ id="menuvar">
 
-                    <ul >
+                        <ul >
 
-                        <li >
-                            <NavLink exact to="/inicio" activeClassName="active"> INICIO </NavLink >
-                        </li>
-                        <li>
-                            <NavLink to="/informacion" activeClassName="active">INFORMACION </NavLink >
-                        </li>
-                        <li>
-                            <NavLink to="/documentos" activeClassName="active"> DOCUMENTOS </NavLink >
-                        </li>
-                        <li>
-                            <NavLink to="/dropbox" activeClassName="active">DROPBOX </NavLink >
-                        </li>
-                    </ul>
+                            <li >
+                                <NavLink exact to="/inicio" activeClassName="active"> INICIO </NavLink >
+                            </li>
+                            <li>
+                                <NavLink to="/informacion" activeClassName="active">INFORMACION </NavLink >
+                            </li>
+                            <li>
+                                <NavLink to="/documentos" activeClassName="active"> DOCUMENTOS </NavLink >
+                            </li>
+                            <li>
+                                <NavLink to="/dropbox" activeClassName="active">DROPBOX </NavLink >
+                            </li>
+                        </ul>
 
-                    { JSON.parse(localStorage.getItem('user')) != null &&
-                        <div className="perfil-header">
-                            <img src={this.url + '/get-image-user/' + JSON.parse(localStorage.getItem('user')).image} className="mini-avatar" ></img>
-                            <h1>{JSON.parse(localStorage.getItem('user')).nombre}</h1>
-                            <DropdownButton id="dropdown-basic-button" style={{left:"auto"},{ rigth:'85%'}} className="dropdown-menu.show">
-                            <Dropdown.Item href="/user/profile">Perfil</Dropdown.Item>
-                            <Dropdown.Item href="/user/profile/edit">Editar Perfil</Dropdown.Item>
-                            <Dropdown.Item href="/user/profile/passwordEdit">Constraseña</Dropdown.Item>
-                            <Dropdown.Item href="#">Ayuda</Dropdown.Item>
-                            <Dropdown.Item onClick={() => this.setState({ navigate: true })}>Cerrar Sesion</Dropdown.Item>
-                        </DropdownButton> 
-                        </div>
-                    }
-                       
-                    
+                        {JSON.parse(localStorage.getItem('user')) != null &&
+                            <div className="perfil-header">
+                                <img src={this.url + '/get-image-user/' + JSON.parse(localStorage.getItem('user')).image} className="mini-avatar" ></img>
+                                <h1>{JSON.parse(localStorage.getItem('user')).nombre}</h1>
+                                <DropdownButton id="dropdown-basic-button" style={{ left: "auto" }, { rigth: '85%' }} className="dropdown-menu.show">
+                                    <Dropdown.Item href="/user/profile">Perfil</Dropdown.Item>
+                                    <Dropdown.Item href="/user/profile/edit">Editar Perfil</Dropdown.Item>
+                                    <Dropdown.Item href="/user/profile/passwordEdit">Constraseña</Dropdown.Item>
+                                    <Dropdown.Item href="#">Ayuda</Dropdown.Item>
+                                    <Dropdown.Item onClick={() => this.setState({ navigate: true })}>Cerrar Sesion</Dropdown.Item>
+                                </DropdownButton>
+                            </div>
+                        }
 
-                </nav>
+
+
+                    </nav>
                 </div>
                 <div className="clearfix"></div>
 

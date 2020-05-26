@@ -153,7 +153,7 @@ var controllers = {
 
         var filename = 'Imagen no subida';
         var docId= req.params.id;
-    var documento= new Documento();
+        var documento= new Documento();
         console.log(docId);
 
         if (!req.files) {
@@ -208,21 +208,7 @@ var controllers = {
                })
            })
             
-           /* Documento.findOneAndUpdate({ _id: docId }, { url: file_name }, { new: true }, (err, documentoUpdated) => {
-                if (err || !documentoUpdated) {
-                    return res.status(200).send({
-                        status: 'error',
-                        message: 'error al guardar la imagen'
-                    });
-                }
-
-                return res.status(200).send({
-                    status: 'sucess',
-                    documento: documentoUpdated
-                });
-
-            });*/
-       // }
+         
 
        
 

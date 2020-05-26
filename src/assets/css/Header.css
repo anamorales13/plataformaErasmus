@@ -19,6 +19,7 @@ header nav{
 }
 
 
+
 .menu_bar{
     display: none;
 
@@ -76,12 +77,18 @@ header nav{
   #logo img { /*queremos modificar la imagen*/
     display: block; /*el elemento se comporta como un bloque*/
     float:left;
-    height:60px;
-    width: 60px;
+    height:90px;
+    width: 170px;
     margin-top:2px;
-    margin-right: -80px;
-    box-shadow: 1px 0px 2px #666;
+    margin-right: -40px;
+    transition: transform .2s; 
+    
   
+  }
+  #logo-img:hover{
+    transform: scale(1.1);
+   
+
   }
   
   #dropdown-basic-button{

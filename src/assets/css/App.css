@@ -28,24 +28,7 @@ body{
 }
 
 
-#logo {
-  width: 25%;
-  font-size: 25px;
-  float: left;
-  margin-top:5px;
 
-}
-
-#logo img { /*queremos modificar la imagen*/
-  display: block; /*el elemento se comporta como un bloque*/
-  float:left;
-  height:60px;
-  width: 60px;
-  margin-top:2px;
-  margin-right: -80px;
-  box-shadow: 1px 0px 2px #666;
-
-}
 
 #brand {
   display: block;
@@ -129,7 +112,8 @@ color: rgb(6, 78, 129);
 }
 
 #nuevoDocumento{
-  margin-top: 30px;
+  margin-top: 40px;
+  margin-left: 4em;
   width:80%;
   
 
@@ -143,6 +127,8 @@ color: rgb(6, 78, 129);
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   display: inline-block;
   text-align: center;
+  width: 340px;
+  height: 270px;;
 }
 
 .nuevoDocumento label{

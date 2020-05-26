@@ -12,7 +12,8 @@ const documentosOficialSchema = new Schema({
         type: String,
         enum: ["NO PRESENTADO", "ACEPTADO" ,"ENTRAMITE","NO ACEPTADO"]
     }*/
-    estado:String
+    estado:String,
+    tipo: String
 });
 
 var AlumnosSchema=Schema ({   

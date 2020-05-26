@@ -39,7 +39,7 @@ class Dropbox extends Component {
                             <Documentos />
                     </div>
                     <div>
-                    <NuevoDocumento />
+                    <NuevoDocumento type="documento" />
                     </div>
 
                 </div>

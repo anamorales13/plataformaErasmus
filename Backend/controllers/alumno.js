@@ -66,8 +66,8 @@ var controllers = {
             alumno.email = params.email;
             alumno.apellidos = params.apellidos;
             alumno.image = 'user-default.jpg';
-            alumno.documentos.push({ nombre: 'CPRA', estado: 'No Presentado' }, { nombre: 'Learning Agreement', estado: "No Presentado " },
-                { nombre: 'Modificación CPRA', estado: 'No Presentado' }, { nombre: 'Modificación LA', estado: 'No Presentado' });
+            alumno.documentos.push({ nombre: 'CPRA', estado: 'No Presentado' }, { nombre: 'Learning_Agreement', estado: "No Presentado " },
+                { nombre: 'Modificacion_CPRA', estado: 'No Presentado' }, { nombre: 'Modificacion_LA', estado: 'No Presentado' });
 
             if (params.uniDestino) {
                 alumno.uniDestino = params.uniDestino;
@@ -527,29 +527,29 @@ var controllers = {
         var update = req.body;
 
         Alumno.findOne({ _id: userId }, (err, user) => {
-          if (err) {
-              return res.status(500).send({
-                  message: 'Error en la petición'
-              });
-          }
-          if (!user) {
-              return res.status(404).send({
-                  message: 'El usuario no existe'
-              });
-          }
-          
-          console.log(update.nombre);
-         user.documentos.push({nombre: req.body.nombre, estado: req.body.estado});
+            if (err) {
+                return res.status(500).send({
+                    message: 'Error en la petición'
+                });
+            }
+            if (!user) {
+                return res.status(404).send({
+                    message: 'El usuario no existe'
+                });
+            }
+
+            console.log(update.nombre);
+            user.documentos.push({ nombre: req.body.nombre, estado: req.body.estado });
             user.save(function (err) {
-               if (err){
-                   console.log("error");
-               }else{
-                   console.log('Success!');
-               }
-              
-             });
-       
-       }); 
+                if (err) {
+                    console.log("error");
+                } else {
+                    console.log('Success!');
+                }
+
+            });
+
+        });
 
 
 
@@ -575,7 +575,122 @@ var controllers = {
 
 
             })
-    }
+    },
+
+    upload: (req, res) => {
+        var filename = 'Imagen no subida';
+        var docname = req.params.name;
+        var userId = req.params.id;
+
+
+    console.log(docname);
+    console.log(userId);
+        if (!req.files) {
+            return res.status(400).send({
+                status: 'error',
+                message: filename
+            });
+        }
+
+        var file_path = req.files.file0.path;
+        var file_split = file_path.split('\\');
+
+        //  var file_name = file_split[file_split.length-1];
+        var file_name = file_split[3];
+        var extension_split = file_name.split('\.');
+        var file_ext = extension_split[1];
+        console.log("file name: " + file_name);
+        if (file_ext == "txt" || file_ext == "doc") {
+
+            tipoDocumento = "word.png";
+        } else if (file_ext == "xls" || file_ext == "xlm" || file_ext == "xlt") {
+
+            tipoDocumento = "default.png";
+        } else if (file_ext == "pdf") {
+
+            tipoDocumento = "pdf.png";
+        } else if (file_ext == "png" || file_ext == "jpg" || file_ext == "jpeg" || file_ext != "gif") {
+            tipoDocumento = "imagen";
+        }
+
+
+        Alumno.updateOne({ _id: userId, "documentos.nombre": docname },
+            { $set: { "documentos.$.estado": 'En tramite', "documentos.$.tipo": tipoDocumento, "documentos.$.url": file_name } }, (err, userUpdate) => {
+                if (err) {
+                    return res.status(500).send({
+                        message: 'Error en la peticion'
+                    });
+                }
+                if (!userUpdate) {
+                    return res.status(404).send({
+                        message: 'No se ha podido actualizar el usuario'
+                    });
+                }
+
+                return res.status(200).send({
+                    message: 'Sucess',
+                    userUpdate
+                });
+
+
+            });
+    },
+
+    getDocumentos: (req, res) => {
+
+        var userId = req.params.id;
+        var documentos;
+
+        Alumno.find({ _id: { $eq: userId },  })
+                .exec((err, alumno) => {
+    
+                    if (err) {
+                        return res.status(500).send({
+                            status: 'error',
+                            message: 'Error en la petición'
+                        });
+                    }
+    
+                    if (!alumno || alumno.length <= 0) {
+                        return res.status(404).send({
+                            status: 'error',
+                            message: ' no hay documentos '
+                        });
+                    }
+
+                    console.log('hola');
+                    return res.status(200).send({
+    
+                        alumno
+                    
+                    });
+                });
+    
+        
+    },
+
+    getImage: (req, res) =>{
+        var file = req.params.image;
+        var path_file = './upload/users/documentos/'+file;
+
+        fss.exists(path_file, (exists) =>{
+        
+            if(exists){
+                return res.sendFile(path.resolve(path_file));
+            }else{
+                return res.status(404).send({
+                    status:'error', 
+                    message: 'la imagen no existe'
+                 });
+        
+            }
+        });
+
+       
+
+    },
+
+
 };
 
 module.exports = controllers;
