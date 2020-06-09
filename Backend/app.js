@@ -11,8 +11,10 @@ var app= express(); //esto va a ser la app en si, es lo que
                     // luego exportaremos.
 
 // 3- Cargar ficheros rutas
-var alumnos_routes= require('./routes/alumno');
+var alumno_routes= require('./routes/alumno');
 var documentos_routes=require('./routes/documento');
+var profesor_routes= require('./routes/profesor');
+
 
 //var documento_routes=require('./routes/documento');
 
@@ -36,8 +38,11 @@ app.use((req, res, next) => {
 
 
 // 6 -añadir prefijos a rutas / Cargar rutas
- app.use('/apiErasmus', alumnos_routes);
+ app.use('/apiErasmus', alumno_routes);
  app.use('/apiDocumentos', documentos_routes);
+ app.use('/apiProfesor', profesor_routes);
+ 
+ 
  
  //app.use('/apiErasmusDoc', documento_routes);
 
