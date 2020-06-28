@@ -14,7 +14,8 @@ var app= express(); //esto va a ser la app en si, es lo que
 var alumno_routes= require('./routes/alumno');
 var documentos_routes=require('./routes/documento');
 var profesor_routes= require('./routes/profesor');
-
+var destino_routes=require('./routes/destinos');
+var mensaje_routes=require('./routes/mensaje');
 
 //var documento_routes=require('./routes/documento');
 
@@ -41,7 +42,8 @@ app.use((req, res, next) => {
  app.use('/apiErasmus', alumno_routes);
  app.use('/apiDocumentos', documentos_routes);
  app.use('/apiProfesor', profesor_routes);
- 
+ app.use('/apiDestino', destino_routes);
+ app.use('/api',mensaje_routes );
  
  
  //app.use('/apiErasmusDoc', documento_routes);

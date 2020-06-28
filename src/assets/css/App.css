@@ -233,9 +233,9 @@ color: rgb(6, 78, 129);
 }
 
 
-.active{
+/*.active{
   border-bottom: 2px solid rgb(6, 78, 129);
-}
+}*/
 
 
 
@@ -593,10 +593,136 @@ input[type="submit"]:hover{
 
 .formulario-inicioSesion{
   margin-top:70px;
-  margin-left: 20px;
+  margin-left: 50px;
   margin-right: auto;
+
+  background-color: rgba(60, 145, 156, 0.616);
+ padding: 2.6em;
+ height: 20em;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.6s;  
+}
+
+.formulario-inicioSesion-nuevo{
+  margin-top:40px;
+  margin-left: 18em;
+  margin-right: 18em;
+  margin-bottom: 70px;
+ background-color: rgba(60, 145, 156, 0.616);
+ padding: 2.6em;
+ height: 35em;
+ border-radius: 25px;
+ box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+ transition: 0.6s;  
+}
+
+
+/*************************/
+/*  PROGRESBAR */
+/************************/
+
+#progressbar {
+	margin-bottom: 30px;
+	overflow: hidden;
+	/*CSS counters to number the steps*/
+  counter-reset: step;
+  margin-left: 18em;
+  margin-right: 18em;
+
+}
+#progressbar li {
+	list-style-type: none;
+	color: black;
+	text-transform: uppercase;
+	font-size: 15px;
+  width: 33.33%;
+	float: left;
+  position: relative;
+  
+
+}
+
+
+#progressbar li:before {
+	content: counter(step);
+	counter-increment: step;
+  width: 40px;
+  height: 40px;
+	line-height: 20px;
+	display: block;
+	font-size: 10px;
+	color: grey;
+	background: grey;
+	border-radius: 3px;
+	margin: 0 auto 5px auto;
+}
+/*progressbar connectors*/
+#progressbar li:after {
+	content: '';
+	width: 100%;
+	height: 2px;
+	background: grey;
+	position: absolute;
+	left: -50%;
+	top: 9px;
+	z-index: -1; /*put it behind the numbers*/
+}
+#progressbar li:first-child:after {
+	/*connector not needed before the first step*/
+	content: none; 
+}
+/*marking active/completed steps green*/
+/*The number of the step and the connector before it = green*/
+#progressbar li.active:before,  #progressbar li.active:after{
+	background:rgb(14, 23, 105);
+  color: white;
   
 }
+
+.fs-title {
+	font-size: 25px;
+	text-transform: uppercase;
+	color: #2C3E50;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.fs-subtitle {
+	font-weight: normal;
+	font-size: 20px;
+	color: #666;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+
+/*FIN PROGRESSBAR */
+
+.form-login-nuevo{
+  display:block;
+}
+
+.form-login-nuevo-input{
+  width: 500px;
+  padding: 8px 8px;
+  margin: 8px 0;
+  align-items: center;
+  background-color:transparent;
+  outline: none;
+  color: #f8f2ee;
+  border-bottom: solid 3px #f8f2ee;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+}
+
+.form-login-nuevo-input::placeholder{
+ 
+  color:#f8f2ee;
+  font-size: 1.15em;
+
+}
+
 .form-login{
   display: block;
 }
@@ -605,13 +731,28 @@ input[type="submit"]:hover{
   width: 300px;
   padding: 8px 8px;
   margin: 8px 0;
+  background-color:transparent;
+  outline: none;
+  color: #f8f2ee;
+  border-bottom: solid 3px #f8f2ee;
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  
 
+}
+
+.form-login-input::placeholder{
+ 
+    color:#f8f2ee;
+    font-size: 1.15em;
+  
 }
 
 .title-login{
   font-family: "AtlasGrotesk","Open Sans",sans-serif;
   font-size: 22px;
-  font-weight: normal;
+  font-weight:normal;
   color:rgb(14, 23, 105);
   letter-spacing: 1px;
 }

@@ -96,6 +96,7 @@ class InicioSesion extends Component {
 
         return (
 
+           
             <div className="grid-inicio">
                 <div className="logo-titulo">
                     <img src={imagenlogo} width="100px" height="80px"></img>
@@ -113,7 +114,7 @@ class InicioSesion extends Component {
 
                     <article className="formulario-inicioSesion">
                         <div className="cabecera-login">
-                            <h1 className="title-login"> Iniciar Sesion </h1>
+                            <h1 className="title-login"> INICIAR SESIÓN </h1>
                             <a href="./nuevoUsuario" className="link-nuevoUsuario"> Crear una cuenta</a>
                         </div>
                         <form onSubmit={this.getAlumno}>
@@ -128,7 +129,7 @@ class InicioSesion extends Component {
                     </article>
                 </div>
             </div>
-
+           
 
 
 

@@ -14,6 +14,14 @@ var md_auth= require('../Middleware/authenticated');
 
 
 
-router.get('/probando', md_auth.ensureAuth, mensajeController.probando);
+router.get('/probando', /*md_auth.ensureAuth,*/ mensajeController.probando);
+router.post('/mensaje', mensajeController.save);
+router.get('/myMessages/:id/:pages?', mensajeController.getReceivedMessage);
+router.get('/messages/:id/:pages?', mensajeController.getEmittedMessage);
+router.get('/mensajes-no-leidos/:id', mensajeController.getMensajesNoVisto);
+router.get('/set-mensajes-leidos/:id', mensajeController.setMensajesVisto);
+
 
 module.exports=router;
+
+

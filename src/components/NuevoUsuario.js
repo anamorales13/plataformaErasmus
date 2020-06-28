@@ -89,7 +89,7 @@ class NuevoUsuario extends Component {
             messages: {
                 required: 'Este campo es obligatorio',
                 alpha_space: 'No puede contener carácteres numéricos',
-                phone : 'Debe de ser un número de teléfono válido'
+                phone: 'Debe de ser un número de teléfono válido'
             },
             email: {
                 messages: 'Correo invalido. Ej: usuario.usuario@alu.uhu.es',
@@ -109,6 +109,7 @@ class NuevoUsuario extends Component {
 
         return (
 
+            /*
             <div className="grid-inicio">
                 <div className="logo-titulo">
                     <img src={imagenlogo} width="100px" height="80px"></img>
@@ -126,7 +127,7 @@ class NuevoUsuario extends Component {
                         <img src={imagen} width="400px" height="200px"></img>
                     </div>
 
-                    <article className="formulario-inicioSesion">
+                    <article className="formulario-inicioSesion-nuevo">
                         <div className="cabecera-login">
                             <h1 className="title-login"> Crear cuenta </h1>
                             <a href="./" className="link-nuevoUsuario"> Iniciar sesion</a>
@@ -166,7 +167,58 @@ class NuevoUsuario extends Component {
                 </div>
 
             </div>
+*/
 
+            <div className="grid-inicio">
+                <div className="logo-titulo">
+                    <img src={imagenlogo} width="100px" height="80px"></img>
+                    <div className="titulo-completo">
+                        <h3>Universidad de Huelva</h3>
+                        <h1> ERASMUS+ </h1>
+                    </div>
+                </div>
+                <hr className="linea"></hr>
+                <div>
+                    {/*progress bar */}
+                    <ul id="progressbar">
+                        <li class="active" id="li-primero">Datos Personales</li>
+                        <li>Datos plataforma</li>
+                        <li>Datos Erasmus</li>
+                    </ul>
+                    <article className="formulario-inicioSesion-nuevo">
+                        <fieldset>
+
+                            <h2 class="fs-title">Datos Personales</h2>
+                            <h3 class="fs-subtitle">Este es el paso 1</h3>
+                            
+                            <a href="./" className="link-nuevoUsuario"> Iniciar sesion</a>
+                            <form onSubmit={this.saveAlumno}>
+                                <div className="form-login-nuevo">
+                                    <input type="text" name="nombre" ref={this.nombreRef} placeholder="Nombre*" onChange={this.changeState} className="form-login-nuevo-input"  />
+                                    {this.validator.message('nombre', this.state.alumno.nombre, 'required|alpha_space')}
+                                </div>
+                                <div className="form-login-nuevo">
+                                    <input type="text" name="apellidos" ref={this.apellidosRef} placeholder="Apellidos*" onChange={this.changeState} className="form-login-nuevo-input" />
+                                    {this.validator.message('apellidos', this.state.alumno.nombre, 'required|alpha_space')}
+                                </div>
+                                <div className="form-login-nuevo">
+                                    <input type="email" name="email" ref={this.emailRef} onChange={this.changeState} placeholder="Correo electrónico"  className="form-login-nuevo-input" />
+                                    {this.validator.message('email', this.state.alumno.email, 'required')}
+                                </div>
+                                <div className="form-login-nuevo">
+                                    <input type="tel" name="telefono" ref={this.telefonoRef} onChange={this.changeState} placeholder="Teléfono" className="form-login-nuevo-input" />
+                                    {this.validator.message('telefono', this.state.alumno.telefono, 'phone')}
+                                </div>
+                              
+                                <input type="submit" value="CREAR" className="btn-login" ></input>
+                            </form>
+                        </fieldset>
+                    </article>
+                    
+
+                </div>
+
+            </div>
 
 
         );

@@ -1,6 +1,6 @@
 
 var validator = require('validator');
-var Profesor = require('../models/profesor');
+var Destino = require('../models/destinos');
 var fss = require('fs');
 var path = require('path');
 
@@ -26,22 +26,21 @@ var controllers = {
     save: (req, res) => {
 
         var params = req.body;
-        var profesor = new Profesor();
-
-        profesor.nombre = params.nombre;
-        profesor.apellidos = params.apellidos;
-        profesor.usuario = params.usuario;
-        profesor.password = params.password;
-        profesor.email = params.email;
-        profesor.telefono = params.telefono;
-        profesor.email = params.email;
-        profesor.despacho = params.despacho;
+        var destino = new Destino();
 
 
+        
+     destino.pais=params.pais;
+      destino.ciudad= params.ciudad;
+      destino.carrera=params.carrera;
+      destino.profesor=params.profesor;
+      destino.coordinador=params.coordinador;
 
-        profesor.save((errn, profesorStored) => {
 
-            if (errn || !profesorStored) {
+
+        destino.save((errn, destinoStored) => {
+
+            if (errn || !destinoStored) {
                 return res.status(500).send({
                     status: 'error',
                     message: 'El alumno no se ha guardado'
@@ -50,11 +49,10 @@ var controllers = {
 
             return res.status(200).send({
                 status: 'sucess',
-                profesor: profesorStored
+                destino: destinoStored
             });
 
         });
-
 
     }
 }
