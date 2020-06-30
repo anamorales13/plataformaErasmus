@@ -1,0 +1,7 @@
+
+
+.grid-mensajeria-col{
+    display:grid;
+    grid-template-columns:250px auto;
+    
+}
