@@ -69,6 +69,7 @@ var controllers = {
             alumno.documentos.push({ nombre: 'CPRA', estado: 'No Presentado' }, { nombre: 'Learning_Agreement', estado: "No Presentado " },
                 { nombre: 'Modificacion_CPRA', estado: 'No Presentado' }, { nombre: 'Modificacion_LA', estado: 'No Presentado' });
 
+            
             if (params.uniDestino) {
                 alumno.uniDestino = params.uniDestino;
             } else {
@@ -689,6 +690,29 @@ var controllers = {
        
 
     },
+
+    getProfesores: (req, res) =>{
+
+        var userId = req.params.id;
+       
+        Alumno.find({_id: {$eq: userId} }) 
+                    .exec((err, users) => {
+
+            if (err) return res.status(500).send({
+                status: 'err',
+                message: "error en la peticion"
+            });
+            if (users) {
+                return res.status(200).send({
+                    
+                    users
+                });
+            
+        }
+
+    });
+        
+    }
 
 
 };

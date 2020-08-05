@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import Global from '../Global';
-import { Redirect, Link } from 'react-router-dom';
+import GlobalProfesor from '../GlobalProfesor';
 import axios from 'axios';
 import swal from 'sweetalert';
 import imagenlogo from '../assets/images/logo-erasmus.png';
-
+import {Link, Redirect} from 'react-router-dom';
 
 import imagen from '../assets/images/InicialScreen.png';
+import imagenalumno from '../assets/images/boton-alumno.png';
+import imagenprof from '../assets/images/boton-profesor.png';
 import '../assets/css/InicialScreen.css';
 
 
@@ -18,7 +20,7 @@ class InicioSesion extends Component {
     gettoken = true;
 
     url = Global.url;
-
+    urlProfesor= GlobalProfesor.url; 
 
     state = {
         alumno: {},
@@ -43,12 +45,48 @@ class InicioSesion extends Component {
 
     }
 
+    getProfesor=(e) =>{
+        e.preventDefault();
+        this.change();
+
+
+        axios.post(this.urlProfesor + 'login', this.state.nuevoAlumno)
+            .then(res => {
+                this.setState({
+                    // alumno: res.data.users,
+                    sucess: 'sucess',
+                    alumno: res.data.users,
+                    token: res.data.token,
+                    navigate: true
+
+                });
+                //persistir los datos del usuario
+                localStorage.setItem('user', JSON.stringify(this.state.alumno));
+                localStorage.setItem('token', this.state.token);
+                localStorage.setItem('tipo', 'profesor' );
+
+                //  this.get_token();
+            })
+            .catch(err => {
+                this.setState({
+                    alumno: {},
+                    status: 'failed'
+                });
+                swal(
+                    '¡Error!',
+                    'Nombre de usuario o contraseña incorrectos',
+                    'error'
+                )
+
+            });
+
+    }
 
     getAlumno = (e) => {
         e.preventDefault();
         this.change();
 
-       
+
         axios.post(this.url + 'login', this.state.nuevoAlumno)
             .then(res => {
                 this.setState({
@@ -62,7 +100,8 @@ class InicioSesion extends Component {
                 //persistir los datos del usuario
                 localStorage.setItem('user', JSON.stringify(this.state.alumno));
                 localStorage.setItem('token', this.state.token);
-        
+                localStorage.setItem('tipo', 'alumno');
+
                 //  this.get_token();
             })
             .catch(err => {
@@ -94,42 +133,107 @@ class InicioSesion extends Component {
             return <Redirect to="/inicio" push={true} />
         }
 
+        const { tipo } = this.props.location.state
         return (
 
-           
-            <div className="grid-inicio">
-                <div className="logo-titulo">
-                    <img src={imagenlogo} width="100px" height="80px"></img>
-                    <div className="titulo-completo">
-                        <h3>Universidad de Huelva</h3>
-                        <h1> ERASMUS+ </h1>
-                    </div>
-                </div>
-                <hr className="linea"></hr>
-
-                <div className="grid-logo-inicio">
-                    <div className="inicio-logo">
-                        <img src={imagen} width="400px" height="200px"></img>
-                    </div>
-
-                    <article className="formulario-inicioSesion">
-                        <div className="cabecera-login">
-                            <h1 className="title-login"> INICIAR SESIÓN </h1>
-                            <a href="./nuevoUsuario" className="link-nuevoUsuario"> Crear una cuenta</a>
+            <div>
+                {tipo == 'profesor' &&
+                    <div className="grid-inicio">
+                        <div className="logo-titulo">
+                            <img src={imagenlogo} width="100px" height="80px"></img>
+                            <div className="titulo-completo">
+                                <h3>Universidad de Huelva</h3>
+                                <h1> ERASMUS+ </h1>
+                            </div>
                         </div>
-                        <form onSubmit={this.getAlumno}>
-                            <div className="form-login">
-                                <input className="form-login-input" onChange={this.change} type="text" ref={this.usuarioRef} placeholder="Usuario"></input>
+                        <hr className="linea"></hr>
+
+                        <div className="grid-logo-inicio">
+                            <div className="inicio-logo">
+
+                                <h3 id="header-boton"> ALUMNOS </h3>
+                                <Link to={{
+                                    pathname: '/inicioSesion',
+                                    state: {
+                                        tipo: 'alumno'
+                                    }
+                                }}>
+                                    <img src={imagenalumno} width="200px" height="280px"></img>
+                                </Link>
                             </div>
-                            <div className="form-login">
-                                <input className="form-login-input" onChange={this.change} type="password" ref={this.passwordRef} placeholder="Password"></input>
+
+                            <article className="formulario-inicioSesion">
+                                <div className="cabecera-login">
+                                    <h3 className="title-login">INICIAR SESIÓN </h3>
+                                    <h1 className="title-login"><strong>PROFESOR</strong>   </h1>
+
+                                    <a href="./nuevoUsuario" className="link-nuevoUsuario"> Crear una cuenta</a>
+                                </div>
+                                <form onSubmit={this.getProfesor}>
+                                    <div className="form-login">
+                                        <input className="form-login-input" onChange={this.change} type="text" ref={this.usuarioRef} placeholder="Usuario"></input>
+                                    </div>
+                                    <div className="form-login">
+                                        <input className="form-login-input" onChange={this.change} type="password" ref={this.passwordRef} placeholder="Password"></input>
+                                    </div>
+                                    <input type="submit" value="Iniciar Sesión" className="btn-login" ></input>
+                                </form>
+                            </article>
+                        </div>
+                    </div>
+
+
+                }
+                {tipo == 'alumno' &&
+                    <div className="grid-inicio">
+                        <div className="logo-titulo">
+                            <img src={imagenlogo} width="100px" height="80px"></img>
+                            <div className="titulo-completo">
+                                <h3>Universidad de Huelva</h3>
+                                <h1> ERASMUS+ </h1>
                             </div>
-                            <input type="submit" value="Iniciar Sesión" className="btn-login" ></input>
-                        </form>
-                    </article>
-                </div>
+                        </div>
+                        <hr className="linea"></hr>
+
+                        <div className="grid-logo-inicio">
+
+                            <article className="formulario-inicioSesion form-alumno">
+                                <div className="cabecera-login">
+                                    <h3 className="title-login">INICIAR SESIÓN </h3>
+                                    <h1 className="title-login"><strong>ALUMNOS</strong>   </h1>
+                                    <a href="./nuevoUsuario" className="link-nuevoUsuario"> Crear una cuenta</a>
+                                </div>
+                                <form onSubmit={this.getAlumno}>
+                                    <div className="form-login">
+                                        <input className="form-login-input" onChange={this.change} type="text" ref={this.usuarioRef} placeholder="Usuario"></input>
+                                    </div>
+                                    <div className="form-login">
+                                        <input className="form-login-input" onChange={this.change} type="password" ref={this.passwordRef} placeholder="Password"></input>
+                                    </div>
+                                    <input type="submit" value="Iniciar Sesión" className="btn-login" ></input>
+                                </form>
+                            </article>
+
+                            <div className="boton-profesor">
+                                
+                                        <h3 id="header-boton-prof"> PROFESOR </h3>
+                                        <Link to={{
+                                            pathname: '/inicioSesion',
+                                            state: {
+                                                tipo: 'profesor'
+                                            }
+                                        }}>
+                                            <img src={imagenprof} width="200px" height="280px"></img>
+                                        </Link>
+                                       
+                                    
+
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
-           
+
 
 
 

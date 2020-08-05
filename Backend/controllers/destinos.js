@@ -29,12 +29,12 @@ var controllers = {
         var destino = new Destino();
 
 
-        
-     destino.pais=params.pais;
-      destino.ciudad= params.ciudad;
-      destino.carrera=params.carrera;
-      destino.profesor=params.profesor;
-      destino.coordinador=params.coordinador;
+
+        destino.pais = params.pais;
+        destino.ciudad = params.ciudad;
+        destino.carrera = params.carrera;
+        destino.profesor = params.profesor;
+        destino.coordinador = params.coordinador;
 
 
 
@@ -53,6 +53,36 @@ var controllers = {
             });
 
         });
+
+    },
+
+    buscar: (req, res) =>{
+        var params= req.body;
+
+        Destino.find({ ciudad: { $eq: params.ciudad }, carrera: {$eq: params.carrera} ,})
+        .exec((err, destino) => {
+
+            if (err) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error en la petición'
+                });
+            }
+
+            if (!destino ) {
+                return res.status(404).send({
+                    status: 'error',
+                    message: ' no hay documentos '
+                });
+            }
+
+            
+           
+            return res.status(200).send({
+                destino
+            });
+        });
+        
 
     }
 }

@@ -20,7 +20,8 @@ router.get('/myMessages/:id/:pages?', mensajeController.getReceivedMessage);
 router.get('/messages/:id/:pages?', mensajeController.getEmittedMessage);
 router.get('/mensajes-no-leidos/:id', mensajeController.getMensajesNoVisto);
 router.get('/set-mensajes-leidos/:id', mensajeController.setMensajesVisto);
-
+router.get('/mensaje/:id', mensajeController.getMensaje);
+router.put('/marcar-leido/:id', mensajeController.marcarLeido);
 
 module.exports=router;
 

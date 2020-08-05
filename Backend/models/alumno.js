@@ -4,6 +4,7 @@ var mongoose= require('mongoose');
 var Schema = mongoose.Schema;
 
 
+
 const documentosOficialSchema = new Schema({
     nombre: String,
     fecha: {type:Date, default: Date.now},
@@ -26,8 +27,10 @@ var AlumnosSchema=Schema ({
     telefono: String,
     UniDestino: String,
     image: String,
-    documentos: [documentosOficialSchema]
-      
+    documentos: [documentosOficialSchema],
+    profesor: {type: Schema.ObjectId, ref: 'Profesor'},
+    coordinador: {type: Schema.ObjectId, ref: 'Profesor'}
+
 });
 
 

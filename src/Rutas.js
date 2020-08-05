@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import NuevoUsuario from './components/NuevoUsuario';
 import RutasWeb from './RutasWeb';
 import InicioSesion from './components/InicioSesion';
-
+import pantallaInicial from './components/pantallaInicial';
+import Userform from './components/newUser/Userform';
 
 class Rutas extends Component{
     render(){
@@ -11,9 +12,9 @@ class Rutas extends Component{
             <BrowserRouter>
            
                 <Switch>
-                   
-                    <Route exact path="/" component={InicioSesion}/>
-                    <Route exact path="/nuevoUsuario" component={NuevoUsuario}/>
+                   <Route exact path="/" component={pantallaInicial}/>
+                    <Route exact path="/inicioSesion" component={InicioSesion}/>
+                    <Route exact path="/nuevoUsuario" component={Userform}/>
                     <RutasWeb/>
 
                     

@@ -26,6 +26,7 @@ router.post('/compararPassword/:id', AlumnoController.comparePassword);
 router.post('/documentos/:id', AlumnoController.addDocumentos);
 router.put('/cambioEstado/:id', AlumnoController.cambiarEstado);
 router.put('/upload-image/:id/:name', md_uploaddoc, AlumnoController.upload);
+router.get('/profesores/:id', AlumnoController.getProfesores);
 
 router.get('/get-image/:image', AlumnoController.getImage);
 

@@ -2,6 +2,262 @@
 
 .grid-mensajeria-col{
     display:grid;
-    grid-template-columns:250px auto;
+    grid-template-columns:320px auto;
     
 }
+
+.form-mensajeria{
+
+    
+    font-family: "AtlasGrotesk","Open Sans",sans-serif;
+    font-weight: bold;
+}
+
+.mensaje-estilo-uno{
+
+    background-color: rgba(235, 235, 235, 0.822);
+    padding: 1.5em ;
+    padding-bottom: 0.3em;
+   
+}
+.input-correo{
+    border-color: transparent;
+}
+
+.mensaje-estilo-dos {
+    
+    margin-right: 300px;
+    width: auto;
+    border-color: grey;
+}
+
+.title-pantalla-mensaje{
+    margin-bottom: 1.5em;
+    font-size:20px;
+    font-weight: bold;
+    
+}
+
+.mensaje-estilo-uno label{
+    width: 85px;
+    margin-left: 3.8em;
+}
+
+.mensaje-estilo-uno input,select{
+    display:inline;
+ background-color: rgba(255, 255, 255, 0.877);
+ border-bottom: none;
+ border-top:none;
+ border-right: none;
+ border-left: none;
+ width: 700px;
+ 
+ 
+}
+
+.btn-default{
+   /* background-color: transparent;*/
+    border:none;
+    float: right;
+    margin-right: 10em;
+    color:black;
+}
+
+
+
+
+
+.btn-default:hover{
+    
+    transform: scale(1.2);
+}
+
+ .image-user{
+    width: 65px;
+    height: 65px;
+    border-radius: 100px;
+    overflow: hidden;
+    margin-top: 1.5em;
+    margin-left: 7px;
+    
+   
+    
+   
+}
+
+
+#mensaje-nombre{
+    font-size: 18px;
+}
+
+.mensaje-header .fecha{
+    
+    margin-left: auto;
+    color:rgb(129, 129, 129);
+   
+    font-size: 13px;
+    
+}
+
+.card{
+    flex-direction: row;
+}
+
+#cardbody{
+    margin-left: 10px;
+}
+
+.card-mensajes:hover{
+    box-shadow: 0 5px 7px 0 rgba(0,0,0,0.2);
+    transform: scale(1.006);
+}
+
+
+
+.card-mensajes{
+   height: 6.5em;
+   margin-left: 3em;
+   
+   background-color: rgb(233, 232, 232);
+    
+}
+
+.card-mensajes-individual{
+    height: auto;
+   margin-left: 3em;
+   border-color: transparent;
+   background-color:transparent
+
+}
+
+.card-mensaje-novisto{
+    height: 6.5em;
+    margin-left: 3em;
+    
+
+}
+
+.mensaje-header{
+    display: flex;
+
+    
+}
+
+.mensaje-texto{
+    position: absolute;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    width:60%;
+    
+    
+}
+
+.mensaje-texto-individual{
+    position: absolute;
+}
+
+.mensaje-header .fecha{
+    
+    margin-left: auto;
+    color:rgb(129, 129, 129);
+   
+    font-size: 13px;
+    
+}
+
+.mensaje-header-novisto{
+    display:flex;
+    font-weight: bold;
+}
+
+
+.mensaje-header-novisto .fecha{
+    
+    margin-left: auto;
+    color:rgb(129, 129, 129);
+   
+    font-size: 13px;
+    font-weight: bold;
+    
+}
+
+#mensaje-nombre-novisto{
+    font-weight:bold;
+    font-size: 18px;
+}
+
+.mensaje-texto-novisto{
+    position: absolute;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+    width:60%;
+    font-weight: bold;
+}
+
+.mensaje-enlace{
+    float: left;
+    margin-top: 25px;
+    
+}
+
+.menu-mensaje{
+    
+    z-index: 99;
+    display: block;
+    background: rgba(235, 235, 235, 0.822);
+    
+    height: 100vh;
+
+}
+
+.menu-mensaje nav ul{
+    
+    overflow: hidden;
+    list-style: none;
+    margin:50px 0;
+    
+   
+}
+
+.menu-mensaje nav ul li{
+    margin-top: 20px;
+    font-family: Roboto,Arial,sans-serif;
+    font-weight: bold;
+   text-align: left;
+   padding: 0.8em;
+   margin-left: 10px;
+   border-bottom: 1.5px solid rgb(255, 255, 255);
+   
+}
+
+
+.menu-mensaje nav ul li:hover{
+    background: rgba(218, 218, 218, 0.918);
+    border-radius: 0 25px 25px 0;
+    text-decoration: none;
+}
+
+.menu-mensaje nav ul li .active{
+    color: rgb(199, 43, 43);
+   
+
+}
+
+.menu-mensaje nav ul li a{
+    
+    color:#3c4043;
+    text-decoration: none;
+}
+
+.header-pantalla{
+    display: inline-flex; 
+}
+
+.glyphicon.glyphicon-arrow-left{
+    font-size:30px;
+    right: 0;
+    
+}
+

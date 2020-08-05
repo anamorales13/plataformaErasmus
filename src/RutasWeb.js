@@ -9,8 +9,12 @@ import MiPerfil from './components/views/MiPerfil';
 import EditPerfil from './components/views/EditPefil';
 import RutasInicio from './Rutas';
 import PasswordEdit from './components/views/PasswordEdit';
-import mensajes from './components/mensajes/mensajes-principal';
+
 import './assets/css/App.css';
+import enviar from './components/mensajes/enviar';
+import recibidos from './components/mensajes/recibidos';
+import enviados from './components/mensajes/enviados';
+import mensaje from './components/mensajes/mensaje'
 
 class Rutas extends Component {
 
@@ -30,7 +34,11 @@ class Rutas extends Component {
                             <Route exact path="/user/profile" component={MiPerfil}></Route>
                             <Route exact path="/user/profile/edit" component={EditPerfil}></Route>
                             <Route exact path="/user/profile/passwordEdit" component={PasswordEdit}></Route>
-                            <Route exact path="/mensajes" component={mensajes} />
+                            <Route exact path="/mensajes" component={recibidos} />
+                            <Route exact path="/mensajes/enviar" component={enviar}/>
+                            <Route exact path="/mensajes/:id" component={mensaje}></Route>
+                            <Route exact path="/enviados" component={enviados}/>
+                           
                             <RutasInicio />
                             {/*  <Route exact path="/" component={InicioSesion}/> */}
                             {/*} <Route exact path="/inicioSesion" component={InicioSesion}/>*/}

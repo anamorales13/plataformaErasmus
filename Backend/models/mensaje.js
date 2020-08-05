@@ -10,6 +10,7 @@ var MensajeSchema= Schema({
     asunto: String,
     emisor: {type: Schema.ObjectId, ref: 'Alumno'},
     receptor: {type: Schema.ObjectId, ref: 'Alumno'},
+    receptor: {type: Schema.ObjectId, ref: 'Profesor'},
     fecha: {type:Date, default: Date.now},
 }) ;
 

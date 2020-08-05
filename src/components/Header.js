@@ -11,6 +11,8 @@ import Global from '../Global';
 
 
 
+
+
 class Header extends Component {
 
     contador = '1';
@@ -87,16 +89,20 @@ class Header extends Component {
                         <ul >
 
                             <li >
-                                <NavLink exact to="/inicio" activeClassName="active"> INICIO </NavLink >
+                                <NavLink exact to="/inicio" activeClassName="active"><span className="glyphicon glyphicon-home"></span>   </NavLink>
                             </li>
                             <li>
-                                <NavLink to="/informacion" activeClassName="active">INFORMACION </NavLink >
+                            
+                                <NavLink to="/informacion" activeClassName="active">    INFORMACION </NavLink >
                             </li>
                             <li>
                                 <NavLink to="/documentos" activeClassName="active"> DOCUMENTOS </NavLink >
                             </li>
                             <li>
-                                <NavLink to="/dropbox" activeClassName="active">DROPBOX </NavLink >
+                                <NavLink to="/dropbox" activeClassName="active">  DROPBOX </NavLink >
+                            </li>
+                            <li>
+                                <NavLink to="/mensaje" activeClassName="active"> <span className="glyphicon glyphicon-envelope" > </span>   </NavLink >
                             </li>
                         </ul>
 
