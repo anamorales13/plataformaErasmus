@@ -38,13 +38,20 @@ var controllers = {
     save: (req, res) => {
         var params = req.body;
 
+        console.log(params.nombre);
+        console.log(params.email);
+        console.log(params.apellido1);
+        console.log(params.apellido2);
+        
         //1.- validar los datos
         try {
             var validate_nombre = !validator.isEmpty(params.nombre);
-            var validate_usuario = !validator.isEmpty(params.usuario);
-            var validate_password = !validator.isEmpty(params.password);
+           /* var validate_usuario = !validator.isEmpty(params.usuario);*/
+            /*var validate_password = !validator.isEmpty(params.password);*/
             var validate_email = !validator.isEmpty(params.email);
-            var validate_apellidos = !validator.isEmpty(params.apellidos);
+            var validate_apellido1 = !validator.isEmpty(params.apellido1);
+            var validate_apellido2= !validator.isEmpty(params.apellido2);
+
 
         } catch (err) {
             return res.status(200).send({
@@ -54,32 +61,42 @@ var controllers = {
         }
 
 
-        if (validate_nombre && validate_usuario && validate_password && validate_email) {
+        if (validate_nombre && validate_apellido1 && validate_apellido2 && validate_email) {
 
             // 2- Crear el objeto a guardar
             var alumno = new Alumno();
 
             // 3- Asignar valores
             alumno.nombre = params.nombre;
-            alumno.usuario = params.usuario;
-            alumno.password = params.password;
-            alumno.email = params.email;
-            alumno.apellidos = params.apellidos;
+           // alumno.usuario = params.usuario;
+          //  alumno.password = params.password;
+            alumno.email = params.email+'@alu.uhu.es';
+            alumno.apellido1 = params.apellido1;
+            alumno.apellido2=params.apellido2;
+            alumno.telefono=params.telefono;
+            alumno.tipo='alumno'
+
             alumno.image = 'user-default.jpg';
             alumno.documentos.push({ nombre: 'CPRA', estado: 'No Presentado' }, { nombre: 'Learning_Agreement', estado: "No Presentado " },
                 { nombre: 'Modificacion_CPRA', estado: 'No Presentado' }, { nombre: 'Modificacion_LA', estado: 'No Presentado' });
 
+            if (params.usuario){
+                alumno.usuario=params.usuario;
+            }else{
+                alumno.usuario=null
+            }
+            if (params.password){
+                alumno.password=params.password;
+            }else{
+                alumno.password=null
+            }
             
-            if (params.uniDestino) {
-                alumno.uniDestino = params.uniDestino;
+            if (params.destino) {
+                alumno.destino = params.uniDestino;
             } else {
-                alumno.uniDestino = null;
+                alumno.destino = null;
             }
-            if (params.telefono) {
-                alumno.telefono = params.telefono;
-            } else {
-                alumno.telefono = null;
-            }
+           
 
             // CONTROLAR DUPLICADOS 
 
@@ -129,6 +146,46 @@ var controllers = {
                 message: 'Datos no validos'
             });
         }
+    },
+    guardarDestino: (req,res) =>{
+
+        var update= req.body;
+        var userId= req.params.id;
+      
+        Alumno.findByIdAndUpdate(userId, { $set: { destino: update.destino} }, { new: true }, function (err, user) {
+            if (err || !user) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'El alumno no se ha guardado'
+                });
+            }
+
+            return res.status(200).send({
+                status: 'sucess',
+                alumno: user
+            });
+        });
+    },
+
+    guardarProfesorCoordinador: (req, res) =>{
+        
+    var update= req.body;
+    var userId= req.params.id;
+    
+  
+        Alumno.findByIdAndUpdate(userId, {$set: {profesor: update.profesor, coordinador:update.coordinador}}, {new:true}, function (err,user) {
+            if (err || !user) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'El alumno no se ha guardado'
+                });
+            }
+
+            return res.status(200).send({
+                status: 'sucess',
+                alumno: user
+            });
+        })
     },
 
     /*--------------------------------*/
@@ -695,7 +752,7 @@ var controllers = {
 
         var userId = req.params.id;
        
-        Alumno.find({_id: {$eq: userId} }) 
+        Alumno.find({_id: {$eq: userId} })
                     .exec((err, users) => {
 
             if (err) return res.status(500).send({
@@ -712,6 +769,22 @@ var controllers = {
 
     });
         
+    },
+    getalumnosdeprofesor: (req, res) =>{
+        var userId= req.params.id;
+
+        Alumno.find({profesor:{$eq: userId}}).populate('destino', 'pais ciudad carrera')
+            .exec((err, users)=>{
+                if(err) return res.status(500).send({
+                    status:'fail',
+                    message:'error en al peticion'
+                });
+                if(users){
+                    return res.status(200).send({
+                        users
+                    });
+                }
+            });
     }
 
 

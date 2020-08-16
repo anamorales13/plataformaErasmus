@@ -26,16 +26,19 @@ var controllers = {
     save: (req, res) => {
         var params = req.body;
 
+
         //1.- validar los datos
         try {
-    
+
             var validate_nombre = !validator.isEmpty(params.nombre);
             var validate_usuario = !validator.isEmpty(params.usuario);
             var validate_password = !validator.isEmpty(params.password);
             var validate_email = !validator.isEmpty(params.email);
-            var validate_telefono =!validator.isEmpty(params.telefono);
-            var validate_despacho=!validator.isEmpty(params.despacho);
-            var validate_apellidos = !validator.isEmpty(params.apellidos);
+            var validate_telefono = !validator.isEmpty(params.telefono);
+            var validate_despacho = !validator.isEmpty(params.despacho);
+            var validate_apellido1 = !validator.isEmpty(params.apellido1);
+            var validate_apellido2 = !validator.isEmpty(params.apellido2);
+            var validate_edificio = !validator.isEmpty(params.edificio);
 
         } catch (err) {
             return res.status(200).send({
@@ -45,7 +48,7 @@ var controllers = {
         }
 
 
-        if (validate_nombre && validate_apellidos && validate_usuario && validate_password && validate_email && validate_telefono && validate_despacho ) {
+        if (validate_nombre && validate_apellido1 && validate_apellido2 && validate_usuario && validate_password && validate_email && validate_edificio && validate_telefono && validate_despacho) {
 
             // 2- Crear el objeto a guardar
             var profesor = new Profesor();
@@ -54,12 +57,16 @@ var controllers = {
             profesor.nombre = params.nombre;
             profesor.usuario = params.usuario;
             profesor.password = params.password;
-            profesor.email = params.email;
-            profesor.apellidos = params.apellidos;
-            profesor.telefono=params.telefono;
-            profesor.despacho=params.despacho;
+            profesor.email = params.email + '@alu.uhu.es';
+
+            profesor.apellido1 = params.apellido1;
+            profesor.apellido2 = params.apellido2;
+            profesor.telefono = params.telefono;
+            profesor.despacho = params.despacho;
             profesor.image = 'user-default.jpg';
-        
+            profesor.edificio = params.edificio;
+            profesor.tipo = 'profesor';
+
 
             // CONTROLAR DUPLICADOS 
 
@@ -109,6 +116,200 @@ var controllers = {
                 message: 'Datos no validos'
             });
         }
+    },
+
+    setprofesor: (req, res) => {
+        var userId = req.params.id;
+        var update = req.body;
+
+        //borrar propiedad password
+        delete update.password;
+
+        /*  if(userId != req.users.sub){
+              return res.status(500).send({
+                  message: 'No tienes permiso para actualizar datos'
+              })
+          }*/
+
+          console.log("hola");
+          console.log(userId);
+          console.log(update);
+
+        Profesor.findByIdAndUpdate(userId, update, { new: true }, (err, userUpdate) => {
+            if (err) {
+                return res.status(500).send({
+                    message: 'Error en la peticion'
+                });
+            }
+            if (!userUpdate) {
+                return res.status(404).send({
+                    message: 'No se ha podido actualizar el usuario'
+                });
+            }
+
+            console.log("userupdate: " + userUpdate);
+            return res.status(200).send({
+                status: 'sucess',
+                user: userUpdate
+
+            })
+        });
+    },
+    deleteImageFile: (req, res) => {
+        var userId = req.params.id;
+        console.log("Estoy en delete");
+
+        Profesor.findOne({ _id: userId }, (err, user) => {
+            if (err) {
+                return res.status(500).send({
+                    message: 'Error en la petición'
+                });
+            }
+            if (!user) {
+                return res.status(404).send({
+                    message: 'El usuario no existe'
+                });
+            }
+            console.log(user.image);
+            if (user.image != 'user-default.jpg') {
+                console.log("entra en eliminar");
+
+                fss.unlink('upload/users/' + user.image, (err) => {
+                    if (err) {
+                        return res.status(200).send({
+                            message: 'Error al borrar la imagen'
+                        });
+                    }
+                });
+            }
+
+        })
+    },
+    
+    /*--------------------------------*/
+    /***** SUBIR AVATAR USUARIO  *****/
+    /*--------------------------------*/
+
+    uploadImage: (req, res) => {
+
+        var userId = req.params.id;
+        var filename = 'Imagen no subida';
+        var profesor = new Profesor();
+
+        console.log(userId);
+
+        if (!req.files) {
+            return res.status(404).send({
+                status: 'error',
+                message: file_name
+            });
+
+        }
+
+        /*  if (req.files) {*/
+        var file_path = req.files.file0.path;
+        console.log(file_path);
+        var file_split = file_path.split('\\');
+        var file_name = file_split[2];
+        console.log(file_name);
+
+        //sacar extensión del archivo para comprobar
+
+        var ext_split = file_name.split('\.');
+        var file_ext = ext_split[1];
+        console.log(file_ext);
+
+        /* if (userId != req.users.sub) {
+             fss.unlink(file_path, (err) => {
+                 if (err) {
+                     return res.status(200).send({
+                         message: 'Usuario no valido para actualizar datos'
+                     });
+                 }
+
+             });
+         }*/
+
+        //comprobar que las extensiones son correctas:
+        if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif') {
+            //actualizar imagen de usuario
+            Profesor.findOne({ _id: userId }, (err, userUpdate) => {
+                if (err) {
+                    return res.status(500).send({
+                        message: 'Error en la peticion'
+                    });
+                }
+                if (!userUpdate) {
+                    return res.status(404).send({
+                        message: 'No se ha podido actualizar el usuario'
+                    });
+                }
+                profesor = userUpdate;
+                profesor.image = file_name;
+
+                profesor.save((errn, alumnoStored) => {
+
+                    if (errn || !alumnoStored) {
+                        return res.status(500).send({
+                            status: 'error',
+                            message: 'El alumno no se ha guardado'
+                        });
+                    }
+
+                    alumnoStored.password = undefined;
+
+                    return res.status(200).send({
+                        status: 'sucess',
+                        profesor: alumnoStored
+                    });
+                });
+                /*userUpdate.password = undefined;
+                return res.status(200).send({
+                    status: 'sucess',
+                    alumno: userUpdate
+                })*/
+
+            })
+        } else {
+            //borrar la imagen
+            fss.unlink(file_path, (err) => {
+                if (err) {
+                    return res.status(200).send({
+                        message: 'Extension no valida'
+                    });
+                }
+            });
+
+        }
+
+        /*} else {
+            return res.status(200).send({
+                message: 'No se han subido imagenes'
+            });
+        }*/
+
+    },
+    /*--------------------------------*/
+    /***** DEVOLVER AVATAR USUARIO *****/
+    /*--------------------------------*/
+
+    getImageFile: (req, res) => {
+
+        var image_file = req.params.imageFile;
+        var path_file = './upload/users/' + image_file;
+
+        fss.exists(path_file, (exists) => {
+            if (exists) {
+                res.sendFile(path.resolve(path_file));
+            } else {
+                res.status(200).send({
+                    message: 'No existe la imagen'
+                });
+            }
+        });
+
+
+
     },
 
     /*--------------------------------*/
@@ -217,8 +418,8 @@ var controllers = {
         });
     },
 
-    getProfesores: (req,res )=>{
-        
+    getProfesores: (req, res) => {
+
         console.log(userString);
 
         Profesor.find()
@@ -244,6 +445,87 @@ var controllers = {
                     profesor
                 });
             });
+    },
+
+    setAlumno: (req, res) => {
+        var update = req.body;
+        var userId = req.params.id;
+        console.log("update" + update.alumno);
+        console.log("userId" + userId);
+
+        Profesor.findOne({ _id: userId }, (err, user) => {
+            if (err) {
+                return res.status(500).send({
+                    message: 'Error en la petición'
+                });
+            }
+            if (!user) {
+                return res.status(404).send({
+                    message: 'El usuario no existe'
+                });
+            }
+
+
+            user.alumnos.push({ _id: update.alumno });
+            user.save(function (err) {
+                if (err) {
+                    console.log("error");
+                } else {
+                    console.log('Success!');
+                }
+
+            });
+
+        });
+    },
+
+    getprofesor: (req, res) => {
+
+        var userId = req.params.id;
+
+
+        Profesor.findById(userId)
+            .exec((err, userget) => {
+                if (err) {
+                    return res.status(500).send({
+                        message: 'Error en la petición'
+                    });
+                }
+                if (!userget) {
+                    return res.status(404).send({
+                        message: 'El usuario no existe'
+                    });
+                }
+
+                return res.status(200).send({
+                    status: 'sucess',
+                    userget
+                });
+            })
+
+    },
+
+    getAlumnos: (req, res) =>{
+        var userId= req.params.id;
+
+        Profesor.findById(userId).populate('alumnos', 'nombre apellido1 apellido2 image ')
+        .exec((err, userget) => {
+            if (err) {
+                return res.status(500).send({
+                    message: 'Error en la petición'
+                });
+            }
+            if (!userget) {
+                return res.status(404).send({
+                    message: 'El usuario no existe'
+                });
+            }
+
+            return res.status(200).send({
+                status: 'sucess',
+               user: userget
+            });
+        })
     }
 }
 

@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
 import FormDatosPersonales from './FormDatosPersonales';
 import FormDatosPlataforma from './FormDatosPlataforma';
-import FormDatosErasmus from './FormDatosErasmus';
 import FormDatosUniversidad from './FormDatosUniversidad.js';
 import Sucess from './Success';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Global from '../../Global';
+
 import GlobalProfesor from '../../GlobalProfesor';
 import axios from 'axios';
 
@@ -28,13 +21,14 @@ export class Useform extends Component {
         telefono: "",
         destino: "",
         despacho: "",
+        edificio:"",
         alumno: {},
         profesor: {},
 
     }
 
-    url = Global.url;
-    urlprofesor=GlobalProfesor.url;
+
+    urlprofesor = GlobalProfesor.url;
 
     //Proceed to the next step
 
@@ -47,10 +41,10 @@ export class Useform extends Component {
         console.log(this.state.step);
 
 
-        if (this.state.step == 2 ) {
-            this.guardarAlumno();
+        if (this.state.step == 3) {
+            this.guardarProfesor();
         }
-       
+
     }
 
     // back to the previus step
@@ -69,26 +63,6 @@ export class Useform extends Component {
 
     }
 
-    guardarAlumno() {
-
-        var body = {
-            nombre: this.state.nombre,
-            apellido1: this.state.apellido1,
-            apellido2: this.state.apellido2,
-            email: this.state.email,
-            telefono: this.state.telefono,
-            usuario: this.state.usuario,
-            password: this.state.password,
-
-        }
-
-        axios.post(this.url + 'save', body)
-            .then(res => {
-                this.setState({
-                    alumno: res.data.alumno
-                })
-            })
-    }
 
     guardarProfesor() {
         var body = {
@@ -99,16 +73,17 @@ export class Useform extends Component {
             telefono: this.state.telefono,
             usuario: this.state.usuario,
             password: this.state.password,
-            despacho: this.state.despacho
+            despacho: this.state.despacho,
+            edificio: this.state.edificio
 
         }
 
-        axios.post(this.url+'save', body)
-        .then(res =>{
-            this.setState({
-                profesor:res.data.profesor
+        axios.post(this.urlprofesor + 'save', body)
+            .then(res => {
+                this.setState({
+                    profesor: res.data.profesor
+                })
             })
-        })
     }
 
 
@@ -117,8 +92,8 @@ export class Useform extends Component {
         const { step } = this.state;
 
 
-        const { nombre, apellido1, apellido2, usuario, password, email, telefono, destino, alumno, profesor, despacho } = this.state;
-        const values = { nombre, apellido1, apellido2, usuario, password, email, telefono, destino, alumno, profesor, despacho }
+        const { nombre, apellido1, apellido2, usuario, password, email, telefono, destino, alumno, profesor, despacho , edificio} = this.state;
+        const values = { nombre, apellido1, apellido2, usuario, password, email, telefono, destino, alumno, profesor, despacho, edificio }
         const { tipo } = this.props.location.state
 
         switch (step) {
@@ -144,16 +119,15 @@ export class Useform extends Component {
             case 3:
                 return (
                     <div>
-                        
-                            <FormDatosErasmus
-                                nextStep={this.nextStep}
-                                prevStep={this.prevStep}
-                                handleChange={this.handleChange}
-                                values={values}
-                                tipo={tipo}
 
-                            />
-                        
+
+                        <FormDatosUniversidad
+                            nextStep={this.nextStep}
+                            prevStep={this.prevStep}
+                            handleChange={this.handleChange}
+                            values={values}
+                            tipo={tipo} />
+
                     </div>
 
                 );

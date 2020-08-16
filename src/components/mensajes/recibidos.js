@@ -61,7 +61,7 @@ class recibidos extends Component {
                                 <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.image} className="image-user" />
                                 <Card.Body id="cardbody">
                                     <div className="mensaje-header">
-                                        <h4 id="mensaje-nombre">{mensajes.emisor.nombre + "  " + mensajes.emisor.apellidos + "    "} </h4>
+                                        <h4 id="mensaje-nombre">{mensajes.emisor.nombre + "  " + mensajes.emisor.apellido1 + "    " + mensajes.emisor.apellido2} </h4>
                                         <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                                     </div>
                                     <Card.Text className="mensaje-texto">
@@ -80,7 +80,7 @@ class recibidos extends Component {
                                 <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.image} className="image-user" />
                                 <Card.Body id="cardbody">
                                     <div className="mensaje-header-novisto">
-                                        <h4 id="mensaje-nombre-novisto">{mensajes.emisor.nombre + "  " + mensajes.emisor.apellidos + "    "} </h4>
+                                        <h4 id="mensaje-nombre-novisto">{mensajes.emisor.nombre + "  " + mensajes.emisor.apellido1 + "    "+ mensajes.emisor.apellido2} </h4>
                                         <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                                     </div>
                                     <Card.Text className="mensaje-texto-novisto">

@@ -12,8 +12,10 @@ body{
   grid-template-rows: 140px auto;
 }
 
-
-
+invalid {
+  border: 2px solid #ff0000;
+  }
+  
 #header{
   height: 75px;
   width: 100%;
@@ -663,6 +665,91 @@ input[type="submit"]:hover{
  transition: 0.6s;  
 }
 
+.notificacion-mensajes{
+  display:block;
+  color:white;
+  padding:17px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14xp;
+  text-decoration:none;
+  max-width:139px;
+  transition: 300ms all;
+  border:none;
+  border-radius: 3px;
+  background-color: rgb(165, 22, 22);
+  justify-content: center;
+}
+
+.notificacion-mensajes:hover{
+  background-color: black;
+  color:white;
+  text-decoration: none;
+}
+
+.notificacion-mensajes:active{
+  color:white;
+  background-color:#3b6978;
+  text-decoration:none;
+}
+
+.notificacion-mensajes:visited{
+  background-color: rgb(165,22,22);
+  color:white;
+  text-decoration: none;
+}
+
+/*******************************/
+/*******  ALUMNOS- PROFESOR   */
+/*******************************/
+
+.card-root{
+  max-width: 360px;
+  width: 330px;
+  display: inline-block;
+  margin-right: 15px;
+  margin-left:50px;
+  margin-top:20px;
+  height: 390px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.card-nombre{
+  font-size:17px;
+  font-weight: 400;
+}
+
+.group-nombre{
+  display: block;
+  
+}
+
+
+
+.card-nombre-uni{
+  font-size:14px;
+  font-weight: lighter;
+  color:grey;
+}
+
+.card-media{
+height: 180px;
+width: 130px;
+margin-left: auto;
+margin-right:auto;
+margin-top:12px;
+}
+
+.card-link-perfil{
+  float: right;
+  font-weight: lighter;
+}
+
+.card-link-perfil:hover{
+  transform: scale(1.05);
+  text-decoration: none;
+}
+
 
 /*************************/
 /*  PROGRESBAR */
@@ -686,9 +773,7 @@ input[type="submit"]:hover{
 	float: left;
   position: relative;
   
-
 }
-
 
 #progressbar li:before {
 	content: counter(step);
@@ -703,6 +788,7 @@ input[type="submit"]:hover{
 	border-radius: 3px;
 	margin: 0 auto 5px auto;
 }
+
 /*progressbar connectors*/
 #progressbar li:after {
 	content: '';
@@ -714,10 +800,12 @@ input[type="submit"]:hover{
 	top: 9px;
 	z-index: -1; /*put it behind the numbers*/
 }
+
 #progressbar li:first-child:after {
 	/*connector not needed before the first step*/
 	content: none; 
 }
+
 /*marking active/completed steps green*/
 /*The number of the step and the connector before it = green*/
 #progressbar li.active:before,  #progressbar li.active:after{

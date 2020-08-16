@@ -8,14 +8,17 @@ var Schema = mongoose.Schema;
 var ProfesorSchema=Schema ({   
 
     nombre: String,
-    apellidos: String, 
+    apellido1: String, 
+    apellido2: String,
     usuario: String, 
     password: String,
     email: String,
     telefono: String,
+    edificio: String,
     despacho: String,
     image: String,
-    alumnos:{type: Schema.ObjectId, ref:'Alumno'}
+    tipo:String,
+    alumnos:[{type: Schema.ObjectId, ref:'Alumno'}]
       
 });
 

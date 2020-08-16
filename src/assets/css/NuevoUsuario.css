@@ -1,0 +1,250 @@
+.registro-nuevoUsuario{
+    display: block;
+}
+.card-nuevoUser{
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    height: 70%;
+    margin-top:30px;
+    padding: 2em 2em 2em 2em;
+}
+.form-login-apellidos{
+    margin-left: 10px;
+}
+.form-newUser-input{
+    width: 400px;
+    padding: 5px 5px;
+    margin: 8px 0;
+    background-color:transparent;
+    outline: none;
+    color:black;
+   
+    border: solid 1px grey;
+}
+
+.form-newUser-input-label{
+    width: 100px;
+    padding:5px 5px;
+    margin: 8px 0;
+    background-color: rgb(231, 231, 231);
+    outline:none;
+    color:rgb(94, 94, 94);
+    border:solid 1px rgb(153, 153, 153);
+    font-weight: lighter;
+    
+}
+
+.form-newUser-input-email{
+    width: 300px;
+}
+
+.form-newUser-input-apellidos{
+   
+   margin-left: 3em;
+    
+}  
+  .form-newUser-input:focus{
+    border-bottom:solid 2px rgb(14,23,105);
+  }
+  
+  .form-newUser-input::placeholder{
+   
+      color:grey;
+      font-size:1em;
+    
+  }
+
+  .titulo-registro{
+      margin-top:20px;
+      font-size: 30px
+  }
+  .titulo-registro-secundario{
+      margin-top: 40px;
+      font-size: 20px;
+      
+  }
+
+.btn-continue{
+    background-color:rgb(14, 23, 105);
+    float:right;
+     letter-spacing: .0727272727em;
+     font-family: Roboto,Arial,sans-serif;
+     font-size:15px;
+     font-weight: 300;
+     border: none;
+     color: white;
+     padding: 4px 8px;
+     text-align: center;
+     text-decoration: none;
+     border-radius: 4px;
+
+
+}
+.btn-seleccionar{
+  background-color: transparent;
+  color: darkblue;
+  border:1px solid darkblue;
+  
+}
+
+.btn-seleccionar:hover{
+  background-color: white;
+}
+.btn-back{
+    background-color:whitesmoke;
+    float:left;
+     letter-spacing: .0727272727em;
+     font-family: Roboto,Arial,sans-serif;
+     font-size:15px;
+     font-weight: 300;
+     border: 1px solid grey;
+     color: black;
+     padding: 4px 8px;
+     text-align: center;
+     text-decoration: none;
+     border-radius: 4px;
+}
+
+.link-cancelar{
+  float: right;
+  margin-right: 20em;
+  color: red;
+  
+}
+
+.link-cancelar:hover{
+  text-decoration: none;
+  color:rgb(150, 21, 21);
+  
+}
+
+.link-continue:hover{
+  text-decoration: none;
+  color:white;
+  
+  background-color: rgb(56, 56, 148);
+}
+
+.alert-sucess-middle{
+align-items: center;
+}
+
+.card-mensajes-sucess{
+  background-color: rgba(124, 219, 124, 0.637);
+}
+
+.mensaje-sucess{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  
+}
+
+/* TABLA */
+
+table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 70%;
+    table-layout: fixed;
+    margin-left: auto;
+    margin-right: auto;
+   
+    
+    
+  }
+ 
+  
+  table caption {
+    font-size: 1.5em;
+    margin: .5em 0 .75em;
+  }
+  
+  table tr {
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: .35em;
+  
+    
+  }
+
+  table th{
+    overflow-x: auto;
+  }
+  
+  table th,
+  table td {
+    padding: .625em;
+    text-align: center;
+    width: 30%;
+    border:none;
+  }
+
+  table tr:hover{
+      background-color:#dfdfdf; ;
+  }
+
+ 
+  .th-pequeño{
+      width: 13%;
+  }
+  
+  table th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  
+  @media screen and (max-width: 600px) {
+    table {
+      border: 0;
+    }
+  
+    table caption {
+      font-size: 1.3em;
+    }
+    
+    table thead {
+      border: none;
+      clip: rect(0 0 0 0);
+      height: 1px;
+      margin: -1px;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      width: 1px;
+    }
+    
+    table tr {
+      border-bottom: 3px solid #ddd;
+      display: block;
+      margin-bottom: .625em;
+    }
+    
+    table td {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: .8em;
+      text-align: right;
+    }
+    
+    table td::before {
+      /*
+      * aria-label has no advantage, it won't be read inside a table
+      content: attr(aria-label);
+      */
+      content: attr(data-label);
+      float: left;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+    
+    table td:last-child {
+      border-bottom: 0;
+    }
+  }

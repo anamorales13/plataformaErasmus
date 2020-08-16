@@ -86,7 +86,7 @@ class mensaje extends Component {
                         
                         <Card.Body id="cardbody">
                             <div className="mensaje-header">
-                                <h4 id="mensaje-nombre-novisto">{mensajes.emisor.nombre + " " + mensajes.emisor.apellidos + "    "} </h4>
+                                <h4 id="mensaje-nombre-novisto">{mensajes.emisor.nombre + " " + mensajes.emisor.apellido1 + "    " + mensajes.emisor.apellido2} </h4>
 
                                 <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                             </div>

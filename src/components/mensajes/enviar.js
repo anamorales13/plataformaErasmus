@@ -125,7 +125,7 @@ class enviar extends Component {
                     <div>
                         <form onSubmit={this.addMessage} className="form-mensajeria">
                             <div className="mensaje-estilo-uno">
-                                {/*  <p>
+                                  <p>
                                     <label> Para: </label>
                                     <select name="para" ref={this.paraRef} onChange={this.changeState}>
                                         <option>---------</option>
@@ -134,8 +134,8 @@ class enviar extends Component {
                                         })}
                                     </select>
 
-                                </p>*/}
-                                <p>
+                                </p>
+                              {/*   <p>
                                     <Autocomplete
                                         id="combo-box-demo"
                                         value={this.state.profesores._id}
@@ -145,7 +145,7 @@ class enviar extends Component {
                                         style={{ width: 300 }}
                                         renderInput={(params) => <TextField {...params} label="correo electrónico" variant="outlined" />}
                                     />
-                                </p>
+                                </p>*/}
 
                                 <p>
                                     <label>Asunto</label>

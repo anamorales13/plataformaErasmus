@@ -56,34 +56,86 @@ var controllers = {
 
     },
 
-    buscar: (req, res) =>{
-        var params= req.body;
+    buscar: (req, res) => {
+        var params = req.body;
 
-        Destino.find({ ciudad: { $eq: params.ciudad }, carrera: {$eq: params.carrera} ,})
-        .exec((err, destino) => {
+        Destino.find({ ciudad: { $eq: params.ciudad }, carrera: { $eq: params.carrera }, })
+            .exec((err, destino) => {
 
+                if (err) {
+                    return res.status(500).send({
+                        status: 'error',
+                        message: 'Error en la petición'
+                    });
+                }
+
+                if (!destino) {
+                    return res.status(404).send({
+                        status: 'error',
+                        message: ' no hay documentos '
+                    });
+                }
+
+
+
+                return res.status(200).send({
+                    destino
+                });
+            });
+
+
+    },
+
+    getDestinos: (req, res) => {
+
+        Destino.find().populate('profesor coordinador', '_id nombre apellido1 apellido2 telefono despacho edificio')
+            .exec((err, destino) => {
+
+                if (err) {
+                    return res.status(500).send({
+                        status: 'error',
+                        message: 'Error en la petición'
+                    });
+                }
+
+                if (!destino || destino.length <= 0) {
+                    return res.status(404).send({
+                        status: 'error',
+                        message: ' no hay documentos'
+                    });
+                }
+                console.log('hola');
+                return res.status(200).send({
+
+                    status: 'sucess',
+                    destino
+                });
+            });
+
+    },
+
+    getdestino: (req, res) => {
+        var destinoId = req.params.id;
+        console.log(destinoId);
+
+        Destino.findById(destinoId).populate('profesor coordinador', 'nombre apellido1 apellido2 edificio despacho telefono') 
+                .exec((err, destinoget )=> {
             if (err) {
                 return res.status(500).send({
-                    status: 'error',
                     message: 'Error en la petición'
                 });
             }
-
-            if (!destino ) {
+            if (!destinoget) {
                 return res.status(404).send({
-                    status: 'error',
-                    message: ' no hay documentos '
+                    message: 'El usuario no existe'
                 });
             }
 
-            
-           
             return res.status(200).send({
-                destino
+                status: 'sucess',
+                destinoget
             });
-        });
-        
-
+        })
     }
 }
 

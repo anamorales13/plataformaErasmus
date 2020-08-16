@@ -31,8 +31,6 @@ class enviados extends Component {
 
     getmensajes = (e) => {
 
-
-
         axios.get(this.url + 'messages/' + this.state.identity._id)
             .then(res => {
 
@@ -58,13 +56,13 @@ class enviados extends Component {
             var listarmensajes = this.state.mensaje.map((mensajes) => {
                 return (
                     <div>
-                        {mensajes.visto == "true" &&
+                       
 
                             <Card style={{ width: '70em' }} className="card-mensajes row no-gutters ">
                                 <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.image} className="image-user" />
                                 <Card.Body id="cardbody">
                                     <div className="mensaje-header">
-                                        <h4 id="mensaje-nombre">Para: {mensajes.receptor.nombre + "  " + mensajes.receptor.apellidos + "    "} </h4>
+                                        <h4 id="mensaje-nombre">Para: {mensajes.receptor.nombre + "  " + mensajes.receptor.apellido1 + "    " + mensajes.receptor.apellido2} </h4>
                                         <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                                     </div>
                                     <Card.Text className="mensaje-texto">
@@ -75,14 +73,14 @@ class enviados extends Component {
                             </Card>
 
 
-                        }
+                        
 
-                        {mensajes.visto == 'false' &&
+                        {/*{mensajes.visto == 'false' &&
                             <Card style={{ width: '70em' }} className="card-mensaje-novisto row no-gutters ">
                                 <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.image} className="image-user" />
                                 <Card.Body id="cardbody">
                                     <div className="mensaje-header-novisto">
-                                        <h4 id="mensaje-nombre-novisto">Para: {mensajes.receptor.nombre + "  " + mensajes.receptor.apellidos + "    "} </h4>
+                                        <h4 id="mensaje-nombre-novisto">Para: {mensajes.receptor.nombre + "  " + mensajes.receptor.apellido1 + "    "+ mensajes.receptor.apellido2} </h4>
                                         <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                                     </div>
                                     <Card.Text className="mensaje-texto-novisto">
@@ -94,7 +92,7 @@ class enviados extends Component {
 
 
                             </Card>
-                        }
+                        }*/}
 
                     </div>
 

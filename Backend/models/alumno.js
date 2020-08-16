@@ -20,13 +20,15 @@ const documentosOficialSchema = new Schema({
 var AlumnosSchema=Schema ({   
 
     nombre: String,
-    apellidos: String, 
+    apellido1: String, 
+    apellido2: String,
     usuario: String, 
     password: String,
     email: String,
     telefono: String,
-    UniDestino: String,
+    destino: {type:Schema.ObjectId, ref:'Destino'},
     image: String,
+    tipo:String,
     documentos: [documentosOficialSchema],
     profesor: {type: Schema.ObjectId, ref: 'Profesor'},
     coordinador: {type: Schema.ObjectId, ref: 'Profesor'}

@@ -16,6 +16,9 @@ class MenuPerfil extends Component {
                         <NavLink exact to="/user/profile/edit" activeClassName="active">   Editar Perfil </NavLink >
                     </li>
                     <li>
+                        <NavLink exact to="/user/erasmus" activeClassName="active"> Erasmus</NavLink >
+                    </li>
+                    <li>
                         <NavLink exact to="/user/profile/passwordEdit" activeClassName="active"> <span className="glyphicon glyphicon-lock"></span> Cambiar Contraseña </NavLink >
                     </li>
                 </ul>

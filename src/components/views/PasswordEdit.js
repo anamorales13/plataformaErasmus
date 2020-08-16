@@ -223,7 +223,7 @@ class PasswordEdit extends Component {
                                     <label className="error"> {this.state.errores.nuevarep.toString()}</label>
                                 }
                             </div>
-                            <input type="submit" value="Actualizar" className="btn-update" ></input>
+                            <input type="submit" value="ACTUALIZAR" className="btn-update" ></input>
                         </form>
                     </article>
                 </div>

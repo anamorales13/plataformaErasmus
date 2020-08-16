@@ -36,7 +36,7 @@ class Dropbox extends Component {
                                     </tr>
                                 </table>
                             </div>
-                            <Documentos />
+                            <Documentos alumno={this.props.match.params.usuario} />
                     </div>
                     <div>
                     <NuevoDocumento type="documento" />
@@ -45,46 +45,7 @@ class Dropbox extends Component {
                 </div>
 
             </div>
-
-
-
-           /*  <div>
-
-
-                <div id="content" className="grid-documentos">
-                    <div>
-                        <h1> DROPBOX </h1>
-                    </div>
-
-                    <div>
-                    <div className="grid-documentos-col">
-                        
-                        <div>
-                            <div className=" documento-item">
-                                <table className="table-titulos">
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Última modificación</th>
-                                    </tr>
-                                </table>
-                            </div>
-                            <Documentos />
-                        </div>
-                        <div>
-                            <NuevoDocumento />
-                        </div>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-              
-
-
-            </div>*/
+          
 
         );
 

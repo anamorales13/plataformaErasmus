@@ -27,6 +27,10 @@ router.post('/documentos/:id', AlumnoController.addDocumentos);
 router.put('/cambioEstado/:id', AlumnoController.cambiarEstado);
 router.put('/upload-image/:id/:name', md_uploaddoc, AlumnoController.upload);
 router.get('/profesores/:id', AlumnoController.getProfesores);
+router.put('/savedestino/:id', AlumnoController.guardarDestino);
+router.put('/saveprofesor/:id', AlumnoController.guardarProfesorCoordinador);
+
+router.get('/alumnos/:id', AlumnoController.getalumnosdeprofesor);
 
 router.get('/get-image/:image', AlumnoController.getImage);
 

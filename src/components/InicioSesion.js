@@ -4,7 +4,7 @@ import GlobalProfesor from '../GlobalProfesor';
 import axios from 'axios';
 import swal from 'sweetalert';
 import imagenlogo from '../assets/images/logo-erasmus.png';
-import {Link, Redirect} from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import imagen from '../assets/images/InicialScreen.png';
 import imagenalumno from '../assets/images/boton-alumno.png';
@@ -20,7 +20,7 @@ class InicioSesion extends Component {
     gettoken = true;
 
     url = Global.url;
-    urlProfesor= GlobalProfesor.url; 
+    urlProfesor = GlobalProfesor.url;
 
     state = {
         alumno: {},
@@ -45,7 +45,7 @@ class InicioSesion extends Component {
 
     }
 
-    getProfesor=(e) =>{
+    getProfesor = (e) => {
         e.preventDefault();
         this.change();
 
@@ -60,10 +60,12 @@ class InicioSesion extends Component {
                     navigate: true
 
                 });
+
+
                 //persistir los datos del usuario
                 localStorage.setItem('user', JSON.stringify(this.state.alumno));
                 localStorage.setItem('token', this.state.token);
-                localStorage.setItem('tipo', 'profesor' );
+
 
                 //  this.get_token();
             })
@@ -79,7 +81,7 @@ class InicioSesion extends Component {
                 )
 
             });
-
+        this.forceUpdate();
     }
 
     getAlumno = (e) => {
@@ -98,9 +100,12 @@ class InicioSesion extends Component {
 
                 });
                 //persistir los datos del usuario
+
+
                 localStorage.setItem('user', JSON.stringify(this.state.alumno));
                 localStorage.setItem('token', this.state.token);
                 localStorage.setItem('tipo', 'alumno');
+                this.router.navigateByUrl('/');
 
                 //  this.get_token();
             })
@@ -109,14 +114,10 @@ class InicioSesion extends Component {
                     alumno: {},
                     status: 'failed'
                 });
-                swal(
-                    '¡Error!',
-                    'Nombre de usuario o contraseña incorrectos',
-                    'error'
-                )
+              
 
             });
-
+        this.forceUpdate();
 
     }
 
@@ -129,7 +130,7 @@ class InicioSesion extends Component {
     render() {
 
         const { navigate } = this.state
-        if (navigate) {
+        if (navigate && JSON.parse(localStorage.getItem('user'))!=null) {
             return <Redirect to="/inicio" push={true} />
         }
 
@@ -167,7 +168,13 @@ class InicioSesion extends Component {
                                     <h3 className="title-login">INICIAR SESIÓN </h3>
                                     <h1 className="title-login"><strong>PROFESOR</strong>   </h1>
 
-                                    <a href="./nuevoUsuario" className="link-nuevoUsuario"> Crear una cuenta</a>
+                                    <Link to={{
+                                        pathname: '/nuevoProfesor',
+                                        state: {
+                                            tipo: 'profesor'
+                                        }
+                                    }} className="link-nuevoUsuario" > Crear cuenta usuario</Link>
+
                                 </div>
                                 <form onSubmit={this.getProfesor}>
                                     <div className="form-login">
@@ -201,7 +208,12 @@ class InicioSesion extends Component {
                                 <div className="cabecera-login">
                                     <h3 className="title-login">INICIAR SESIÓN </h3>
                                     <h1 className="title-login"><strong>ALUMNOS</strong>   </h1>
-                                    <a href="./nuevoUsuario" className="link-nuevoUsuario"> Crear una cuenta</a>
+                                    <Link to={{
+                                        pathname: '/nuevoUsuario',
+                                        state: {
+                                            tipo: 'alumno'
+                                        }
+                                    }} className="link-nuevoUsuario" > Crear cuenta usuario</Link>
                                 </div>
                                 <form onSubmit={this.getAlumno}>
                                     <div className="form-login">
@@ -215,18 +227,18 @@ class InicioSesion extends Component {
                             </article>
 
                             <div className="boton-profesor">
-                                
-                                        <h3 id="header-boton-prof"> PROFESOR </h3>
-                                        <Link to={{
-                                            pathname: '/inicioSesion',
-                                            state: {
-                                                tipo: 'profesor'
-                                            }
-                                        }}>
-                                            <img src={imagenprof} width="200px" height="280px"></img>
-                                        </Link>
-                                       
-                                    
+
+                                <h3 id="header-boton-prof"> PROFESOR </h3>
+                                <Link to={{
+                                    pathname: '/inicioSesion',
+                                    state: {
+                                        tipo: 'profesor'
+                                    }
+                                }}>
+                                    <img src={imagenprof} width="200px" height="280px"></img>
+                                </Link>
+
+
 
                             </div>
                         </div>

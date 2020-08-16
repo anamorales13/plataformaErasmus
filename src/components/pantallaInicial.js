@@ -70,6 +70,7 @@ class pantallaInicial extends Component {
                 <hr className="linea"></hr>
 
                 <div className="grid-logo-inicio">
+                    
                     <div className="boton-alumno">
 
                         <h3 id="header-boton"> ALUMNOS </h3>

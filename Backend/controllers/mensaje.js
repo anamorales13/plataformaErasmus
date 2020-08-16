@@ -64,7 +64,7 @@ var controllers = {
 
         var itemsPerPage= 4;
 
-        Mensaje.find({receptor: userId}).populate('emisor', 'nombre usuario apellidos telefono image').sort('-fecha').paginate(page, itemsPerPage, (err, mensajes, total) =>{
+        Mensaje.find({receptor: userId}).populate('emisor', 'nombre usuario apellido1 apellido2 telefono image').sort('-fecha').paginate(page, itemsPerPage, (err, mensajes, total) =>{
             if (err) {
                 return res.status(500).send({
                     status: 'error',
@@ -98,7 +98,7 @@ var controllers = {
 
         var itemsPerPage= 4;
 
-        Mensaje.find({emisor: userId}).populate('emisor receptor', 'nombre usuario apellidos telefono image').sort('-fecha').paginate(page, itemsPerPage, (err, mensajes, total) =>{
+        Mensaje.find({emisor: userId}).populate('emisor receptor', 'nombre usuario apellido1 apellido2 telefono image').sort('-fecha').paginate(page, itemsPerPage, (err, mensajes, total) =>{
             if (err) {
                 return res.status(500).send({
                     status: 'error',
