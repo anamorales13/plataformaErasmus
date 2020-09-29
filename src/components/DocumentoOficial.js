@@ -136,7 +136,7 @@ class DocumentoOficial extends Component {
                                                 <img src={doc} />
                                             </div>
                                             <div className="datos-doc">
-                                                <h3 id="title-doc"> Modificacion CPRA </h3>
+                                                <h3 id="title-doc"> Modificación CPRA </h3>
                                                 <h5 id="estado-doc">Estado : {this.state.alumno[0].documentos[2].estado} </h5>
                                                 {this.state.alumno[0].documentos[2].estado !='No Presentado' &&
                                                     <a id="link-doc" target="_blank" href={this.url + '/get-image/' + this.state.alumno[0].documentos[2].url}>ver documento</a>
@@ -152,7 +152,7 @@ class DocumentoOficial extends Component {
                                                 <img src={doc} />
                                             </div>
                                             <div>
-                                                <h3 id="title-doc"> Modificacion LA </h3>
+                                                <h3 id="title-doc"> Modificación LA </h3>
                                                 <h5 id="estado-doc">Estado : {this.state.alumno[0].documentos[3].estado} </h5>
                                                 {this.state.alumno[0].documentos[3].estado != 'No Presentado' &&
                                                     <a id="link-doc" target="_blank" href={this.url + '/get-image/' + this.state.alumno[0].documentos[3].url}>ver documento</a>
