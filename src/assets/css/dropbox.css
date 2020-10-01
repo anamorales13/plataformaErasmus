@@ -1,12 +1,12 @@
 .grid-documentos{
     display:grid;
-    grid-template-rows: 50px auto;
+    grid-template-rows: 80px auto;
   }
   
 
   .grid-documentos-col{
     display:grid;
-    grid-template-columns:1050px auto;
+    grid-template-columns:1300px auto;
   }
 
   .elemt-one{

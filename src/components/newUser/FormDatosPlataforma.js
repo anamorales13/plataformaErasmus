@@ -5,14 +5,76 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import imagenlogo from '../../assets/images/logo-erasmus.png';
 import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import InputGroup from 'react-bootstrap/InputGroup';
 
-import  {Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export class FormDatosPlataforma extends Component {
 
+    state = {
+        errors: {}
+    }
+
+    validate = e => {
+        const errors = {};
+        let regex = new RegExp("[!#$%&'()*+,-./:;<=>?@[\]^_`{|}~ ]+");
+        let regexnumeros = new RegExp("[0-9]{9,}");
+
+        //USUARIO 
+        if (!this.props.values.usuario) {
+            errors.usuario = "Campo obligatorio";
+        }
+
+
+        //PASSWORD 
+        if (!this.props.values.password1) {
+            errors.password1 = "Campo obligatorio";
+        }else{
+            if(regex.test(this.props.values.password1)){
+                errors.password1="No puede contener carácteres especiales o espacios";
+            }
+            if(this.props.values.password1.length<8 || this.props.values.password1.length>12){
+                errors.password1="Debe de tener entre 8-12 carácteres";
+            }
+        }
+
+        if (!this.props.values.password2) {
+            errors.password2 = "Campo obligatorio";
+        }else{
+            if(regex.test(this.props.values.password2)){
+                errors.password2="No puede contener carácteres especiales o espacios";
+            }
+            if(this.props.values.password2.length<8 || this.props.values.password2.length>12){
+                errors.password2="Debe de tener entre 8-12 carácteres";
+            }
+        }
+
+        if (this.props.values.password1 != this.props.values.password2) {
+            errors.password1 = "Las contraseñas deben de coincidir"
+            errors.password2 = "Las contraseñas deben de coincidir"
+        }
+
+
+
+
+        return errors;
+    }
+
+
     continue = e => {
         e.preventDefault();
-        this.props.nextStep();
+        const { errors, ...sinErrors } = this.state;
+        const result = this.validate(sinErrors);
+
+        this.setState({ errors: result })
+        if (!Object.keys(result).length) {
+            this.props.nextStep();
+        }
+
+
+
 
     }
 
@@ -41,39 +103,49 @@ export class FormDatosPlataforma extends Component {
                     <h1 className="titulo titulo-registro "> ALTA DE PROFESOR/A</h1>
                     <h1 className="titulo titulo-registro titulo-registro-secundario"> DATOS PLATAFORMA </h1>
                     <div className="subtitulo">Es posible que otros usuarios puedan ver parte de la infomación al usar la plataforma. </div>
-                    <Link to='/' className="link-cancelar">Cancelar registro de usuario</Link><br/>
+                    <Link to='/' className="link-cancelar">Cancelar registro de usuario</Link><br />
                     <Card className="card-nuevoUser">
-
-                        <form>
-                            <div className="form-login">
-
-                                <input
-                                    className="form-newUser-input"
+                        <Form>
+                            <Form.Group >
+                                <Form.Control
+                                    placeholder="Usuario"
                                     onChange={handleChange('usuario')}
-                                    defaultValue={values.usuario}
-                                    type="text"
-                                    placeholder="Usuario" />
-                            </div>
-                            <br />
-                            <div className="form-login">
-                                <input
-                                    className="form-newUser-input"
-                                    onChange={handleChange('password')}
-                                    defaultValue={values.password}
-                                    type="password"
-                                    placeholder="Contraseña" />
-                                <input
-                                    className="form-newUser-input form-newUser-input-apellidos"
-                                    defaultValue={values.password}
-                                    type="password"
-                                    placeholder="Repetir contraseña" />
+                                    defaultValue={values.usuario} />
+                                {this.state.errors.usuario && <Form.Label style={{ color: 'red', fontSize: '12px' }}>{this.state.errors.usuario}</Form.Label>}
+                            </Form.Group>
+                            <label style={{colore:'grey', fontSize:'12px'}}>La contraseña debe de contener entre 8-12 carácteres. No incluir espacios, carácteres especiales o iconos</label>
+                            <Form.Row>
+                           
+                                <Form.Group as={Col} >
+                                   
+                                    <Form.Control
+                                        onChange={handleChange('password1')}
+                                        defaultValue={values.password1}
+                                        type="password"
+                                        type="password"
+                                        placeholder="Contraseña" />
 
-                            </div>
+                                    {this.state.errors.password1 && <Form.Label style={{ color: 'red', fontSize: '12px' }}>{this.state.errors.password1}</Form.Label >}
 
+                                </Form.Group>
+                                <Form.Group as={Col}>
+
+                                    <Form.Control
+                                        onChange={handleChange('password2')}
+                                        defaultValue={values.password2}
+                                        type="password"
+                                        type="password"
+                                        placeholder="Repetir contraseña" />
+
+
+                                    {this.state.errors.password1 && <Form.Label style={{ color: 'red', fontSize: '12px' }}>{this.state.errors.password1}</Form.Label >}
+
+                                </Form.Group>
+                            </Form.Row>
 
                             <button
                                 label="continue"
-                                className="btn-continue form-login"
+                                className="btn-continue form-login"                             
                                 style={styles.button}
                                 onClick={this.continue}
                             >   CONTINUAR </button>
@@ -83,7 +155,9 @@ export class FormDatosPlataforma extends Component {
                                 style={styles.button}
                                 onClick={this.back}
                             > VOLVER </button>
-                        </form>
+                        </Form>
+
+                       
                         <br></br>
 
 

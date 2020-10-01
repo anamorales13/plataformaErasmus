@@ -6,8 +6,7 @@ body{
 
 .grid{
     display:grid;
-    /*margin-top: 1.9em;*/
-    /*grid-template-areas:"menu main";*/
+  
     grid-template-columns: 250px 240px auto;
     grid-template-rows: 500px 75px
 }
@@ -18,7 +17,7 @@ body{
 
 .titulo{
     font-family: 'Google Sans', Rotobot, arial, sans-serif;
-    font-size: 1.95em;
+    /*font-size: 1.95em;*/
     font-weight: 400;
     letter-spacing: 0;
     line-height: 2.25rem;
@@ -194,7 +193,7 @@ transition: 0.3s;
     
     z-index: 99;
     display: block;
-    background: rgb(248, 248, 248);
+    background: rgb(241, 239, 239);
     border-radius: 0 15px 15px 0;
 }
 

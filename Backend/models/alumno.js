@@ -9,15 +9,11 @@ const documentosOficialSchema = new Schema({
     nombre: String,
     fecha: {type:Date, default: Date.now},
     url: String,
-   /* estado: {
-        type: String,
-        enum: ["NO PRESENTADO", "ACEPTADO" ,"ENTRAMITE","NO ACEPTADO"]
-    }*/
     estado:String,
     tipo: String
 });
 
-var AlumnosSchema=Schema ({   
+var AlumnoSchema=Schema ({   
 
     nombre: String,
     apellido1: String, 
@@ -26,18 +22,22 @@ var AlumnosSchema=Schema ({
     password: String,
     email: String,
     telefono: String,
+    tipo: String,
     destino: {type:Schema.ObjectId, ref:'Destino'},
     image: String,
-    tipo:String,
     documentos: [documentosOficialSchema],
     profesor: {type: Schema.ObjectId, ref: 'Profesor'},
     coordinador: {type: Schema.ObjectId, ref: 'Profesor'}
+
+   
+  
+   
 
 });
 
 
 
-module.exports= mongoose.model('Alumno', AlumnosSchema);
+module.exports= mongoose.model('Alumno', AlumnoSchema);
 
 
 

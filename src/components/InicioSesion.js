@@ -10,7 +10,7 @@ import imagen from '../assets/images/InicialScreen.png';
 import imagenalumno from '../assets/images/boton-alumno.png';
 import imagenprof from '../assets/images/boton-profesor.png';
 import '../assets/css/InicialScreen.css';
-
+import Form from 'react-bootstrap/Form';
 
 
 class InicioSesion extends Component {
@@ -49,7 +49,6 @@ class InicioSesion extends Component {
         e.preventDefault();
         this.change();
 
-
         axios.post(this.urlProfesor + 'login', this.state.nuevoAlumno)
             .then(res => {
                 this.setState({
@@ -61,11 +60,10 @@ class InicioSesion extends Component {
 
                 });
 
-
                 //persistir los datos del usuario
+                console.log(JSON.stringify(this.state.alumno));
                 localStorage.setItem('user', JSON.stringify(this.state.alumno));
                 localStorage.setItem('token', this.state.token);
-
 
                 //  this.get_token();
             })
@@ -79,7 +77,6 @@ class InicioSesion extends Component {
                     'Nombre de usuario o contraseña incorrectos',
                     'error'
                 )
-
             });
         this.forceUpdate();
     }
@@ -114,7 +111,7 @@ class InicioSesion extends Component {
                     alumno: {},
                     status: 'failed'
                 });
-              
+
 
             });
         this.forceUpdate();
@@ -130,9 +127,10 @@ class InicioSesion extends Component {
     render() {
 
         const { navigate } = this.state
-        if (navigate && JSON.parse(localStorage.getItem('user'))!=null) {
+        if (navigate && JSON.parse(localStorage.getItem('user')) != null) {
             return <Redirect to="/inicio" push={true} />
         }
+
 
         const { tipo } = this.props.location.state
         return (
@@ -165,26 +163,41 @@ class InicioSesion extends Component {
 
                             <article className="formulario-inicioSesion">
                                 <div className="cabecera-login">
-                                    <h3 className="title-login">INICIAR SESIÓN </h3>
-                                    <h1 className="title-login"><strong>PROFESOR</strong>   </h1>
-
+                                    <h3 className="title-login" style={{ fontSize: '25px' }}>INICIAR SESIÓN </h3>
+                                    <h1 className="title-login" style={{ fontSize: '18px' }}><strong>PROFESOR</strong>   </h1>
                                     <Link to={{
                                         pathname: '/nuevoProfesor',
                                         state: {
                                             tipo: 'profesor'
                                         }
-                                    }} className="link-nuevoUsuario" > Crear cuenta usuario</Link>
+                                    }} className="link-nuevoUsuario" > Registrarse</Link>
 
                                 </div>
-                                <form onSubmit={this.getProfesor}>
-                                    <div className="form-login">
-                                        <input className="form-login-input" onChange={this.change} type="text" ref={this.usuarioRef} placeholder="Usuario"></input>
+                                <Form onSubmit={this.getProfesor} >
+                                    {/*<div className="form-login">*/}
+
+                                    <div className="form-group ">
+
+                                        <div className="input-group">
+                                            <div className="input-group-addon icono-form">
+                                                <span className="glyphicon glyphicon-user"></span>
+                                            </div>
+                                            <input className="form-login-input" onChange={this.change} type="text" ref={this.usuarioRef} placeholder="Usuario" />
+                                        </div>
                                     </div>
-                                    <div className="form-login">
-                                        <input className="form-login-input" onChange={this.change} type="password" ref={this.passwordRef} placeholder="Password"></input>
+
+                                    <div className="form-group ">
+
+                                        <div className="input-group">
+                                            <div className="input-group-addon icono-form">
+                                                <span className="glyphicon glyphicon-lock"></span>
+                                            </div>
+                                            <input className="form-login-input" onChange={this.change} type="password" ref={this.passwordRef} placeholder="Contraseña" />
+                                        </div>
                                     </div>
-                                    <input type="submit" value="Iniciar Sesión" className="btn-login" ></input>
-                                </form>
+
+                                    <input type="submit" value="INICIAR SESIÓN" className="btn-login " ></input>
+                                </Form>
                             </article>
                         </div>
                     </div>
@@ -206,23 +219,37 @@ class InicioSesion extends Component {
 
                             <article className="formulario-inicioSesion form-alumno">
                                 <div className="cabecera-login">
-                                    <h3 className="title-login">INICIAR SESIÓN </h3>
-                                    <h1 className="title-login"><strong>ALUMNOS</strong>   </h1>
+                                    <h3 className="title-login" style={{ fontSize: '25px' }}>INICIAR SESIÓN </h3>
+                                    <h1 className="title-login" style={{ fontSize: '18px' }}><strong>ALUMNOS</strong>   </h1>
+
                                     <Link to={{
                                         pathname: '/nuevoUsuario',
                                         state: {
                                             tipo: 'alumno'
                                         }
-                                    }} className="link-nuevoUsuario" > Crear cuenta usuario</Link>
+                                    }} className="link-nuevoUsuario" > Registrarse</Link>
                                 </div>
-                                <form onSubmit={this.getAlumno}>
-                                    <div className="form-login">
-                                        <input className="form-login-input" onChange={this.change} type="text" ref={this.usuarioRef} placeholder="Usuario"></input>
+                                <form onSubmit={this.getAlumno} >
+                                    <div className="form-group ">
+
+                                        <div className="input-group">
+                                            <div className="input-group-addon icono-form">
+                                                <span className="glyphicon glyphicon-user"></span>
+                                            </div>
+                                            <input className="form-login-input" onChange={this.change} type="text" ref={this.usuarioRef} placeholder="Usuario" />
+                                        </div>
                                     </div>
-                                    <div className="form-login">
-                                        <input className="form-login-input" onChange={this.change} type="password" ref={this.passwordRef} placeholder="Password"></input>
+                                    <div className="form-group ">
+
+                                        <div className="input-group">
+                                            <div className="input-group-addon icono-form">
+                                                <span className="glyphicon glyphicon-lock"></span>
+                                            </div>
+                                            <input className="form-login-input" onChange={this.change} type="password" ref={this.passwordRef} placeholder="Contraseña"></input>
+                                        </div>
                                     </div>
-                                    <input type="submit" value="Iniciar Sesión" className="btn-login" ></input>
+                                   
+                                    <input type="submit" value="INICIAR SESIÓN" className="btn-login" ></input>
                                 </form>
                             </article>
 
@@ -251,11 +278,9 @@ class InicioSesion extends Component {
 
 
 
-
-
-
-
         );
+
+
 
     }
 }

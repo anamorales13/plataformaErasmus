@@ -11,34 +11,48 @@ import { Link } from 'react-router-dom';
 import Global from '../../Global';
 import SimpleReactValidator from 'simple-react-validator';
 import axios from 'axios';
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 export class FormDatosUniversidad extends Component {
 
     url = Global.url;
 
+    state = {
+        errors: {}
+    }
 
-    componentWillMount() {
+    validate = e => {
+        const errors = {};
+       
+        //EDIFICIO 
+        if (!this.props.values.edificio) {
+            errors.edificio = "Campo obligatorio";
+        }
 
-        this.validator = new SimpleReactValidator({
-            messages: {
-                required: 'Este campo es obligatorio',
-                alpha_space: 'No puede contener carácteres numéricos',
-                phone: 'Debe de ser un número de teléfono válido'
-            },
+        //DESPACHO 
+        if (!this.props.values.despacho) {
+            errors.despacho = "Campo obligatorio";
+        }
 
-        });
+        return errors;
     }
 
     continue = e => {
         e.preventDefault();
-        this.props.nextStep();
+        const { errors, ...sinErrors } = this.state;
+        const result = this.validate(sinErrors);
 
+        this.setState({ errors: result })
+        if (!Object.keys(result).length) {
+            this.props.nextStep();
+        }
     }
 
     back = e => {
         e.preventDefault();
         this.props.prevStep();
-
     }
 
 
@@ -69,40 +83,41 @@ export class FormDatosUniversidad extends Component {
                         <br />
                         <Card className="card-nuevoUser">
 
-                            <form>
-                                <div className="form-login">
-
-                                    <input
-                                        className="form-newUser-input"
-                                        onChange={handleChange('telefono')}
-                                        defaultValue={values.telefono}
-                                        type="text"
-                                        placeholder="Telefono despacho"
-                                        name="telefono"
-                                        required  title="Introduce tu telefono del despacho." />
+                            <Form>
+                                <Form.Group >
                                     
-                                </div>
-                                <div className="form-login ">
-                                    <input
-                                        className="form-newUser-input"
+                                    <Form.Control  
                                         onChange={handleChange('edificio')}
                                         defaultValue={values.edificio}
                                         type="text"
                                         name="edificio"
-                                        placeholder="Edificio" required />
+                                        placeholder="Edificio" />
+                                         {this.state.errors.edificio && <Form.Label style={{ color: 'red', fontSize: '12px' }}>{this.state.errors.edificio}</Form.Label>}
+                                </Form.Group>
+                                <Form.Group >
+                                   
+                                    <Form.Control 
+                                     onChange={handleChange('despacho')}
+                                     defaultValue={values.despacho}
+                                     type="number"
+                                     name="despacho"
+                                     placeholder="Número de despacho" />
+                                      {this.state.errors.despacho && <Form.Label style={{ color: 'red', fontSize: '12px' }}>{this.state.errors.despacho}</Form.Label>}
+                                </Form.Group>
+                                <Form.Group >
                                     
-                                    <input
-                                        className="form-newUser-input form-newUser-input-apellidos"
-                                        onChange={handleChange('despacho')}
-                                        defaultValue={values.despacho}
-                                        type="number"
-                                        name="despacho"
-                                        placeholder="Número de despacho" required />
-                                    
-
-                                </div>
-                               
-
+                                    <textarea 
+                                        className="form-control-textarea"
+                                        style={{width:'380px', height:'50px'}} 
+                                        onChange={handleChange('datos')}
+                                        defaultValue={values.datos}
+                                        type="textarea"
+                                        name="datos"
+                                        placeholder="Datos de interés" />
+                                         
+                                </Form.Group>
+                           
+                        
                                 <button
                                     label="continue"
                                     className="btn-continue form-login"
@@ -111,20 +126,19 @@ export class FormDatosUniversidad extends Component {
                                     formnovalidate
                                 > CONTINUAR </button>
                                 <button
-                            label="volver"
-                            className="btn-back form-login"
-                            style={styles.button}
-                            onClick={this.back}
-                        > VOLVER </button>
-                            </form>
-
+                                    label="volver"
+                                    className="btn-back form-login"
+                                    style={styles.button}
+                                    onClick={this.back}
+                                > VOLVER </button>
+                           </Form>
                             <br></br>
 
 
                         </Card>
 
                     </div>
-                    
+
 
                 </div>
 

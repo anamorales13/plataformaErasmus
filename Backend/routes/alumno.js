@@ -17,6 +17,8 @@ router.get('/pruebas', md_auth.ensureAuth, AlumnoController.pruebas);
 router.post('/save', AlumnoController.save);
 router.post('/login' , AlumnoController.loginUser);
 router.get('/user/:id', /*md_auth.ensureAuth,*/ AlumnoController.getUser);
+
+
 router.put('/update-user/:id' , /*md_auth.ensureAuth,*/ AlumnoController.updateUser);
 router.put('/update-password/:id', AlumnoController.updatePassword);
 router.post('/upload-image-user/:id',/* [md_auth.ensureAuth,*/ md_uploadd, AlumnoController.uploadImage );
@@ -24,13 +26,15 @@ router.get('/get-image-user/:imageFile', AlumnoController.getImageFile );
 router.delete('/delete-image/:id',md_uploadd, AlumnoController.deleteImageFile);
 router.post('/compararPassword/:id', AlumnoController.comparePassword);
 router.post('/documentos/:id', AlumnoController.addDocumentos);
-router.put('/cambioEstado/:id', AlumnoController.cambiarEstado);
+router.put('/cambioEstado/:id/:name', AlumnoController.cambiarEstado);
 router.put('/upload-image/:id/:name', md_uploaddoc, AlumnoController.upload);
 router.get('/profesores/:id', AlumnoController.getProfesores);
 router.put('/savedestino/:id', AlumnoController.guardarDestino);
 router.put('/saveprofesor/:id', AlumnoController.guardarProfesorCoordinador);
 
-router.get('/alumnos/:id', AlumnoController.getalumnosdeprofesor);
+router.get('/get-alumnos-profesor/:id', AlumnoController.getalumnosdeprofesor);
+router.get('/coordinador/:id', AlumnoController.getalumnosdecoordinador);
+router.get('/alumnos', AlumnoController.getAlumnos);
 
 router.get('/get-image/:image', AlumnoController.getImage);
 

@@ -32,7 +32,8 @@ class Alumnos extends Component {
     state = {
         identity: JSON.parse(localStorage.getItem('user')),
         status: '',
-        alumnos: []
+        alumnos: [],
+        alumnosCord:[]
     }
 
     url = Global.urlprofesor;
@@ -40,11 +41,12 @@ class Alumnos extends Component {
 
     componentWillMount() {
         this.getalumno();
+        this.getalumnosCoordinador();
     }
 
     getalumno = () => {
 
-        axios.get(this.urlalumnos + 'alumnos/' + this.state.identity._id)
+        axios.get(this.urlalumnos + 'get-alumnos-profesor/' + this.state.identity._id)
             .then(res => {
                 this.setState({
                     alumnos: res.data.users,
@@ -59,10 +61,32 @@ class Alumnos extends Component {
                     status: 'failed'
                 });
             });
+        
+            
+    }
+
+    getalumnosCoordinador=()=>{
+        axios.get(this.urlalumnos + 'coordinador/' + this.state.identity._id)
+            .then(res => {
+                this.setState({
+                    alumnosCord: res.data.users,
+                    status: 'sucess',
+
+                });
+
+            })
+            .catch(err => {
+                this.setState({
+                    alumnosCord: {},
+                    status: 'failed'
+                });
+            });
+        
     }
 
     render() {
 
+        if(this.state.alumnos != []) {
         var listaralumnos = this.state.alumnos.map((alumno) => {
             return (
 
@@ -90,23 +114,69 @@ class Alumnos extends Component {
                         <hr></hr>
                     </CardActionArea>
                     <CardActions>
-                        <Link size="small" color="secondary" style={{color: 'rgb(16,8,168)'}} >
+                        <Link size="small" color="secondary" style={{color: 'rgb(16,8,168)'}} to={"/documentos/" + alumno._id } >
                             Documentos
                          </Link>
-                        <Link size="small" color="primary" style={{color: 'rgb(39,149,192)'}} to={"/dropbox/" + alumno.usuario}>
+                        <Link size="small" color="primary" style={{color: 'rgb(39,149,192)'}} to={"/dropbox/" + alumno._id + "/" + alumno.nombre+ "/" + alumno.apellido1 + "/" + alumno.apellido2}>
                             Dropbox
                          </Link>
+
+                        
                         
                     </CardActions>
                 </Card>
 
             )
 
-        })
+        })}
+        if(this.state.alumnosCord !=[]){
+        var listaralumnos2 = this.state.alumnosCord.map((alumno) => {
+            return (
+
+
+                <Card className="card-root">
+                    <CardActionArea>
+                        <CardMedia
+                            className="card-media"
+                            image={this.urlalumnos + '/get-image-user/' + alumno.image}
+                            title="Contemplative Reptile"
+                        />
+                        <hr/>
+                        <CardContent>
+                            <div    className="group-nombre">
+                                <h3 className="card-nombre">{alumno.nombre + " " + alumno.apellido1 + " " + alumno.apellido2}</h3>
+                                
+                                <Link size="small" color="primary" style={{color: 'grey'}} className="card-link-perfil" to={"/user/profile/" + alumno._id}>ver perfil</Link>
+                            </div>
+                            <div  className="card-nombre-uni" >
+                                <h4 className="card-nombre-uni">{alumno.destino.ciudad + " ("+ alumno.destino.pais + ")  -" + alumno.destino.carrera }</h4>
+                                
+                            </div>
+                            
+                        </CardContent>
+                        <hr></hr>
+                    </CardActionArea>
+                    <CardActions>
+                        <Link size="small" color="secondary" style={{color: 'rgb(16,8,168)'}} to={"/documentos/" + alumno._id } >
+                            Documentos
+                         </Link>
+                        <Link size="small" color="primary" style={{color: 'rgb(39,149,192)'}} to={"/dropbox/" + alumno._id + "/" + alumno.nombre+ "/" + alumno.apellido1 + "/" + alumno.apellido2}>
+                            Dropbox
+                         </Link>
+
+                        
+                        
+                    </CardActions>
+                </Card>
+
+            )
+
+        })}
         return (
             <div>
                 <h1 className="titulo-doc" > ALUMNOS</h1>
                 {listaralumnos}
+                {listaralumnos2}
             </div>
         );
 

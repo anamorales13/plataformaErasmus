@@ -37,7 +37,8 @@ export class Sucess extends Component {
 
                         <Link
                             label="continue"
-                            className="btn-continue form-login link-continue"
+
+                            className=" link-continue"
                             style={styles.button}
                             to={
                                 '/'

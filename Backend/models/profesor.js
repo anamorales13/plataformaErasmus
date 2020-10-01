@@ -18,6 +18,7 @@ var ProfesorSchema=Schema ({
     despacho: String,
     image: String,
     tipo:String,
+    datos:String,
     alumnos:[{type: Schema.ObjectId, ref:'Alumno'}]
       
 });

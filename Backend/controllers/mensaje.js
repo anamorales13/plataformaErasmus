@@ -64,7 +64,12 @@ var controllers = {
 
         var itemsPerPage= 4;
 
-        Mensaje.find({receptor: userId}).populate('emisor', 'nombre usuario apellido1 apellido2 telefono image').sort('-fecha').paginate(page, itemsPerPage, (err, mensajes, total) =>{
+        Mensaje.find({ $or: 
+            [ 
+              {"receptor.profesor":userId}, 
+              {"receptor.alumno":userId} 
+            ] 
+          }).populate('emisor.profesor emisor.alumno', 'nombre usuario apellido1 apellido2 telefono image').sort('-fecha').paginate(page, itemsPerPage, (err, mensajes, total) =>{
             if (err) {
                 return res.status(500).send({
                     status: 'error',
@@ -98,7 +103,12 @@ var controllers = {
 
         var itemsPerPage= 4;
 
-        Mensaje.find({emisor: userId}).populate('emisor receptor', 'nombre usuario apellido1 apellido2 telefono image').sort('-fecha').paginate(page, itemsPerPage, (err, mensajes, total) =>{
+        Mensaje.find({ $or: 
+            [ 
+              {"emisor.profesor":userId}, 
+              {"emisor.alumno":userId} 
+            ] 
+          }  ).populate('emisor.profesor emisor.alumno receptor.alumno receptor.profesor', 'nombre usuario apellido1 apellido2 telefono image').sort('-fecha').paginate(page, itemsPerPage, (err, mensajes, total) =>{
             if (err) {
                 return res.status(500).send({
                     status: 'error',
@@ -125,7 +135,12 @@ var controllers = {
     getMensajesNoVisto: (req, res) =>{
         var userId= req.params.id;
 
-        Mensaje.count({receptor: userId, visto:'false'}).exec((err,count)=>{
+        Mensaje.count({ $or: 
+            [ 
+              {"receptor.profesor":userId}, 
+              {"receptor.alumno":userId} 
+            ] 
+           , visto:'false'}).exec((err,count)=>{
             if (err) {
                 return res.status(500).send({
                     status: 'error',
@@ -143,7 +158,11 @@ var controllers = {
     setMensajesVisto: (req, res)=>{
         var userId= req.params.id;
 
-        Mensaje.update({receptor: userId, visto:'false'}, {visto:'true'}, {"multi": true}, (err, mensajeUpdate)=>{
+        Mensaje.update({ $or: 
+            [ 
+              {"receptor.profesor":userId}, 
+              {"receptor.alumno":userId} 
+            ] , visto:'false'}, {visto:'true'}, {"multi": true}, (err, mensajeUpdate)=>{
             if (err) {
                 return res.status(500).send({
                     status: 'error',
@@ -168,7 +187,7 @@ var controllers = {
 
         var itemsPerPage= 4;
 
-        Mensaje.find({_id: mensajeId}).populate('emisor', 'nombre usuario apellidos telefono image email').sort('-fecha').paginate(page, itemsPerPage, (err, mensajes, total) =>{
+        Mensaje.find({_id: mensajeId}).populate('emisor.alumno emisor.profesor', 'nombre usuario apellido1 apellido2 telefono image email').sort('-fecha').paginate(page, itemsPerPage, (err, mensajes, total) =>{
             if (err) {
                 return res.status(500).send({
                     status: 'error',

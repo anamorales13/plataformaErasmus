@@ -17,6 +17,7 @@ router.put('/saveAlumnos/:id', ProfesorController.setAlumno);
 router.get('/profesor/:id', ProfesorController.getprofesor);
 router.get('/alumnos/:id', ProfesorController.getAlumnos);
 
+
 router.post('/upload-image-user/:id',/* [md_auth.ensureAuth,*/ md_uploadd, ProfesorController.uploadImage);
 router.get('/get-image-user/:imageFile', ProfesorController.getImageFile);
 router.delete('/delete-image/:id', md_uploadd, ProfesorController.deleteImageFile);

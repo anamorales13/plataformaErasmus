@@ -13,14 +13,16 @@ class MenuPerfil extends Component {
                     </li>
                     <li>
                         <span className="glyphicon glyphicon-pencil"></span>
-                        <NavLink exact to="/user/profile/edit" activeClassName="active">   Editar Perfil </NavLink >
+                        <NavLink exact to="/user/edit" activeClassName="active">   Editar Perfil </NavLink >
                     </li>
                     <li>
-                        <NavLink exact to="/user/erasmus" activeClassName="active"> Erasmus</NavLink >
+                        <NavLink exact to="/user/seguridad" activeClassName="active"> <span className="glyphicon glyphicon-lock"></span> Cambiar Contraseña </NavLink >
                     </li>
+                    {JSON.parse(localStorage.getItem('user')).tipo=='Alumno' &&
                     <li>
-                        <NavLink exact to="/user/profile/passwordEdit" activeClassName="active"> <span className="glyphicon glyphicon-lock"></span> Cambiar Contraseña </NavLink >
+                        <NavLink exact to="/user/erasmus" activeClassName="active"> <span className="glyphicon glyphicon-globe"/> Erasmus</NavLink >
                     </li>
+                    }
                 </ul>
                 </nav>
             </div>

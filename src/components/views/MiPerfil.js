@@ -55,8 +55,6 @@ class MiPerfil extends Component {
         return (
             <div>
 
-
-
                 <div id="content" className="grid">
 
                     {this.props.match.params.id == null &&

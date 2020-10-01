@@ -8,24 +8,23 @@ class MenuMensajes extends Component {
     render() {
 
         return (
-            <div>
-                            
-            <div className="menu-mensaje">
+                              
+            <div className="menu-perfil menu-mensaje">
                 
                 <nav> <ul>
                     <li>
-                        <NavLink exact to="/mensajes/enviar" activeClassName="active"> ENVIAR MENSAJE</NavLink >
+                        <NavLink exact to="/mensajes/enviar" activeClassName="active"> <span className="glyphicon glyphicon-send"></span> Enviar mensaje</NavLink >
                     </li>
                     <li>
-                        <NavLink exact to="/mensajes" activeClassName="active"> RECIBIDOS</NavLink >
+                        <NavLink exact to="/mensajes" activeClassName="active"> <span className="glyphicon glyphicon-save"></span> Recibidos </NavLink >
                     </li>
                     <li>
-                        <NavLink exact to="/enviados" activeClassName="active">ENVIADOS </NavLink >
+                        <NavLink exact to="/enviados" activeClassName="active"> <span className="glyphicon glyphicon-open"></span> Enviados </NavLink >
                     </li>
                 </ul>
                 </nav>
             </div>
-            </div>
+        
         );
     }
 

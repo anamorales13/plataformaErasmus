@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
-import Sidebar from './Sidebar';
 
-import GlobalDocumentos from '../GlobalDocumentos';
-import Documentos from './Documentos';
 import axios from 'axios';
-import swal from 'sweetalert';
+
 import '../assets/css/documentos.css';
-import imagen from '../assets/images/doc-default.png';
+
 import NuevoDocumento from './NuevoDocumento';
 import Global from '../Global';
 import doc from '../assets/images/default-document.png';
+import Modal from 'react-bootstrap/Modal';
+import Moment from 'react-moment';
 
 
 class DocumentoOficial extends Component {
 
     url = Global.url;
+    nombre = "";
+    estadoRef=React.createRef();
 
     constructor(props) {
         super(props);
@@ -22,42 +23,126 @@ class DocumentoOficial extends Component {
             identity: JSON.parse(localStorage.getItem('user')),
             alumno: {},
             status: null,
+            open: false,
+            estado:"",
 
         };
 
 
     }
 
-    componentWillMount() {
-        this.getDocumentos();
+
+    openModal = (name) => {
+        this.nombre = name;
+        this.setState({ open: true });
     }
 
-    componentDidMount(){
+    onCloseModal = () => {
+        this.setState({ open: false })
+    }
+
+    componentWillMount() {
+        this.getDocumentos();
+
+    }
+
+
+    componentDidMount() {
         this.getDocumentos();
     }
 
     getDocumentos() {
-        console.log("prueba");
+      
+        //ventana del alumno
+        if (this.props.match.params.id == null) {
+            axios.get(this.url + "getdocumentos" + "/" + this.state.identity._id)
+                .then(res => {
+                    if (res.data.alumno) {
+                        this.setState({
+                            alumno: res.data.alumno,
+                            status: 'sucess'
+                        });
 
-        axios.get(this.url + "getdocumentos" + "/" + this.state.identity._id)
-            .then(res => {
-                if (res.data.alumno) {
-                    this.setState({
-                        alumno: res.data.alumno,
-                        status: 'sucess'
-                    });
+                        console.log(this.state.alumno.length)
 
-                    console.log(this.state.alumno.length)
-
-                }
+                    }
 
 
-            });
+                });
+        } else {
+            //ventana del profesor
+            axios.get(this.url + "getdocumentos" + "/" + this.props.match.params.id)
+                .then(res => {
+                    if (res.data.alumno) {
+                        this.setState({
+                            alumno: res.data.alumno,
+                            status: 'sucess'
+                        });
+
+                        console.log(this.state.alumno.length)
+
+                    }
+
+
+                });
+        }
 
 
     }
 
+    changeEstado=()=>{
+        this.setState({
+            estado: this.estadoRef.current.value
+        })
 
+    }
+
+  
+    //SOLO PROFESOR
+    modificarEstado=()=>{
+       
+        console.log(this.nombre);
+        var body ={
+            estado: this.state.estado
+        }
+
+    
+            axios.put(this.url+"cambioEstado/" + this.props.match.params.id + "/"  + this.nombre, body)
+            .then(res=>{
+                this.setState({
+                    status:'sucess'
+                })
+            })
+            this.notificarAlumno();
+        
+
+    
+    }
+
+
+    
+    notificarAlumno=()=>{
+        var mensaje = {
+            asunto: 'Nueva notificación Plataforma Erasmus+',
+            texto: 'El estado del documento ' +  this.nombre + ' ha sido modificado por el profesor ' + this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2
+                + '  Puede obtener más información en el apartado de DOCUMENTOS. ',
+            emisor: { profesor: '5f7307f18ffed90f8c503a91'},
+            receptor: { alumno: this.props.match.params.id  }
+        }
+
+        axios.post('http://localhost:3900/api/mensaje', mensaje)
+        .then(res => {
+            this.setState({
+                nuevoMensaje: res.data.mensaje,
+                status: 'sucess',
+            });
+        })
+        .catch(err => {
+            this.setState({
+                status: 'failed'
+            });
+        });
+    }
 
     render() {
 
@@ -66,7 +151,15 @@ class DocumentoOficial extends Component {
                 <div className="grid-row">
                     {/* TITULO - fila 1  */}
                     <div>
-                        <h1 className="titulo-doc">DOCUMENTOS OFICIALES</h1>
+                        {this.state.identity.tipo === "profesor" &&
+                            <div>
+                                <h1 className="titulo-secundario">DOCUMENTOS OFICIALES</h1>
+                                <h4 className="subtitulo-doc">{this.state.alumno[0].nombre + " " + this.state.alumno[0].apellido1 + "  " + this.state.alumno[0].apellido2}</h4>
+                            </div>
+                        }
+                        {this.state.identity.tipo === "Alumno" &&
+                            <h1 className="titulo-doc">DOCUMENTOS OFICIALES</h1>
+                        }
                     </div>
                     {/* FILA 2 */}
                     <div className="grid-col">
@@ -88,37 +181,89 @@ class DocumentoOficial extends Component {
                                 <div>
                                     <div className="grid-documentosofi">
                                         {/*     documento 1      */}
-                                        
+
                                         <div className="grid-documentos-dos">
                                             <div className="doc-default">
                                                 <img src={doc} />
                                             </div>
                                             <div className="datos-doc">
                                                 <h3 id="title-doc"> CPRA </h3>
-                                                <h5 id="estado-doc">Estado : {this.state.alumno[0].documentos[0].estado} </h5>
-                                                {this.state.alumno[0].documentos[0].url != 'No Presentado' &&
-                                                    <a id="link-doc" target="_blank" href={this.url + '/get-image/' + this.state.alumno[0].documentos[0].url}>ver documento</a>
+
+
+                                                {this.state.alumno[0].documentos[0].estado === 'En tramite' &&
+
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'blue' }}>En tramite</strong>
+                                                        <button onClick={() => this.openModal('CPRA')} id="edit-style" style={this.props.match.params.id ? { color: 'blue' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
+                                                }
+                                                {this.state.alumno[0].documentos[0].estado === 'Aceptado' &&
+
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'green' }}>Aceptado</strong>
+                                                        <button onClick={() => this.openModal('CPRA')} id="edit-style" style={this.props.match.params.id ? { color: 'green' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
+
+                                                }
+                                                {this.state.alumno[0].documentos[0].estado === 'No Aceptado' &&
+
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'red' }}>No Aceptado</strong>
+                                                        <button onClick={() => this.openModal('CPRA')} id="edit-style" style={this.props.match.params.id ? { color: 'red' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
+
+                                                }
+                                                {this.state.alumno[0].documentos[0].estado === 'No Presentado' &&
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'grey' }}>No Presentado</strong> </h5>
                                                 }
 
+                                                {this.state.alumno[0].documentos[0].estado != 'No Presentado' &&
+                                                    <div>
+                                                        <a id="link-doc" target="_blank" href={this.url + '/get-image/' + this.state.alumno[0].documentos[0].url}>
+                                                            <span className="glyphicon glyphicon-download-alt"></span>
+                                                        </a>
+                                                        <h5 id="estado-doc" style={{fontSize:'16px'}}>Ultima modificación:  <Moment format="DD-MM-YYYY">{this.state.alumno[0].documentos[0].fecha}</Moment></h5>
+                                                    </div>
+                                                }
+
+
+
                                             </div>
-                                            </div>
-                                    
-                                         {/*     documento 2      */}
-                                        
+                                        </div>
+
+                                        {/*     documento 2      */}
+
                                         <div className="grid-documentos-dos">
                                             <div className="doc-default">
                                                 <img src={doc} />
                                             </div>
                                             <div>
                                                 <h3 id="title-doc"> Learning Agreement </h3>
-                                                <h5 id="estado-doc">Estado : {this.state.alumno[0].documentos[1].estado} </h5>
-                                                {this.state.alumno[0].documentos[1].estado != 'No Presentado' &&
-                                                    <a id="link-doc" target="_blank" href={this.url + '/get-image/' + this.state.alumno[0].documentos[1].url}>ver documento</a>
+                                                {this.state.alumno[0].documentos[1].estado === 'En tramite' &&
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'blue' }}>En tramite</strong>
+                                                        <button onClick={() => this.openModal('Learning_Agreement')} id="edit-style" style={this.props.match.params.id ? { color: 'blue' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
+
                                                 }
+                                                {this.state.alumno[0].documentos[1].estado === 'Aceptado' &&
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'green' }}>Aceptado</strong>
+                                                        <button onClick={() => this.openModal('Learning_Agreement')} id="edit-style" style={this.props.match.params.id ? { color: 'green' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
+
+                                                }
+                                                {this.state.alumno[0].documentos[1].estado === 'No Aceptado' &&
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'red' }}>No Aceptado</strong>
+                                                        <button onClick={() => this.openModal('Learning_Agreement')} id="edit-style" style={this.props.match.params.id ? { color: 'red' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
+
+                                                }
+                                                {this.state.alumno[0].documentos[1].estado === 'No Presentado' &&
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'grey' }}>No Presentado</strong> </h5>
+                                                }
+                                                {this.state.alumno[0].documentos[1].estado != 'No Presentado' &&
+                                                <div>
+                                                    <a id="link-doc" target="_blank" href={this.url + '/get-image/' + this.state.alumno[0].documentos[1].url}>
+                                                        <span className="glyphicon glyphicon-download-alt"></span>
+                                                    </a>
+                                                    <h5 id="estado-doc" style={{fontSize:'16px'}}>Ultima modificación:  <Moment format="DD-MM-YYYY">{this.state.alumno[0].documentos[1].fecha}</Moment></h5>
+                                                </div>
+                                                }
+
 
                                             </div>
                                         </div>
-                                        
+
 
                                     </div>
                                 </div>
@@ -130,47 +275,129 @@ class DocumentoOficial extends Component {
                                 <div>
                                     <div className="grid-documentosofi">
                                         {/*     documento 3    */}
-                                        
+
                                         <div className="grid-documentos-dos">
                                             <div className="doc-default">
                                                 <img src={doc} />
                                             </div>
                                             <div className="datos-doc">
                                                 <h3 id="title-doc"> Modificación CPRA </h3>
-                                                <h5 id="estado-doc">Estado : {this.state.alumno[0].documentos[2].estado} </h5>
-                                                {this.state.alumno[0].documentos[2].estado !='No Presentado' &&
-                                                    <a id="link-doc" target="_blank" href={this.url + '/get-image/' + this.state.alumno[0].documentos[2].url}>ver documento</a>
+
+                                                {this.state.alumno[0].documentos[2].estado === 'En tramite' &&
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'blue' }}>En tramite</strong>
+                                                        <button onClick={() => this.openModal('Modificación_CPRA')} id="edit-style" style={this.props.match.params.id ? { color: 'blue' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
+
+                                                }
+                                                {this.state.alumno[0].documentos[2].estado === 'Aceptado' &&
+
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'green' }}>Aceptado</strong>
+                                                        <button onClick={() => this.openModal('Modificación_CPRA')} id="edit-style" style={this.props.match.params.id ? { color: 'green' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
+
+                                                }
+                                                {this.state.alumno[0].documentos[2].estado === 'No Aceptado' &&
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'red' }}>No Aceptado</strong>
+                                                        <button onClick={() => this.openModal('Modificación_CPRA')} id="edit-style" style={this.props.match.params.id ? { color: 'red' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
+
+                                                }
+                                                {this.state.alumno[0].documentos[2].estado === 'No Presentado' &&
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: '#3A3A3A' }}>No Presentado</strong> </h5>
+                                                }
+                                                {this.state.alumno[0].documentos[2].estado != 'No Presentado' &&
+                                                <div>
+                                                    <a id="link-doc" target="_blank" href={this.url + '/get-image/' + this.state.alumno[0].documentos[2].url}>
+                                                        <span className="glyphicon glyphicon-download-alt"></span>
+                                                    </a>
+                                                    <h5 id="estado-doc" style={{fontSize:'16px'}}>Ultima modificación: <Moment format="DD-MM-YYYY">{this.state.alumno[0].documentos[2].fecha}</Moment></h5>
+                                                </div>
                                                 }
 
                                             </div>
-                                            </div>
-                                    
-                                         {/*     documento 4     */}
-                                        
+                                        </div>
+
+                                        {/*     documento 4     */}
+
                                         <div className="grid-documentos-dos">
                                             <div className="doc-default">
                                                 <img src={doc} />
                                             </div>
                                             <div>
                                                 <h3 id="title-doc"> Modificación LA </h3>
-                                                <h5 id="estado-doc">Estado : {this.state.alumno[0].documentos[3].estado} </h5>
+                                                {this.state.alumno[0].documentos[3].estado === 'En tramite' &&
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'blue' }}>En tramite</strong>
+                                                        <button onClick={() => this.openModal('Modificación_LA')} id="edit-style" style={this.props.match.params.id ? { color: 'blue' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
+
+                                                }
+                                                {this.state.alumno[0].documentos[3].estado === 'Aceptado' &&
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'green' }}>Aceptado</strong>
+                                                        <button onClick={() => this.openModal('Modificación_LA')} id="edit-style" style={this.props.match.params.id ? { color: 'green' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
+
+                                                }
+                                                {this.state.alumno[0].documentos[3].estado === 'No Aceptado' &&
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'red' }}>No Aceptado</strong>
+                                                        <button onClick={() => this.openModal('Modificación_LA')} id="edit-style" style={this.props.match.params.id ? { color: 'red' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
+
+                                                }
+                                                {this.state.alumno[0].documentos[3].estado === 'No Presentado' &&
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: '#3A3A3A' }}>No Presentado</strong> </h5>
+                                                }
+
                                                 {this.state.alumno[0].documentos[3].estado != 'No Presentado' &&
-                                                    <a id="link-doc" target="_blank" href={this.url + '/get-image/' + this.state.alumno[0].documentos[3].url}>ver documento</a>
+                                                <div>
+                                                    <a id="link-doc" target="_blank" href={this.url + '/get-image/' + this.state.alumno[0].documentos[3].url}>
+                                                        <span className="glyphicon glyphicon-download-alt"></span>
+
+                                                    </a>
+                                                    <h5 id="estado-doc" style={{fontSize:'16px'}} >Ultima modificación:  <Moment format="DD-MM-YYYY">{this.state.alumno[0].documentos[3].fecha}</Moment></h5>
+                                                </div>
                                                 }
 
                                             </div>
                                         </div>
-                                        
+
 
                                     </div>
                                 </div>
 
 
                             </div>
+
+                            <Modal show={this.state.open} onHide={this.onCloseModal} animation={false}>
+                                <Modal.Header closeButton>
+                                    <Modal.Title >MODIFICAR ESTADO <strong>-- {this.nombre} --</strong> </Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body>
+                                    <form onSubmit={this.modificarEstado} className="nuevo-doc">
+                                        <div className="form-subir">
+                                            <label for="tittle">Seleccionar nuevo estado:</label>
+                                            <select className="form-input-nuevo" ref={this.estadoRef} onChange={this.changeEstado}>
+                                                <option selected value=""></option>
+                                                <option value="No Aceptado">No Aceptado</option>
+                                                <option value="Aceptado">Aceptado</option>
+                                                <option value="En tramite">En tramite</option>
+
+                                            </select>
+
+                                        </div>
+
+                                        <input type="submit" value="ACTUALIZAR" className="btn-submit" ></input>
+                                    </form>
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <button variant="secondary" onClick={this.onCloseModal} className="btn-cerrar">
+                                        Close
+                             </button>
+
+                                </Modal.Footer>
+                            </Modal>
                         </div>
                         {/* COLUMA 3 */}
-                        <div>
-                            <NuevoDocumento type="nuevo" />
+                        <div className="btn-docOficial">
+                            {this.props.match.params.id !=null 
+                                    ?<NuevoDocumento type={this.props.match.params.id} />
+                                    :<NuevoDocumento type="nuevo" />
+                            }
+                           
+                            
                         </div>
                     </div>
                 </div>

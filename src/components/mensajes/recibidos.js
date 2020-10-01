@@ -58,10 +58,22 @@ class recibidos extends Component {
                         {mensajes.visto == 'true' &&
 
                             <Card style={{ width: '70em' }} className="card-mensajes row no-gutters ">
-                                <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.image} className="image-user" />
+                                {mensajes.emisor.profesor != null &&
+                                    <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.profesor.image} className="image-user" />
+                                }
+                                {mensajes.emisor.alumno != null &&
+                                    <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.alumno.image} className="image-user" />
+                                }
+
                                 <Card.Body id="cardbody">
                                     <div className="mensaje-header">
-                                        <h4 id="mensaje-nombre">{mensajes.emisor.nombre + "  " + mensajes.emisor.apellido1 + "    " + mensajes.emisor.apellido2} </h4>
+                                        {mensajes.emisor.profesor != null &&
+                                            <h4 id="mensaje-nombre">{mensajes.emisor.profesor.nombre + "  " + mensajes.emisor.profesor.apellido1 + "    " + mensajes.emisor.profesor.apellido2} </h4>
+                                        }
+                                        {mensajes.emisor.alumno != null &&
+                                            <h4 id="mensaje-nombre">{mensajes.emisor.alumno.nombre + "  " + mensajes.emisor.alumno.apellido1 + "    " + mensajes.emisor.alumno.apellido2} </h4>
+                                        }
+
                                         <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                                     </div>
                                     <Card.Text className="mensaje-texto">
@@ -77,10 +89,20 @@ class recibidos extends Component {
 
                         {mensajes.visto == 'false' &&
                             <Card style={{ width: '70em' }} className="card-mensaje-novisto row no-gutters ">
-                                <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.image} className="image-user" />
+                                {mensajes.emisor.profesor != null &&
+                                    <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.profesor.image} className="image-user" />
+                                }
+                                {mensajes.emisor.alumno != null &&
+                                    <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.alumno.image} className="image-user" />
+                                }
                                 <Card.Body id="cardbody">
                                     <div className="mensaje-header-novisto">
-                                        <h4 id="mensaje-nombre-novisto">{mensajes.emisor.nombre + "  " + mensajes.emisor.apellido1 + "    "+ mensajes.emisor.apellido2} </h4>
+                                        {mensajes.emisor.profesor != null &&
+                                            <h4 id="mensaje-nombre">{mensajes.emisor.profesor.nombre + "  " + mensajes.emisor.profesor.apellido1 + "    " + mensajes.emisor.profesor.apellido2} </h4>
+                                        }
+                                        {mensajes.emisor.alumno != null &&
+                                            <h4 id="mensaje-nombre">{mensajes.emisor.alumno.nombre + "  " + mensajes.emisor.alumno.apellido1 + "    " + mensajes.emisor.alumno.apellido2} </h4>
+                                        }
                                         <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                                     </div>
                                     <Card.Text className="mensaje-texto-novisto">
@@ -101,10 +123,10 @@ class recibidos extends Component {
             return (
 
                 <div className="grid-mensajeria-col">
-                    <div>
+                   
                         <Menu />
 
-                    </div>
+         
 
                     <div>
                         <h3 className="title-pantalla-mensaje">{this.state.title} </h3>
@@ -120,10 +142,10 @@ class recibidos extends Component {
             return (
 
                 <div className="grid-mensajeria-col">
-                    <div>
+                   
                         <Menu />
 
-                    </div>
+                   
 
                     <div>
                         <h3>No hay mensajes </h3>

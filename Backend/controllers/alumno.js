@@ -38,19 +38,19 @@ var controllers = {
     save: (req, res) => {
         var params = req.body;
 
-        console.log(params.nombre);
-        console.log(params.email);
-        console.log(params.apellido1);
-        console.log(params.apellido2);
-        
+        console.log("nombre"+params.nombre);
+        console.log("email"+params.email);
+        console.log("apellido"+params.apellido1);
+        console.log("apellido"+params.apellido2);
+
         //1.- validar los datos
         try {
             var validate_nombre = !validator.isEmpty(params.nombre);
-           /* var validate_usuario = !validator.isEmpty(params.usuario);*/
+            /* var validate_usuario = !validator.isEmpty(params.usuario);*/
             /*var validate_password = !validator.isEmpty(params.password);*/
             var validate_email = !validator.isEmpty(params.email);
             var validate_apellido1 = !validator.isEmpty(params.apellido1);
-            var validate_apellido2= !validator.isEmpty(params.apellido2);
+            var validate_apellido2 = !validator.isEmpty(params.apellido2);
 
 
         } catch (err) {
@@ -59,44 +59,53 @@ var controllers = {
                 message: 'Faltan datos por enviar'
             });
         }
+        console.log(validate_nombre);
+        console.log(validate_apellido1);
+        console.log(validate_apellido2);
+        console.log(validate_email);
+        
 
 
         if (validate_nombre && validate_apellido1 && validate_apellido2 && validate_email) {
 
             // 2- Crear el objeto a guardar
-            var alumno = new Alumno();
+            var usuario = new Alumno();
 
             // 3- Asignar valores
-            alumno.nombre = params.nombre;
-           // alumno.usuario = params.usuario;
-          //  alumno.password = params.password;
-            alumno.email = params.email+'@alu.uhu.es';
-            alumno.apellido1 = params.apellido1;
-            alumno.apellido2=params.apellido2;
-            alumno.telefono=params.telefono;
-            alumno.tipo='alumno'
+            usuario.nombre = params.nombre;
+            // alumno.usuario = params.usuario;
+            //  alumno.password = params.password;
+            usuario.email = params.email + '@alu.uhu.es';
+            usuario.apellido1 = params.apellido1;
+            usuario.apellido2 = params.apellido2;
+            usuario.telefono = params.telefono;
+            usuario.tipo = params.tipo;
 
-            alumno.image = 'user-default.jpg';
-            alumno.documentos.push({ nombre: 'CPRA', estado: 'No Presentado' }, { nombre: 'Learning_Agreement', estado: "No Presentado " },
+            usuario.image = 'user-default.jpg';
+
+            usuario.documentos.push({ nombre: 'CPRA', estado: 'No Presentado' }, { nombre: 'Learning_Agreement', estado: 'No Presentado' },
                 { nombre: 'Modificacion_CPRA', estado: 'No Presentado' }, { nombre: 'Modificacion_LA', estado: 'No Presentado' });
 
-            if (params.usuario){
-                alumno.usuario=params.usuario;
-            }else{
-                alumno.usuario=null
-            }
-            if (params.password){
-                alumno.password=params.password;
-            }else{
-                alumno.password=null
-            }
-            
             if (params.destino) {
-                alumno.destino = params.uniDestino;
+                usuario.destino = params.uniDestino;
             } else {
-                alumno.destino = null;
+                usuario.destino = null;
             }
-           
+
+
+
+            if (params.usuario) {
+                usuario.usuario = params.usuario;
+            } else {
+                usuario.usuario = null
+            }
+            if (params.password) {
+                usuario.password = params.password;
+            } else {
+                usuario.password = null
+            }
+
+
 
             // CONTROLAR DUPLICADOS 
 
@@ -119,11 +128,11 @@ var controllers = {
 
                         //cifrar contraseña:
                         bcrypt.hash(params.password, null, null, (err, hash) => {
-                            alumno.password = hash;
+                            usuario.password = hash;
 
                             // 4 - Guardar el objeto
 
-                            alumno.save((errn, alumnoStored) => {
+                            usuario.save((errn, alumnoStored) => {
 
                                 if (errn || !alumnoStored) {
                                     return res.status(500).send({
@@ -147,12 +156,12 @@ var controllers = {
             });
         }
     },
-    guardarDestino: (req,res) =>{
+    guardarDestino: (req, res) => {
 
-        var update= req.body;
-        var userId= req.params.id;
-      
-        Alumno.findByIdAndUpdate(userId, { $set: { destino: update.destino} }, { new: true }, function (err, user) {
+        var update = req.body;
+        var userId = req.params.id;
+
+        Alumno.findByIdAndUpdate(userId, { $set: { destino: update.destino } }, { new: true }, function (err, user) {
             if (err || !user) {
                 return res.status(500).send({
                     status: 'error',
@@ -167,13 +176,13 @@ var controllers = {
         });
     },
 
-    guardarProfesorCoordinador: (req, res) =>{
-        
-    var update= req.body;
-    var userId= req.params.id;
-    
-  
-        Alumno.findByIdAndUpdate(userId, {$set: {profesor: update.profesor, coordinador:update.coordinador}}, {new:true}, function (err,user) {
+    guardarProfesorCoordinador: (req, res) => {
+
+        var update = req.body;
+        var userId = req.params.id;
+
+
+        Alumno.findByIdAndUpdate(userId, { $set: { profesor: update.profesor, coordinador: update.coordinador } }, { new: true }, function (err, user) {
             if (err || !user) {
                 return res.status(500).send({
                     status: 'error',
@@ -199,6 +208,8 @@ var controllers = {
         userString = params.usuario;
         passwString = params.password;
 
+        console.log("usuario" + userString);
+        console.log("password"+ passwString);
 
         Alumno.findOne({ usuario: { $eq: userString } })
             .exec((err, users) => {
@@ -237,6 +248,7 @@ var controllers = {
 
 
                         } else {
+                            console.log("no passwrd");
                             return res.status(404).send({
                                 status: 'error',
                                 message: 'El usuario no ha introducido los datos correstamente'
@@ -244,6 +256,7 @@ var controllers = {
                         }
                     })
                 } else {
+                    console.log("no user")
                     return res.status(404).send({
                         status: 'error',
                         message: 'El usuario no ha introducido los datos correstamente'
@@ -353,6 +366,7 @@ var controllers = {
                 });
             }
 
+            userUpdate.password = undefined;
             console.log("userupdate: " + userUpdate);
             return res.status(200).send({
                 status: 'sucess',
@@ -580,9 +594,14 @@ var controllers = {
 
     },
 
+    /*************  */
+    /* SUBIR DOCUMENTO */
+    /*************** */
+
     addDocumentos: (req, res) => {
         var userId = req.params.id;
         var update = req.body;
+        var fechanueva= new Date();
 
         Alumno.findOne({ _id: userId }, (err, user) => {
             if (err) {
@@ -598,6 +617,7 @@ var controllers = {
 
             console.log(update.nombre);
             user.documentos.push({ nombre: req.body.nombre, estado: req.body.estado });
+            
             user.save(function (err) {
                 if (err) {
                     console.log("error");
@@ -610,11 +630,15 @@ var controllers = {
         });
 
 
-
     },
 
     cambiarEstado: (req, res) => {
-        Alumno.updateOne({ _id: userId, "documentos.nombre": 'LA' },
+        var docname = req.params.name;
+        var userId = req.params.id;
+
+        console.log("nombre" + docname);
+        console.log("estado" + req.body.estado);
+        Alumno.updateOne({ _id: userId, "documentos.nombre": docname },
             { $set: { "documentos.$.estado": req.body.estado } }, (err, userUpdate) => {
                 if (err) {
                     return res.status(500).send({
@@ -628,11 +652,40 @@ var controllers = {
                 }
 
                 return res.status(200).send({
-                    message: 'Sucess'
+                    message: 'Sucess',
+                    alumno: userUpdate
                 });
 
 
             })
+    },
+
+    getAlumnos: (req, res) => {
+
+        Alumno.find()
+            .exec((err, alumno) => {
+
+                if (err) {
+                    return res.status(500).send({
+                        status: 'error',
+                        message: 'Error en la petición'
+                    });
+                }
+
+                if (!alumno || alumno.length <= 0) {
+                    return res.status(404).send({
+                        status: 'error',
+                        message: ' no hay documentos que coincidan con tu usuario'
+                    });
+                }
+                console.log('hola');
+                return res.status(200).send({
+
+                    status: 'sucess',
+                    alumno
+                });
+            });
+
     },
 
     upload: (req, res) => {
@@ -641,8 +694,8 @@ var controllers = {
         var userId = req.params.id;
 
 
-    console.log(docname);
-    console.log(userId);
+        console.log(docname);
+        console.log(userId);
         if (!req.files) {
             return res.status(400).send({
                 status: 'error',
@@ -671,9 +724,9 @@ var controllers = {
             tipoDocumento = "imagen";
         }
 
-
+        console.log("nombre: " + docname);
         Alumno.updateOne({ _id: userId, "documentos.nombre": docname },
-            { $set: { "documentos.$.estado": 'En tramite', "documentos.$.tipo": tipoDocumento, "documentos.$.url": file_name } }, (err, userUpdate) => {
+            { $set: { "documentos.$.estado": 'En tramite', "documentos.$.tipo": tipoDocumento, "documentos.$.url": file_name, "documentos.$.fecha": new Date() } }, (err, userUpdate) => {
                 if (err) {
                     return res.status(500).send({
                         message: 'Error en la peticion'
@@ -699,87 +752,106 @@ var controllers = {
         var userId = req.params.id;
         var documentos;
 
-        Alumno.find({ _id: { $eq: userId },  })
-                .exec((err, alumno) => {
-    
-                    if (err) {
-                        return res.status(500).send({
-                            status: 'error',
-                            message: 'Error en la petición'
-                        });
-                    }
-    
-                    if (!alumno || alumno.length <= 0) {
-                        return res.status(404).send({
-                            status: 'error',
-                            message: ' no hay documentos '
-                        });
-                    }
+        Alumno.find({ _id: { $eq: userId }, })
+            .exec((err, alumno) => {
 
-                    console.log('hola');
-                    return res.status(200).send({
-    
-                        alumno
-                    
+                if (err) {
+                    return res.status(500).send({
+                        status: 'error',
+                        message: 'Error en la petición'
                     });
+                }
+
+                if (!alumno || alumno.length <= 0) {
+                    return res.status(404).send({
+                        status: 'error',
+                        message: ' no hay documentos '
+                    });
+                }
+
+                console.log('hola');
+                return res.status(200).send({
+
+                    alumno
+
                 });
-    
-        
+            });
+
+
     },
 
-    getImage: (req, res) =>{
+    getImage: (req, res) => {
         var file = req.params.image;
-        var path_file = './upload/users/documentos/'+file;
+        var path_file = './upload/users/documentos/' + file;
 
-        fss.exists(path_file, (exists) =>{
-        
-            if(exists){
+        fss.exists(path_file, (exists) => {
+
+            if (exists) {
                 return res.sendFile(path.resolve(path_file));
-            }else{
+            } else {
                 return res.status(404).send({
-                    status:'error', 
+                    status: 'error',
                     message: 'la imagen no existe'
-                 });
-        
+                });
+
             }
         });
 
-       
+
 
     },
 
-    getProfesores: (req, res) =>{
+    getProfesores: (req, res) => {
 
         var userId = req.params.id;
-       
-        Alumno.find({_id: {$eq: userId} })
-                    .exec((err, users) => {
 
-            if (err) return res.status(500).send({
-                status: 'err',
-                message: "error en la peticion"
+        Alumno.find({ _id: { $eq: userId } })
+            .exec((err, users) => {
+
+                if (err) return res.status(500).send({
+                    status: 'err',
+                    message: "error en la peticion"
+                });
+                if (users) {
+                    return res.status(200).send({
+
+                        users
+                    });
+
+                }
+
             });
-            if (users) {
-                return res.status(200).send({
-                    
-                    users
-                });
-            
-        }
 
-    });
-        
     },
-    getalumnosdeprofesor: (req, res) =>{
-        var userId= req.params.id;
-
-        Alumno.find({profesor:{$eq: userId}}).populate('destino', 'pais ciudad carrera')
-            .exec((err, users)=>{
-                if(err) return res.status(500).send({
-                    status:'fail',
-                    message:'error en al peticion'
+    getalumnosdeprofesor: (req, res) => {
+        var userId = req.params.id;
+        console.log("hola busqueda de profesor");
+        Alumno.find({ profesor: { $eq: userId } }).populate('destino', 'pais ciudad carrera')
+            .exec((err, users) => {
+                if (err) return res.status(500).send({
+                    status: 'fail',
+                    message: 'error en al peticion'
                 });
-                if(users){
+                if (users) {
+                    return res.status(200).send({
+                        users
+                    });
+                }
+            });
+    },
+
+    getalumnosdecoordinador :(req, res) =>{
+        var userId = req.params.id;
+        console.log("hola busqueda de coordinador");
+        console.log(userId);
+
+        Alumno.find({ coordinador: { $eq: userId } }).populate('destino', 'pais ciudad carrera')
+            .exec((err, users) => {
+                if (err) return res.status(500).send({
+                    status: 'fail',
+                    message: 'error en al peticion'
+                });
+                if (users) {
                     return res.status(200).send({
                         users
                     });

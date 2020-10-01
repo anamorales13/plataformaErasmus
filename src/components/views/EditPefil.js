@@ -115,7 +115,7 @@ class EditPerfil extends Component {
 
         this.changeState();
         console.log("HOLA");
-       
+        if(this.validator.allValid()){
             axios.put(this.url + 'update-user/' + this.state.identity._id, this.state.alumno)
                 .then(res => {
                     console.log("HOLA2");
@@ -139,13 +139,19 @@ class EditPerfil extends Component {
                         status: 'failed'
                     });
                 });
-        
+            }
+            else{
+                this.validator.showMessages();
+                this.forceUpdate();
+            }
 
-        this.forceUpdate();
+        
 
     }
 
     updateUserProfesor=(e) =>{
+        e.preventDefault();
+        if(this.validator.allValid()){
         axios.put('http://localhost:3900/apiProfesor/update-user/' + this.state.identity._id, this.state.profesor)
         .then(res => {
             console.log("HOLA2");
@@ -154,7 +160,7 @@ class EditPerfil extends Component {
                 status: 'sucess',
 
             });
-            console.log("prueba alumno:" + this.state.profesor.telefono);
+            console.log("prueba alumno:" + this.state.profesor.edificio);
             localStorage.setItem('user', JSON.stringify(this.state.profesor));
 
             swal(
@@ -169,8 +175,12 @@ class EditPerfil extends Component {
                 status: 'failed'
             });
         });
-
+    }else{
+        this.validator.showMessages();
         this.forceUpdate();
+    }
+
+       
     }
 
     updateImage = (e) => {
@@ -246,7 +256,7 @@ class EditPerfil extends Component {
 
         return (
             <div>
-                {this.state.identity == 'alumno' &&
+                {this.state.identity.tipo === 'Alumno' &&
 
                     <div id="content" className="grid">
                         <MenuPerfil />
@@ -263,32 +273,32 @@ class EditPerfil extends Component {
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">Nombre </label>
                                         <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.nombre} ref={this.nombreRef}></input>
-                                        {this.validator.message('nombre', this.state.alumno.nombre, 'required|alpha_space')}
+                                        {this.validator.message('nombre', this.state.alumno.nombre, 'required|alpha_space', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">Primer apellido</label>
                                         <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.apellido1} ref={this.apellido1Ref}></input>
-                                        {this.validator.message('apellido1', this.state.alumno.apellido1, 'required|alpha_space')}
+                                        {this.validator.message('apellido1', this.state.alumno.apellido1, 'required|alpha_space', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">Segundo apellido</label>
                                         <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.apellido2} ref={this.apellido2Ref}></input>
-                                        {this.validator.message('apellido2', this.state.alumno.apellido2, 'required|alpha_space')}
+                                        {this.validator.message('apellido2', this.state.alumno.apellido2, 'required|alpha_space', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">Usuario</label>
                                         <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.usuario} ref={this.usuarioRef}></input>
-                                        {this.validator.message('usuario', this.state.alumno.usuario, 'required')}
+                                        {this.validator.message('usuario', this.state.alumno.usuario, 'required', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">email</label>
                                         <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.email} ref={this.emailRef}></input>
-                                        {this.validator.message('email', this.state.alumno.email, 'required')}
+                                        {this.validator.message('email', this.state.alumno.email, 'required', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">telefono</label>
                                         <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.telefono} ref={this.telefonoRef}></input>
-                                        {this.validator.message('telefono', this.state.alumno.telefono, 'phone')}
+                                        {this.validator.message('telefono', this.state.alumno.telefono, 'phone', { className: 'text-danger' })}
                                     </div>
 
                                    
@@ -314,7 +324,7 @@ class EditPerfil extends Component {
                         </div>
                     </div>
                 }
-                {this.state.identity.tipo == 'profesor' &&
+                {this.state.identity.tipo === 'profesor' &&
                     <div id="content" className="grid">
                         <MenuPerfil />
                         <div className="avatar-edit">
@@ -330,44 +340,44 @@ class EditPerfil extends Component {
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">Nombre </label>
                                         <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.nombre} ref={this.nombreRef}></input>
-                                        {this.validator.message('nombre', this.state.profesor.nombre, 'required|alpha_space')}
+                                        {this.validator.message('nombre', this.state.profesor.nombre, 'required|alpha_space', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">Primer apellido</label>
                                         <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.apellido1} ref={this.apellido1Ref}></input>
-                                        {this.validator.message('apellido1', this.state.profesor.apellido1, 'required|alpha_space')}
+                                        {this.validator.message('apellido1', this.state.profesor.apellido1, 'required|alpha_space', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">Segundo apellido</label>
                                         <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.apellido2} ref={this.apellido2Ref}></input>
-                                        {this.validator.message('apellido2', this.state.profesor.apellido2, 'required|alpha_space')}
+                                        {this.validator.message('apellido2', this.state.profesor.apellido2, 'required|alpha_space', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">Usuario</label>
                                         <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.usuario} ref={this.usuarioRef}></input>
-                                        {this.validator.message('usuario', this.state.profesor.usuario, 'required')}
+                                        {this.validator.message('usuario', this.state.profesor.usuario, 'required', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">Correo electrónico</label>
                                         <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.email} ref={this.emailRef}></input>
-                                        {this.validator.message('email', this.state.profesor.email, 'required')}
+                                        {this.validator.message('email', this.state.profesor.email, 'required', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">Telefono</label>
                                         <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.telefono} ref={this.telefonoRef}></input>
-                                        {this.validator.message('telefono', this.state.profesor.telefono, 'phone')}
+                                        {this.validator.message('telefono', this.state.profesor.telefono, 'phone', { className: 'text-danger' })}
                                     </div>
 
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">Edificio</label>
                                         <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.edificio} ref={this.edificioRef}></input>
-                                        {this.validator.message('edificio', this.state.profesor.edificio, 'required')}
+                                        {this.validator.message('edificio', this.state.profesor.edificio, 'required', { className: 'text-danger' })}
                                     </div>
 
                                     <div className="form-edit">
                                         <label className="form-edit-value-title">Numero despacho</label>
                                         <input className="form-edit-value" onChange={this.changeStateProfesor} type="number" defaultValue={this.state.identity.despacho} ref={this.despachoRef}></input>
-                                        {this.validator.message('despacho', this.state.profesor.despacho, 'required')}
+                                        {this.validator.message('despacho', this.state.profesor.despacho, 'required', { className: 'text-danger' })}
                                     </div>
 
 

@@ -10,7 +10,7 @@ import Card from 'react-bootstrap/Card';
 
 
 class enviados extends Component {
-
+    url = Global.url;
     state = {
         title: 'Mensajes enviados',
         mensaje: [],
@@ -25,8 +25,8 @@ class enviados extends Component {
         this.getmensajes();
     }
 
-    url = Global.url;
-    urlperfil = GlobalPerfil.url;
+   
+    urlprofesor = Global.urlprofesor;
 
 
     getmensajes = (e) => {
@@ -56,13 +56,21 @@ class enviados extends Component {
             var listarmensajes = this.state.mensaje.map((mensajes) => {
                 return (
                     <div>
-                       
+                                            
 
                             <Card style={{ width: '70em' }} className="card-mensajes row no-gutters ">
-                                <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.image} className="image-user" />
+                          
+                                <Card.Img variant="left" src={'http://localhost:3900/apiErasmus/get-image-user/' + this.state.identity.image} className="image-user" />
+                              
                                 <Card.Body id="cardbody">
                                     <div className="mensaje-header">
-                                        <h4 id="mensaje-nombre">Para: {mensajes.receptor.nombre + "  " + mensajes.receptor.apellido1 + "    " + mensajes.receptor.apellido2} </h4>
+                                        {mensajes.receptor.profesor !=null &&
+                                        <h4 id="mensaje-nombre">Para: {mensajes.receptor.profesor.nombre + "  " + mensajes.receptor.profesor.apellido1 + "    " + mensajes.receptor.profesor.apellido2} </h4>
+                                       }
+                                        {mensajes.receptor.alumno !=null &&
+                                        <h4 id="mensaje-nombre">Para: {mensajes.receptor.alumno.nombre + "  " + mensajes.receptor.alumno.apellido1 + "    " + mensajes.receptor.alumno.apellido2} </h4>
+                                       }
+                                       
                                         <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                                     </div>
                                     <Card.Text className="mensaje-texto">
@@ -75,24 +83,6 @@ class enviados extends Component {
 
                         
 
-                        {/*{mensajes.visto == 'false' &&
-                            <Card style={{ width: '70em' }} className="card-mensaje-novisto row no-gutters ">
-                                <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.image} className="image-user" />
-                                <Card.Body id="cardbody">
-                                    <div className="mensaje-header-novisto">
-                                        <h4 id="mensaje-nombre-novisto">Para: {mensajes.receptor.nombre + "  " + mensajes.receptor.apellido1 + "    "+ mensajes.receptor.apellido2} </h4>
-                                        <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
-                                    </div>
-                                    <Card.Text className="mensaje-texto-novisto">
-                                        {mensajes.texto}
-                                    </Card.Text>
-                                    <Card.Link href={'/mensajes/enviar/' + mensajes._id} className="mensaje-enlace">ver mensaje</Card.Link>
-                                </Card.Body>
-
-
-
-                            </Card>
-                        }*/}
 
                     </div>
 
@@ -101,10 +91,10 @@ class enviados extends Component {
             return (
 
                 <div className="grid-mensajeria-col">
-                    <div>
+                    
                         <Menu />
 
-                    </div>
+                  
 
                     <div>
                        
@@ -125,17 +115,17 @@ class enviados extends Component {
         } else {
             return (
                 <div className="grid-mensajeria-col">
-                <div>
+              
                     <Menu />
 
-                </div>
+                
 
                 <div>
                     <h3 className="title-pantalla-mensaje">No hay mensajes </h3>
                     {listarmensajes}
 
                 </div>
-            </div>
+                </div>
         
             );
 

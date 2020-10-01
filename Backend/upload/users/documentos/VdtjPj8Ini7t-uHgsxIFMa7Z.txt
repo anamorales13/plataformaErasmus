@@ -1,0 +1,11 @@
+Lenguaje Javascript
+
+Este es un lenguaje interpretado, no requiere compilación. Fue creado por Brendan Eich en la empresa 
+Netscape Communications. 
+Utilizado principalmente en páginas web. Es similar a Java, aunque no es un lenguaje orientado a objetos,
+el mismo no dispone de herencias. 
+La mayoría de los navegadores en sus últimas versiones interpretan código Javascript.
+
+El código Javascript puede ser integrado dentro de nuestras páginas web. Para evitar incompatibilidades 
+el World Wide Web Consortium (W3C) diseño un estándar denominado DOM (en inglés Document Object Model, 
+en su traducción al español Modelo de Objetos del Documento).

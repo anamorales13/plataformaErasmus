@@ -1,15 +1,30 @@
 .registro-nuevoUsuario{
     display: block;
 }
+
 .card-nuevoUser{
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
     width: 60%;
     height: 70%;
-    margin-top:30px;
+    margin-top:10px;
     padding: 2em 2em 2em 2em;
+    
 }
+
+.card{
+  border-color: grey;
+}
+
+.form-login-nuevo{
+  display: flex;
+  margin-bottom: 13px;
+}
+
+
+
+
 .form-login-apellidos{
     margin-left: 10px;
 }
@@ -56,32 +71,74 @@
     
   }
 
+  .form-group{
+    margin-bottom: 2em;
+  }
+
+  .form-control{
+    width: 380px;
+    height: 37px;
+    border:solid 1px rgb(153, 153, 153);
+    font-size: 14px;
+  }
+
+  .form-control-textarea{
+    border:solid 1px rgb(153, 153, 153);
+    font-size: 14px;
+  }
+  
+  .form-control::placeholder{
+    color:grey;
+      font-size:1.023em;
+  }
+
+  .form-control:focus{
+    border:solid 2px rgb(14,23,105);
+    box-shadow:none;
+  }
+
+
   .titulo-registro{
       margin-top:20px;
       font-size: 30px
   }
+  
   .titulo-registro-secundario{
       margin-top: 40px;
-      font-size: 20px;
+      font-size: 22px;
       
   }
 
+  .mensaje-error{
+    position: absolute;
+    margin-top:43px;
+  }
+
+  .mensaje-error-doble{
+    margin-left: 37em;
+  }
+
 .btn-continue{
-    background-color:rgb(14, 23, 105);
+    background-color:rgba(165, 165, 165, 0.308);
     float:right;
      letter-spacing: .0727272727em;
      font-family: Roboto,Arial,sans-serif;
-     font-size:15px;
+     font-size:13px;
      font-weight: 300;
      border: none;
-     color: white;
+     color: black;
      padding: 4px 8px;
      text-align: center;
      text-decoration: none;
      border-radius: 4px;
-
+    height: 35px;;
 
 }
+
+.btn-continue:hover{
+  background-color:rgba(165, 165, 165, 0.651);
+}
+
 .btn-seleccionar{
   background-color: transparent;
   color: darkblue;
@@ -93,18 +150,23 @@
   background-color: white;
 }
 .btn-back{
-    background-color:whitesmoke;
+  background-color:rgba(165, 165, 165, 0.308);
     float:left;
      letter-spacing: .0727272727em;
      font-family: Roboto,Arial,sans-serif;
-     font-size:15px;
+     font-size:13px;
      font-weight: 300;
-     border: 1px solid grey;
+     border:none;
      color: black;
      padding: 4px 8px;
      text-align: center;
      text-decoration: none;
      border-radius: 4px;
+     height: 35px;;
+}
+
+.btn-back:hover{
+  background-color:rgba(165, 165, 165, 0.651);
 }
 
 .link-cancelar{
@@ -154,9 +216,6 @@ table {
     table-layout: fixed;
     margin-left: auto;
     margin-right: auto;
-   
-    
-    
   }
  
   

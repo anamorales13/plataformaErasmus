@@ -30,12 +30,12 @@ class Rutas extends Component {
                         <Switch>
                             <Route exact path="/inicio" component={Inicio} />
                             <Route exact path="/informacion" component={Informacion}></Route>
-                            <Route exact path="/documentos" component={Documento}></Route>
-                            <Route exact path="/dropbox/:usuario?" component={Dropbox}></Route>
+                            <Route exact path="/documentos/:id?" component={Documento}></Route>
+                            <Route exact path="/dropbox/:id?/:nombre?/:apellido1?/:apellido2?" component={Dropbox}></Route>
                             <Route exact path="/user/profile/:id?" component={MiPerfil}></Route>
-                            <Route exact path="/user/profile/edit" component={EditPerfil}></Route>
+                            <Route exact path="/user/edit" component={EditPerfil}></Route>
                             <Route exact path="/user/erasmus" component={perfilErasmus}/>
-                            <Route exact path="/user/profile/passwordEdit" component={PasswordEdit}></Route>
+                            <Route exact path="/user/seguridad" component={PasswordEdit}></Route>
                             <Route exact path="/mensajes" component={recibidos} />
                             <Route exact path="/mensajes/enviar" component={enviar}/>
                             <Route exact path="/mensajes/:id" component={mensaje}></Route>

@@ -19,39 +19,44 @@ export class Useform extends Component {
 
     state = {
         step: 1,
+        formulario: false,
         nombre: "",
         apellido1: "",
         apellido2: "",
         usuario: "",
-        password: "",
-        email: "",
+        password1: "",
+        email1: "",
+        email2: "",
         telefono: "",
         destino: "",
         despacho: "",
         alumno: {},
         profesor: {},
+        errors: {},
 
     }
 
     url = Global.url;
-    urlprofesor=GlobalProfesor.url;
+    urlprofesor = GlobalProfesor.url;
 
     //Proceed to the next step
 
+
     nextStep = (tipo) => {
         const { step } = this.state;
+        console.log("pasos:"+ step);
         this.setState({
             step: step + 1
         });
 
-        console.log(this.state.step);
 
-
-        if (this.state.step == 2 ) {
+        if (this.state.step == 2) {
             this.guardarAlumno();
         }
-       
+
     }
+
+
 
     // back to the previus step
     prevStep = () => {
@@ -69,16 +74,17 @@ export class Useform extends Component {
 
     }
 
-    guardarAlumno() {
+    guardarAlumno=()=> {
 
         var body = {
             nombre: this.state.nombre,
             apellido1: this.state.apellido1,
             apellido2: this.state.apellido2,
-            email: this.state.email,
+            email: this.state.email1,
             telefono: this.state.telefono,
             usuario: this.state.usuario,
-            password: this.state.password,
+            password: this.state.password1,
+            tipo: 'Alumno',
 
         }
 
@@ -90,39 +96,18 @@ export class Useform extends Component {
             })
     }
 
-    guardarProfesor() {
-        var body = {
-            nombre: this.state.nombre,
-            apellido1: this.state.apellido1,
-            apellido2: this.state.apellido2,
-            email: this.state.email,
-            telefono: this.state.telefono,
-            usuario: this.state.usuario,
-            password: this.state.password,
-            despacho: this.state.despacho
-
-        }
-
-        axios.post(this.url+'save', body)
-        .then(res =>{
-            this.setState({
-                profesor:res.data.profesor
-            })
-        })
-    }
-
 
 
     render() {
         const { step } = this.state;
 
 
-        const { nombre, apellido1, apellido2, usuario, password, email, telefono, destino, alumno, profesor, despacho } = this.state;
-        const values = { nombre, apellido1, apellido2, usuario, password, email, telefono, destino, alumno, profesor, despacho }
+        const { nombre, apellido1, apellido2, usuario, password1,password2, email1, email2, telefono, destino, alumno, profesor, despacho } = this.state;
+        const values = { nombre, apellido1, apellido2, usuario, password1, password2, email1, email2, telefono, destino, alumno, profesor, despacho }
         const { tipo } = this.props.location.state
 
         switch (step) {
-            case 1:
+           case 1:
                 return (
                     <FormDatosPersonales
                         nextStep={this.nextStep}
@@ -144,16 +129,16 @@ export class Useform extends Component {
             case 3:
                 return (
                     <div>
-                        
-                            <FormDatosErasmus
-                                nextStep={this.nextStep}
-                                prevStep={this.prevStep}
-                                handleChange={this.handleChange}
-                                values={values}
-                                tipo={tipo}
 
-                            />
-                        
+                        <FormDatosErasmus
+                            nextStep={this.nextStep}
+                            prevStep={this.prevStep}
+                            handleChange={this.handleChange}
+                            values={values}
+                            tipo={tipo}
+
+                        />
+
                     </div>
 
                 );

@@ -63,7 +63,7 @@ class mensaje extends Component {
 
     render() {
         var listarmensajes = this.state.mensaje.map((mensajes) => {
-                  
+
             return (
                 <div>
                     <Breadcrumb>
@@ -76,23 +76,48 @@ class mensaje extends Component {
 
 
                     <button type="button" href={'/enviar/' + mensajes._id} className="btn-default btn-lg btn-left" aria-label="Left Align" name="volver atrás" placeholder="volver">
-                           responder
+                        responder
                     </button>
-                    <Link to={'/mensajes/enviar'} params={{ mensajeId: mensajes._id}} className="btn btn-warning ">RESPONDER</Link>
+                    <Link to={'/mensajes/enviar'} params={{ mensajeId: mensajes._id }} className="btn btn-warning ">RESPONDER</Link>
                     <hr className="linea-bajo"></hr>
                     <Card style={{ width: '70em' }} className="card-mensajes-individual row no-gutters ">
 
-                        <Card.Img variant="left" src={this.urlperfil + '/get-image-user/' + mensajes.emisor.image} className="image-user" />
-                        
+                        {mensajes.emisor.profesor != null &&
+                            <Card.Img variant="left" src={'http://localhost:3900/apiErasmus/get-image-user/' + mensajes.emisor.profesor.image} className="image-user" />
+                        }
+                        {mensajes.emisor.alumno != null &&
+                            <Card.Img variant="left" src={'http://localhost:3900/apiErasmus/get-image-user/' + mensajes.emisor.alumno.image} className="image-user" />
+                        }
+
+
                         <Card.Body id="cardbody">
                             <div className="mensaje-header">
-                                <h4 id="mensaje-nombre-novisto">{mensajes.emisor.nombre + " " + mensajes.emisor.apellido1 + "    " + mensajes.emisor.apellido2} </h4>
+                                {mensajes.emisor.profesor != null &&
+                                    <h4 id="mensaje-nombre-novisto">{mensajes.emisor.profesor.nombre + " " + mensajes.emisor.profesor.apellido1 + "    " + mensajes.emisor.profesor.apellido2} </h4>
+
+                                }
+                                {mensajes.emisor.alumno != null &&
+                                    <h4 id="mensaje-nombre-novisto">{mensajes.emisor.alumno.nombre + " " + mensajes.emisor.alumno.apellido1 + "    " + mensajes.emisor.alumno.apellido2} </h4>
+
+                                }
+
 
                                 <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                             </div>
-                            <h5> {"    <" + mensajes.emisor.email + ">"} </h5>
+                            {mensajes.emisor.profesor != null &&
+                                <h5> {"    <" + mensajes.emisor.profesor.email + ">"} </h5>
+
+                            }
+                            {mensajes.emisor.alumno != null &&
+                                <h5> {"    <" + mensajes.emisor.alumno.email + ">"} </h5>
+
+                            }
+
                             <br></br>
+                            <strong>{mensajes.asunto}</strong>
+
                             <Card.Text >
+                                <br></br>
                                 {mensajes.texto}
                             </Card.Text>
 
@@ -105,10 +130,10 @@ class mensaje extends Component {
         });
         return (
             <div className="grid-mensajeria-col">
-                <div>
-                    <Menu />
 
-                </div>
+                <Menu />
+
+
                 <div>
                     {listarmensajes}
                 </div>

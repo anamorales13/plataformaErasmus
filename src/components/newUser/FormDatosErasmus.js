@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
 import imagenlogo from '../../assets/images/logo-erasmus.png';
-import  {Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Card from 'react-bootstrap/Card';
 
 
 
@@ -51,8 +52,22 @@ export class FormDatosErasmus extends Component {
             profesor: profesor,
             coordinador: coordinador
         }
-        var body3={
+        var body3 = {
             alumno: alumno
+        }
+        var mensaje = {
+            asunto: 'Nueva notificación Plataforma Erasmus+',
+            texto: 'Se ha añadido un nuevo alumno'
+                + '  Puede obtener más información en el apartado de ALUMNOS. ',
+            emisor: { profesor: '5f7307f18ffed90f8c503a91' },
+            receptor: { profesor: profesor }
+        }
+        var mensaje2={
+            asunto: 'Nueva notificación Plataforma Erasmus+',
+            texto: 'Se ha añadido un nuevo alumno'
+                + '  Puede obtener más información en el apartado de ALUMNOS. ',
+            emisor: { profesor: '5f7307f18ffed90f8c503a91' },
+            receptor: { profesor: coordinador }
         }
 
         axios.put('http://localhost:3900/apiErasmus/savedestino/' + alumno, body)
@@ -69,13 +84,26 @@ export class FormDatosErasmus extends Component {
                         console.log("Done")
 
                     })
-                axios.put('http://localhost:3900/apiProfesor/saveAlumnos/'+profesor, body3)
-                    .then(res=>{
+                    console.log("mensaje");
+                axios.put('http://localhost:3900/apiProfesor/saveAlumnos/' + profesor, body3)
+                    .then(res => {
                         this.setState({
-                            status:'sucess'
+                            status: 'sucess'
+                        });
+                    
+                       
+                    });
+                   this.notificarProfesor(profesor);
+
+                    axios.put('http://localhost:3900/apiProfesor/saveAlumnos/' + coordinador, body3)
+                    .then(res => {
+                        this.setState({
+                            status: 'sucess'
                         });
                     });
-                console.log("Done")
+
+                    this.notificarProfesor(coordinador);
+                    
 
             })
 
@@ -83,47 +111,71 @@ export class FormDatosErasmus extends Component {
     }
 
 
+    notificarProfesor = (prof) => {
+
+        var mensaje = {
+            asunto: 'Nueva notificación Plataforma Erasmus+',
+            texto: 'Se ha añadido un nuevo alumno'
+                + '  Puede obtener más información en el apartado de ALUMNOS. ',
+            emisor: { profesor: '5f7307f18ffed90f8c503a91' },
+            receptor: { profesor: prof }
+        }
+
+        axios.post('http://localhost:3900/api/mensaje', mensaje)
+            .then(res => {
+                this.setState({
+                    nuevoMensaje: res.data.mensaje,
+                    status: 'sucess',
+                });
+            })
+            .catch(err => {
+                this.setState({
+                    status: 'failed'
+                });
+            });
+    }
+
 
 
 
     render() {
 
-        const { values, handleChange ,tipo} = this.props;
+        const { values, handleChange, tipo } = this.props;
 
 
         const listarDestinos = this.state.destinos.map((destino) => {
             return (
 
                 <div>
-                {tipo =='alumno' &&
-                <table>
-                    <tbody>
-                        <tr>
-                            <td className="th-pequeño">
-                                {destino.pais}
-                            </td>
-                            <td className="th-pequeño">
-                                {destino.ciudad}
-                            </td>
-                            <td>
-                                {destino.carrera}
-                            </td>
-                            <td>
-                                {destino.profesor.nombre}
-                            </td>
-                            <td className="th-pequeño">
-                                <button
-                                    className="btn-continue btn-seleccionar"
-                                    onClick={() => this.guardarDestino(values.alumno._id, destino._id, destino.profesor._id, destino.coordinador._id)}
-                                >seleccionar</button>
-                            </td>
-                        </tr>
+                    {tipo == 'alumno' &&
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td className="th-pequeño">
+                                        {destino.pais}
+                                    </td>
+                                    <td className="th-pequeño">
+                                        {destino.ciudad}
+                                    </td>
+                                    <td>
+                                        {destino.carrera}
+                                    </td>
+                                    <td>
+                                        {destino.profesor.nombre}
+                                    </td>
+                                    <td className="th-pequeño">
+                                        <button
+                                            className="btn-continue btn-seleccionar"
+                                            onClick={() => this.guardarDestino(values.alumno._id, destino._id, destino.profesor._id, destino.coordinador._id)}
+                                        >seleccionar</button>
+                                    </td>
+                                </tr>
 
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
 
-            }
-            </div>
+                    }
+                </div>
             )
         })
         return (
@@ -139,9 +191,9 @@ export class FormDatosErasmus extends Component {
 
                 <div className="registro-nuevoUsuario">
                     <h1 className="titulo titulo-registro "> ALTA DE ALUMNO/A</h1>
-                    <h1 className="titulo titulo-registro titulo-registro-secundario"> DATOS  </h1>
+                    <h1 className="titulo titulo-registro titulo-registro-secundario"> DATOS ERASMUS </h1>
                     <div className="subtitulo">Es posible que otros usuarios puedan ver parte de la infomación al usar la plataforma. </div>
-                    <Link to='/' className="link-cancelar">Cancelar registro de usuario</Link><br/>
+                    <Link to='/' className="link-cancelar">Cancelar registro de usuario</Link><br />
                     <div>
                         {this.state.status == 'sucess' &&
                             <div className="alert alert-success alert-sucess-middle">
@@ -161,6 +213,7 @@ export class FormDatosErasmus extends Component {
                         }
                     </div>
                     {/* NUEVOOOOO TABLAS */}
+
                     <table >
                         <thead className="cabecera">
                             <tr>
@@ -172,21 +225,22 @@ export class FormDatosErasmus extends Component {
                         </thead>
                     </table>
                     {listarDestinos}
-                  
-                        <button
-                            label="continue"
-                            className="btn-continue form-login"
-                            style={styles.button}
-                            onClick={this.continue}
-                        > CONFIMAR </button>
-                        <button
-                            label="volver"
-                            className="btn-back form-login"
-                            style={styles.button}
-                            onClick={this.back}
-                        > VOLVER </button>
-                    
+
+                    <button
+                        label="continue"
+                        className="btn-continue form-login"
+                        style={styles.button}
+                        onClick={this.continue}
+                    > CONFIMAR </button>
+                    <button
+                        label="volver"
+                        className="btn-back form-login"
+                        style={styles.button}
+                        onClick={this.back}
+                    > VOLVER </button>
+
                 </div>
+
 
             </div>
         );

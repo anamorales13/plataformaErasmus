@@ -18,7 +18,8 @@ const DocumentosSchema = Schema({
        type: Schema.Types.ObjectId,
        ref: "Alumno"
     }*/
-    alumnoNombre: String,
+    alumno: {type: Schema.ObjectId, ref: 'Alumno'},
+    profesor: {type: Schema.ObjectId, ref: 'Profesor'},
  });
 
 

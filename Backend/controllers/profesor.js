@@ -39,6 +39,7 @@ var controllers = {
             var validate_apellido1 = !validator.isEmpty(params.apellido1);
             var validate_apellido2 = !validator.isEmpty(params.apellido2);
             var validate_edificio = !validator.isEmpty(params.edificio);
+            
 
         } catch (err) {
             return res.status(200).send({
@@ -57,7 +58,7 @@ var controllers = {
             profesor.nombre = params.nombre;
             profesor.usuario = params.usuario;
             profesor.password = params.password;
-            profesor.email = params.email + '@alu.uhu.es';
+            profesor.email = params.email;
 
             profesor.apellido1 = params.apellido1;
             profesor.apellido2 = params.apellido2;
@@ -66,6 +67,10 @@ var controllers = {
             profesor.image = 'user-default.jpg';
             profesor.edificio = params.edificio;
             profesor.tipo = 'profesor';
+
+            if(params.datos){
+                profesor.datos=params.datos;
+            }
 
 
             // CONTROLAR DUPLICADOS 
@@ -147,6 +152,7 @@ var controllers = {
                 });
             }
 
+            userUpdate.password=undefined;
             console.log("userupdate: " + userUpdate);
             return res.status(200).send({
                 status: 'sucess',
@@ -420,8 +426,6 @@ var controllers = {
 
     getProfesores: (req, res) => {
 
-        console.log(userString);
-
         Profesor.find()
             .exec((err, profesor) => {
 
@@ -446,6 +450,7 @@ var controllers = {
                 });
             });
     },
+  
 
     setAlumno: (req, res) => {
         var update = req.body;
@@ -508,7 +513,7 @@ var controllers = {
     getAlumnos: (req, res) =>{
         var userId= req.params.id;
 
-        Profesor.findById(userId).populate('alumnos', 'nombre apellido1 apellido2 image ')
+        Profesor.findById(userId).populate('alumnos', 'nombre apellido1 apellido2 image email')
         .exec((err, userget) => {
             if (err) {
                 return res.status(500).send({

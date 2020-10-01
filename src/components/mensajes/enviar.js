@@ -13,10 +13,16 @@ class enviar extends Component {
     state = {
         title: 'Enviar mensaje',
         mensaje: {},
-        profesores: [],
+        alumno: [],
+        usuarios: [],
+        usuariosProfesor:[],
+        profesor: [],
         identity: JSON.parse(localStorage.getItem('user')),
         status: 'false',
-        nuevoMensaje: {}
+        nuevoMensaje: {},
+        tags: "",
+        texto: "",
+        asunto: "",
 
     }
 
@@ -25,31 +31,47 @@ class enviar extends Component {
     asuntoRef = React.createRef();
     mensajeRef = React.createRef();
 
-
-
-
+    urlprofesor = Global.urlprofesor;
     url = Global.url;
 
     constructor(props) {
         super(props)
+
         this.listarProfesores();
+        this.listarAlumnos();
+
     }
 
     componentWillMount() {
+
         this.listarProfesores();
+        this.listarAlumnos();
+
     }
 
     listarProfesores() {
-        axios.get('http://localhost:3900/apiProfesor/profesores')
+        axios.get('http://localhost:3900/apiProfesor/' + 'profesores')
             .then(res => {
 
                 this.setState({
-                    profesores: res.data.profesor,
+                    profesor: res.data.profesor,
 
                 });
             });
 
-        console.log(this.state.profesores.length)
+        console.log(this.state.usuarios.length)
+
+    }
+
+    listarAlumnos() {
+        axios.get('http://localhost:3900/apiErasmus/alumnos')
+            .then(res => {
+                this.setState({
+                    usuarios: res.data.alumno
+                })
+            })
+
+
 
     }
 
@@ -59,19 +81,56 @@ class enviar extends Component {
             mensaje: {
                 texto: this.mensajeRef.current.value,
                 asunto: this.asuntoRef.current.value,
-                receptor: this.paraRef.current.value,
                 emisor: this.state.identity._id
             }
         });
     }
 
+    handleChange = input => e => {
+        this.setState({ [input]: e.target.value });
+
+    }
 
     addMessage = (e) => {
         e.preventDefault();
 
-        this.changeState();
+        if (this.state.identity.tipo == 'Alumno' && this.state.tags.tipo == 'Alumno') {
+            var mensaje = {
+                texto: this.state.texto,
+                asunto: this.state.asunto,
+                emisor: { alumno: this.state.identity._id },
+                receptor: { alumno: this.state.tags._id },
+                tipo: this.state.tags.tipo,
+            }
+        } else if (this.state.identity.tipo == 'Alumno' && this.state.tags.tipo == 'profesor') {
+            var mensaje = {
+                texto: this.state.texto,
+                asunto: this.state.asunto,
+                emisor: { alumno: this.state.identity._id },
+                receptor: { profesor: this.state.tags._id },
+                tipo: this.state.tags.tipo,
+            }
+        } else if (this.state.identity.tipo == 'profesor' && this.state.tags.tipo == 'Alumno') {
+            var mensaje = {
+                texto: this.state.texto,
+                asunto: this.state.asunto,
+                emisor: { profesor: this.state.identity._id },
+                receptor: { alumno: this.state.tags._id },
+                tipo: this.state.tags.tipo,
+            }
+        } else if (this.state.identity.tipo == 'profesor' && this.state.tags.tipo == 'profesor') {
+            var mensaje = {
+                texto: this.state.texto,
+                asunto: this.state.asunto,
+                emisor: { profesor: this.state.identity._id },
+                receptor: { profesor: this.state.tags._id },
+                tipo: this.state.tags.tipo,
+            }
+        }
 
-        axios.post(this.url + 'mensaje', this.state.mensaje)
+
+
+        axios.post(this.url + 'mensaje', mensaje)
             .then(res => {
 
                 this.setState({
@@ -90,18 +149,26 @@ class enviar extends Component {
             });
     }
 
+    onTagsChange = (event, values) => {
+        this.setState({
+            tags: values
+        }, () => {
+            // This will output an array of objects
+            // given by Autocompelte options property.
+
+        });
+    }
+
 
     render() {
 
 
         return (
-
+            <div>
 
             <div className="grid-mensajeria-col">
-                <div>
+                
                     <Menu />
-
-                </div>
 
                 <div>
                     {this.state.status == 'sucess' &&
@@ -120,48 +187,59 @@ class enviar extends Component {
                         </div>
                     }
 
-                    <h3 className="title-pantalla-mensaje">{this.state.title} </h3>
+                    {/* <h3 className="title-pantalla-mensaje">{this.state.title} </h3>*/}
 
                     <div>
                         <form onSubmit={this.addMessage} className="form-mensajeria">
                             <div className="mensaje-estilo-uno">
-                                  <p>
-                                    <label> Para: </label>
-                                    <select name="para" ref={this.paraRef} onChange={this.changeState}>
-                                        <option>---------</option>
-                                        {this.state.profesores.map((e, key) => {
-                                            return <option key={key} value={e._id}>{e.nombre + " " + e.apellidos + " " + "| " + e.email + " "}</option>;
-                                        })}
-                                    </select>
-
+                                <p>
+                                    <label>Remitente</label>
+                                    <label id="remitente">{this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2 + " <" + this.state.identity.email+ "> " }</label>
                                 </p>
-                              {/*   <p>
-                                    <Autocomplete
-                                        id="combo-box-demo"
-                                        value={this.state.profesores._id}
-                                        options={this.state.profesores}
-
-                                        getOptionLabel={(option) => option.email}
-                                        style={{ width: 300 }}
-                                        renderInput={(params) => <TextField {...params} label="correo electrónico" variant="outlined" />}
-                                    />
-                                </p>*/}
+                                <div className="destinatario">
+                                    <label>Para</label>
+                                    {this.state.identity.tipo=="Alumno" &&
+                                     <Autocomplete
+                                     className="autocomplete"
+                                     value={this.state.profesor._id}
+                                     options={this.state.profesor}
+                                     onChange={this.onTagsChange}
+                                     getOptionLabel={(option) => option.nombre+" " + option.apellido1 + " " + option.apellido2 + "  <" + option.email +"> "}
+                                     style={{ width: 750 }}
+                                     renderInput={(params) => <TextField {...params} />}
+                                 />
+                                    }
+                                    {this.state.identity.tipo==="profesor "&&
+                                       <Autocomplete
+                                       className="autocomplete"
+                                       value={this.state.usuario._id}
+                                       options={this.state.usuario}
+                                       onChange={this.onTagsChange}
+                                       getOptionLabel={(option) => option.nombre+" " + option.apellido1 + " " + option.apellido2 + "  <" + option.email +"> "}
+                                       style={{ width: 750 }}
+                                       renderInput={(params) => <TextField {...params} />}
+                                   />
+                                   
+                                   }
+                                   
+                                </div>
 
                                 <p>
                                     <label>Asunto</label>
-                                    <input type="text" onChange={this.changeState} ref={this.asuntoRef}></input>
+                                    <input type="text" onChange={this.handleChange('asunto')} ref={this.asuntoRef} id="asunto"></input>
                                 </p>
                             </div>
                             <div className="mensaje-estilo-dos">
 
-                                <textarea type="text" name="text" onChange={this.changeState} ref={this.mensajeRef}></textarea>
+                                <textarea type="text" name="text" onChange={this.handleChange('texto')} ref={this.mensajeRef} placeholder="Escribe tu mensaje" className="textarea-mensaje"></textarea>
 
                             </div>
-                            <input type="submit" value="Enviar" className="btn-update" ></input>
+                            <input type="submit" value="ENVIAR" className="btn-enviar" ></input>
                         </form>
                     </div>
 
                 </div>
+            </div>
             </div>
 
         );

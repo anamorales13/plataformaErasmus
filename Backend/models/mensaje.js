@@ -8,10 +8,25 @@ var MensajeSchema= Schema({
     texto: String,
     visto: String,
     asunto: String,
-    emisor: {type: Schema.ObjectId, ref: 'Alumno'},
-    receptor: {type: Schema.ObjectId, ref: 'Alumno'},
-    receptor: {type: Schema.ObjectId, ref: 'Profesor'},
+    emisor: {
+        alumno:{
+            type: Schema.ObjectId, ref: 'Alumno',
+        },
+        profesor:{
+            type: Schema.ObjectId, ref: 'Profesor'
+        }
+    },
+    receptor: {
+        alumno:{
+            type: Schema.ObjectId, ref: 'Alumno',
+        },
+        profesor:{
+            type: Schema.ObjectId, ref: 'Profesor'
+        }
+    },  
     fecha: {type:Date, default: Date.now},
 }) ;
 
 module.exports= mongoose.model('Mensaje', MensajeSchema);
+
+

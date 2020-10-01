@@ -1,0 +1,40 @@
+'use strict'
+
+var mongoose= require('mongoose');
+var Schema = mongoose.Schema;
+
+var DocumentoSchema=Schema ({  
+  //_id: Schema.Types.ObjectId, 
+   title: String,
+   url: String,
+   date: {type:Date, default: Date.now}
+   
+
+});
+
+//module.exports= mongoose.model(<nombre_del_modelo>, <esquema del modelo>);
+module.exports= mongoose.model('Documento', DocumentoSchema);
+
+
+var AlumnosSchema=Schema ({   
+   _id: Number,
+    nombre: String, 
+    usuario: String, 
+    password: String,
+    email: String,
+    telefono: String,
+    UniDestino: String,
+    Documentos: [{
+       type: Schema.Types.ObjectId,
+       ref: 'Documentos'
+    }],
+    
+   
+});
+
+const DocumentosSchema = Schema({
+    _alumno: {type:Number, ref: 'Alumno'},
+    title:String,
+    url: String, 
+    date: {type:Date, default: Date.now},
+ });

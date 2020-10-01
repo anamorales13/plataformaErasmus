@@ -30,14 +30,14 @@ var controllers = {
             //asignar valores
             documento.title = params.title;
 
-           if (params.url) {
-            var file = params.url;
-            var file_split = file.split('\.');
-            var file_ext = file_split[1];
-            console.log("file_ext:" + file_ext);
+            if (params.url) {
+                var file = params.url;
+                var file_split = file.split('\.');
+                var file_ext = file_split[1];
+                console.log("file_ext:" + file_ext);
 
-    
-                if (file_ext == "txt" || file_ext == "doc") {
+
+                if (file_ext == "txt" || file_ext == "doc" || file_ext == "docx") {
                     //documento.url='../assets/images/word.png';
                     documento.tipoDocumento = "word.png";
                 } else if (file_ext == "xls" || file_ext == "xlm" || file_ext == "xlt") {
@@ -50,24 +50,28 @@ var controllers = {
                     documento.tipoDocumento = "imagen";
                 }
 
-        
-             documento.url=params.url;
-           } else {
+
+                documento.url = params.url;
+            } else {
                 //documento.url = '../assets/images/default.png';
                 documento.tipoDocumento = "default.png";
-                documento.url="default.png";
-                
+                documento.url = "default.png";
+
             }
 
 
-            
-            documento.alumnoNombre = params.nombre;
 
-          /*  if (params.comentario) {
-                documento.comentario = params.comentario;
-            } else {
-                documento.comentario = null;
-            }*/
+            if (params.tipousuario == 'alumno')
+                documento.alumno = params.nombre;
+            else {
+                documento.profesor = params.nombre;
+            }
+
+            /*  if (params.comentario) {
+                  documento.comentario = params.comentario;
+              } else {
+                  documento.comentario = null;
+              }*/
 
 
             //Guardar el objeto
@@ -92,68 +96,102 @@ var controllers = {
             });
         }
     },
-    delete: (req, res) =>{
-        var docString= req.params.title;
-       
-        Documento.findOneAndDelete({title: {$eq: docString}})
-                .exec((err, documento) =>{
-                    if(err){
-                        return res.status(500).send({
-                            status:'error',
-                            message:'Error en la peticion'
-                        });
-                    }
+    delete: (req, res) => {
+        var docString = req.params.title;
 
-                    if(!documento){
-                        return res.status(404).send({
-                            status:'error',
-                            message: 'No se encuentra el documento registrado'
-                        })
-                    }
-                    
-                    return res.status(200).send({
-                        status:'sucess',
-                        message: 'Documento eliminado correctamente'
-                    })
-                })
-    },
-
-    getDocumentos: (req, res) => {
-
-        var userString = req.params.user;
-        console.log(userString);
-
-        Documento.find({ alumnoNombre: { $eq: userString } })
+        Documento.findOneAndDelete({ title: { $eq: docString } })
             .exec((err, documento) => {
-
                 if (err) {
                     return res.status(500).send({
                         status: 'error',
-                        message: 'Error en la petición'
+                        message: 'Error en la peticion'
                     });
                 }
 
-                if (!documento || documento.length <= 0) {
+                if (!documento) {
                     return res.status(404).send({
                         status: 'error',
-                        message: ' no hay documentos que coincidan con tu usuario'
-                    });
+                        message: 'No se encuentra el documento registrado'
+                    })
                 }
-                console.log('hola');
-                return res.status(200).send({
 
+                return res.status(200).send({
                     status: 'sucess',
-                    documento
+                    message: 'Documento eliminado correctamente'
+                })
+            })
+    },
+
+    getDocumentosAlumnos: (req, res) => {
+
+        var userId = req.params.id;
+        
+        console.log(userId);
+
+        
+        
+            Documento.find({ alumno: { $eq: userId } }).populate('alumno', 'nombre apellido1 apellido2')
+                .exec((err, documento) => {
+
+                    if (err) {
+                        return res.status(500).send({
+                            status: 'error',
+                            message: 'Error en la petición'
+                        });
+                    }
+
+                    if (!documento || documento.length <= 0) {
+                        return res.status(404).send({
+                            status: 'error',
+                            message: ' no hay documentos que coincidan con tu usuario'
+                        });
+                    }
+                    console.log('hola');
+                    return res.status(200).send({
+
+                        status: 'sucess',
+                        documento
+                    });
                 });
-            });
+        
+            
+        
 
     },
 
-   upload: (req, res) => {
+    getDocumentosProfesor: (req, res) =>{
+        var userId=req.params.id;
+        
+        Documento.find({ profesor: { $eq: userId } }).populate('profesor', 'nombre apellido1 apellido2')
+                .exec((err, documento) => {
+
+                    if (err) {
+                        return res.status(500).send({
+                            status: 'error',
+                            message: 'Error en la petición'
+                        });
+                    }
+
+                    if (!documento || documento.length <= 0) {
+                        return res.status(404).send({
+                            status: 'error',
+                            message: ' no hay documentos que coincidan con tu usuario'
+                        });
+                    }
+                    console.log('hola');
+                    return res.status(200).send({
+
+                        status: 'sucess',
+                        documento
+                    });
+                });
+    },
+
+    upload: (req, res) => {
 
         var filename = 'Imagen no subida';
-        var docId= req.params.id;
-        var documento= new Documento();
+        var docId = req.params.id;
+        var documento = new Documento();
         console.log(docId);
 
         if (!req.files) {
@@ -166,74 +204,74 @@ var controllers = {
         var file_path = req.files.file0.path;
         var file_split = file_path.split('\\');
 
-     //  var file_name = file_split[file_split.length-1];
-        var file_name=file_split[2];
+        //  var file_name = file_split[file_split.length-1];
+        var file_name = file_split[2];
         var extension_split = file_name.split('\.');
         var file_ext = extension_split[1];
 
-      /* if (file_ext != 'png' && file_ext != "jpg" && file_ext != "jpeg" && file_ext != "gif") {
-            fs.unlink(file_path, (err) => {  //eliminar un fichero
-                return res.status(200).send({
-                    status: 'error',
-                    message: 'La extensión de la imagen no es válida'
-                });
-            });
-        } else {*/
-            
-           Documento.findOne({_id: docId}, (err, documentoUpdated)=>{
-               if(err){
-                   return res.status(500).send({
-                       message:' Error en la peticion'
-                   });
-               }
-               if(!documentoUpdated){
-                   return res.status(404).send({
-                       message:'No se ha podido  actualizar el documento'
-                   });
-               }
-               documento=documentoUpdated;
-               documento.url= file_name;
+        /* if (file_ext != 'png' && file_ext != "jpg" && file_ext != "jpeg" && file_ext != "gif") {
+              fs.unlink(file_path, (err) => {  //eliminar un fichero
+                  return res.status(200).send({
+                      status: 'error',
+                      message: 'La extensión de la imagen no es válida'
+                  });
+              });
+          } else {*/
 
-               documento.save((errn,docStored) =>{
-                   if(errn || !docStored){
-                       return res.status(500).send({
-                           status:'error',
-                           message: 'El documento se ha guardado'
-                       });
-                   }
-                   return res.status(200).send({
+        Documento.findOne({ _id: docId }, (err, documentoUpdated) => {
+            if (err) {
+                return res.status(500).send({
+                    message: ' Error en la peticion'
+                });
+            }
+            if (!documentoUpdated) {
+                return res.status(404).send({
+                    message: 'No se ha podido  actualizar el documento'
+                });
+            }
+            documento = documentoUpdated;
+            documento.url = file_name;
+
+            documento.save((errn, docStored) => {
+                if (errn || !docStored) {
+                    return res.status(500).send({
+                        status: 'error',
+                        message: 'El documento se ha guardado'
+                    });
+                }
+                return res.status(200).send({
                     status: 'sucess',
                     documento: documentoUpdated
                 });
-               })
-           })
-            
-         
+            })
+        })
 
-       
 
-     
+
+
+
+
 
     },
 
- getImage: (req, res) =>{
+    getImage: (req, res) => {
         var file = req.params.image;
-        var path_file = './upload/documents/'+file;
+        var path_file = './upload/documents/' + file;
 
-        fs.exists(path_file, (exists) =>{
-        
-            if(exists){
+        fs.exists(path_file, (exists) => {
+
+            if (exists) {
                 return res.sendFile(path.resolve(path_file));
-            }else{
+            } else {
                 return res.status(404).send({
-                    status:'error', 
+                    status: 'error',
                     message: 'la imagen no existe'
-                 });
-        
+                });
+
             }
         });
 
-       
+
 
     },
 

@@ -87,10 +87,11 @@ class Documentos extends Component {
                 return (
 
                     <div className="documento-item">
-
+                        
                         <table aria-rowcount={this.state.documentos.length} className="documento-table">
+                            <tbody>
                             <tr>
-                                <td>
+                                <td className="table-icono"> 
                                     <div>
 
                                         {
@@ -113,6 +114,9 @@ class Documentos extends Component {
                                         <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
                                     </div>
                                 </td>
+                                <td>
+                                    <label> {documentos.alumnoNombre}</label>
+                                </td>
 
                                 <td>
                                     <spain>
@@ -127,6 +131,7 @@ class Documentos extends Component {
                                 </td>
 
                             </tr>
+                            </tbody>
                         </table>
 
                         <div className="clearfix"></div>

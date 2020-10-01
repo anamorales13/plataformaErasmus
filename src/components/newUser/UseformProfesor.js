@@ -8,6 +8,15 @@ import Sucess from './Success';
 import GlobalProfesor from '../../GlobalProfesor';
 import axios from 'axios';
 
+
+const validate= values =>{
+ const errors={}
+ if(!values.nombre){
+     errors.nombre="campo obligatorio";
+ }
+ 
+ return errors;
+}
 export class Useform extends Component {
 
     state = {
@@ -16,14 +25,18 @@ export class Useform extends Component {
         apellido1: "",
         apellido2: "",
         usuario: "",
-        password: "",
-        email: "",
+        password1: "",
+        password2:"",
+        email1: "",
+        email2:"",
         telefono: "",
         destino: "",
         despacho: "",
-        edificio:"",
+        edificio: "",
+        datos:"",
         alumno: {},
         profesor: {},
+        
 
     }
 
@@ -32,14 +45,18 @@ export class Useform extends Component {
 
     //Proceed to the next step
 
-    nextStep = (tipo) => {
+ 
+
+    nextStep = e => {
         const { step } = this.state;
-        this.setState({
-            step: step + 1
-        });
-
-        console.log(this.state.step);
-
+     
+       
+            this.setState({
+                step: step + 1
+            });
+       
+      
+     
 
         if (this.state.step == 3) {
             this.guardarProfesor();
@@ -69,12 +86,13 @@ export class Useform extends Component {
             nombre: this.state.nombre,
             apellido1: this.state.apellido1,
             apellido2: this.state.apellido2,
-            email: this.state.email,
+            email: this.state.email1,
             telefono: this.state.telefono,
             usuario: this.state.usuario,
-            password: this.state.password,
+            password: this.state.password1,
             despacho: this.state.despacho,
-            edificio: this.state.edificio
+            edificio: this.state.edificio,
+            datos:this.state.datos
 
         }
 
@@ -92,8 +110,8 @@ export class Useform extends Component {
         const { step } = this.state;
 
 
-        const { nombre, apellido1, apellido2, usuario, password, email, telefono, destino, alumno, profesor, despacho , edificio} = this.state;
-        const values = { nombre, apellido1, apellido2, usuario, password, email, telefono, destino, alumno, profesor, despacho, edificio }
+        const { nombre, apellido1, apellido2, usuario, password1,password2, email1,email2, telefono, destino, alumno, profesor, despacho, edificio,datos  } = this.state;
+        const values = { nombre, apellido1, apellido2, usuario, password1,password2, email1,email2, telefono, destino, alumno, profesor, despacho, edificio,datos }
         const { tipo } = this.props.location.state
 
         switch (step) {
@@ -105,7 +123,7 @@ export class Useform extends Component {
                         values={values}
                         tipo={tipo}
                     />
-                );
+                )
             case 2:
                 return (
                     <FormDatosPlataforma
@@ -119,8 +137,6 @@ export class Useform extends Component {
             case 3:
                 return (
                     <div>
-
-
                         <FormDatosUniversidad
                             nextStep={this.nextStep}
                             prevStep={this.prevStep}
