@@ -204,6 +204,7 @@ class InicioSesion extends Component {
 
 
                 }
+                
                 {tipo == 'alumno' &&
                     <div className="grid-inicio">
                         <div className="logo-titulo">
