@@ -204,8 +204,8 @@ class InicioSesion extends Component {
 
 
                 }
-                
-                {tipo == 'alumno' &&
+
+                {tipo === 'alumno' &&
                     <div className="grid-inicio">
                         <div className="logo-titulo">
                             <img src={imagenlogo} width="100px" height="80px"></img>
