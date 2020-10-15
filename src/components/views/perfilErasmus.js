@@ -107,7 +107,7 @@ class MiPerfil extends Component {
                                                 </div>
                                             </li>
                                             <li>
-                                                <span className="form-perfil-value-title">Telefono</span>
+                                                <span className="form-perfil-value-title">Teléfono</span>
                                                 <span className="form-perfil-value">{this.state.profesor.telefono}</span>
                                                 <br /><br />
                                                 <div className="form-line">
@@ -169,7 +169,7 @@ class MiPerfil extends Component {
                                                 </div>
                                             </li>
                                             <li>
-                                                <span className="form-perfil-value-title">Telefono</span>
+                                                <span className="form-perfil-value-title">Teléfono</span>
                                                 <span className="form-perfil-value">{this.state.coordinador.telefono}</span>
                                                 <br /><br />
                                                 <div className="form-line">

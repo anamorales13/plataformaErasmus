@@ -74,11 +74,28 @@
     padding: 3px 3px 3px 3px;
 }
 
+.textarea-mostrarmensaje{
+    width:110%;
+    height: 310px;
+    resize:none;
+    border: 1px solid rgb(179, 179, 179);
+    padding: 3px 3px 3px 3px;
+    font-weight: lighter;
+}
+
+
 .textarea-mensaje::placeholder{
     font-weight: lighter;
     padding: 3px 3px 3px 3px;
    
     
+}
+
+.pruebaresponder{
+    display:flex;
+}
+.responder{
+    margin-left: auto;
 }
 
 .textarea-mensaje:focus{
@@ -189,7 +206,7 @@
     
     margin-left: auto;
     color:rgb(129, 129, 129);
-   
+  
     font-size: 13px;
     
 }
@@ -234,7 +251,7 @@
 
 .mensaje-header{
     display: flex;
-
+  
     
 }
 
@@ -247,6 +264,10 @@
     
     
 }
+.mensaje-asunto{
+    font-size:12px;
+}
+
 
 .mensaje-texto-individual{
     position: absolute;
@@ -288,7 +309,7 @@
     white-space:nowrap;
     text-overflow: ellipsis;
     width:60%;
-    font-weight: bold;
+   
 }
 
 .mensaje-enlace{

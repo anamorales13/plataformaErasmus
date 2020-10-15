@@ -76,7 +76,9 @@ class recibidos extends Component {
 
                                         <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                                     </div>
+                                   
                                     <Card.Text className="mensaje-texto">
+                                    <strong>{mensajes.asunto}        </strong>
                                         {mensajes.texto}
                                     </Card.Text>
                                     <Card.Link href={'/mensajes/' + mensajes._id} className="mensaje-enlace">ver mensaje</Card.Link>
@@ -105,7 +107,9 @@ class recibidos extends Component {
                                         }
                                         <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                                     </div>
+                                
                                     <Card.Text className="mensaje-texto-novisto">
+                                    <strong>{mensajes.asunto}       </strong>
                                         {mensajes.texto}
                                     </Card.Text>
                                     <Card.Link href={'/mensajes/' + mensajes._id} className="mensaje-enlace">ver mensaje</Card.Link>
@@ -123,10 +127,10 @@ class recibidos extends Component {
             return (
 
                 <div className="grid-mensajeria-col">
-                   
-                        <Menu />
 
-         
+                    <Menu />
+
+
 
                     <div>
                         <h3 className="title-pantalla-mensaje">{this.state.title} </h3>
@@ -142,10 +146,10 @@ class recibidos extends Component {
             return (
 
                 <div className="grid-mensajeria-col">
-                   
-                        <Menu />
 
-                   
+                    <Menu />
+
+
 
                     <div>
                         <h3>No hay mensajes </h3>

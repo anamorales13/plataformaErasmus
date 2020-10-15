@@ -122,6 +122,105 @@ var controllers = {
             });
         }
     },
+    comparePassword: (req, res) => {
+
+        var userId = req.params.id;
+        var params = req.body;
+
+
+        passwString = params.password;
+
+        console.log("hola");
+        Profesor.findById(userId, (err, userget) => {
+            if (err) {
+                return res.status(500).send({
+                    message: 'Error en la petición'
+                });
+            }
+            if (!userget) {
+                return res.status(404).send({
+                    message: 'El usuario no existe'
+                });
+            }
+            if (userget) {
+                console.log("comparamos");
+                console.log(passwString);
+                console.log(userget.password);
+                bcrypt.compare(passwString, userget.password, (err, check) => {
+                    if (check) {
+                        console.log("sucess");
+                        return res.status(200).send({
+                            status: 'sucess'
+                        })
+                    } else {
+                        return res.status(200).send({
+                            status: 'failed'
+                        })
+                    }
+
+                });
+            }
+
+        });
+    },
+    updatePassword: (req, res) => {
+        var userId = req.params.id;
+        var update = req.body;
+
+        try {
+
+            Profesor.findOne({ '_id': req.params.id }, function (err, updateuser) {
+
+
+                // Si hay errores, se retornan
+                if (err) {
+                    return done(err);
+                } else {
+
+
+                    var profesor = new Profesor();
+
+                    profesor.nombre = updateuser.nombre;
+                    profesor.usuario = updateuser.usuario;
+                    profesor.email = updateuser.email;
+                    profesor.telefono = updateuser.telefono;
+                    profesor.uniDestino = updateuser.uniDestino;
+                    profesor.image = updateuser.image;
+                    /* alumno.apellido= update.apellido;*/
+
+                    bcrypt.hash(update.password, null, null, (err, hash) => {
+                        profesor.password = hash;
+
+                        Profesor.findByIdAndUpdate(req.params.id, { $set: { password: profesor.password } }, { new: true }, function (err, user) {
+                            if (err || !user) {
+                                return res.status(500).send({
+                                    status: 'error',
+                                    message: 'El alumno no se ha guardado'
+                                });
+                            }
+
+                            return res.status(200).send({
+                                status: 'sucess',
+                                profesor: user
+                            });
+                        });
+
+                    });
+                }
+
+            });
+
+
+
+        } catch (e) {
+            res.send('error');
+        }
+
+
+
+
+    },
+
 
     setprofesor: (req, res) => {
         var userId = req.params.id;
@@ -328,7 +427,8 @@ var controllers = {
 
         userString = params.usuario;
         passwString = params.password;
-
+console.log(userString);
+console.log(passwString);
 
         Profesor.findOne({ usuario: { $eq: userString } })
             .exec((err, users) => {
@@ -347,6 +447,7 @@ var controllers = {
                             // if(params.gettoken){
                             //generar y devolver el token
                             users.password = undefined;
+                            users.alumnos=undefined;
                             return res.status(200).send({
                                 status: 'sucess',
                                 users,

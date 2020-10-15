@@ -94,7 +94,11 @@ class pantallaInicial extends Component {
                             <img src={imagenprof} width="200px" height="280px"></img>
                         </Link>
                     </div>
+                    
+                    
                 </div>
+                <div id="administrador">
+                    <label>¿Eres administrador?</label> <Link to={"/inicioAdministrador"}>Inicia sesión aquí</Link> </div>
             </div>
 
 

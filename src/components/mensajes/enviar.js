@@ -12,18 +12,14 @@ class enviar extends Component {
 
     state = {
         title: 'Enviar mensaje',
-        mensaje: {},
-        alumno: [],
         usuarios: [],
-        usuariosProfesor:[],
         profesor: [],
         identity: JSON.parse(localStorage.getItem('user')),
         status: 'false',
-        nuevoMensaje: {},
         tags: "",
         texto: "",
         asunto: "",
-
+       
     }
 
 
@@ -39,13 +35,14 @@ class enviar extends Component {
 
         this.listarProfesores();
         this.listarAlumnos();
-
+       
     }
 
     componentWillMount() {
 
         this.listarProfesores();
         this.listarAlumnos();
+       
 
     }
 
@@ -75,16 +72,6 @@ class enviar extends Component {
 
     }
 
-
-    changeState = () => {
-        this.setState({
-            mensaje: {
-                texto: this.mensajeRef.current.value,
-                asunto: this.asuntoRef.current.value,
-                emisor: this.state.identity._id
-            }
-        });
-    }
 
     handleChange = input => e => {
         this.setState({ [input]: e.target.value });
@@ -147,7 +134,20 @@ class enviar extends Component {
                     status: 'failed'
                 });
             });
+
+        this.formularioEnBlanco();
     }
+
+    formularioEnBlanco = () => {
+        this.setState({
+            texto: "",
+            asunto: "",
+            tags: ""
+
+        });
+    }
+
+
 
     onTagsChange = (event, values) => {
         this.setState({
@@ -161,85 +161,92 @@ class enviar extends Component {
 
 
     render() {
-
+       
+        if(this.props.location.state!=null){
+            const{mensajeId, emisor, texto}=this.props.location.state;
+            console.log(this.texto)
+        }
+       
 
         return (
+
             <div>
 
-            <div className="grid-mensajeria-col">
-                
+                <div className="grid-mensajeria-col">
+
                     <Menu />
 
-                <div>
-                    {this.state.status == 'sucess' &&
-                        <div className="alert alert-success">
-
-                            <strong>¡Correo enviado correctamente!</strong>
-                            <button classsName="close" data-dismiss="alert"> <span>&times;</span></button>
-                        </div>
-
-                    }
-                    {this.state.status == 'failed' &&
-                        <div className="alert alert-danger">
-
-                            <strong>¡Error!</strong> El correo no se pudo enviar correctamente
-                            <button classsName="close" data-dismiss="alert"> <span>&times;</span></button>
-                        </div>
-                    }
-
-                    {/* <h3 className="title-pantalla-mensaje">{this.state.title} </h3>*/}
-
                     <div>
-                        <form onSubmit={this.addMessage} className="form-mensajeria">
-                            <div className="mensaje-estilo-uno">
-                                <p>
-                                    <label>Remitente</label>
-                                    <label id="remitente">{this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2 + " <" + this.state.identity.email+ "> " }</label>
-                                </p>
-                                <div className="destinatario">
-                                    <label>Para</label>
-                                    {this.state.identity.tipo=="Alumno" &&
-                                     <Autocomplete
-                                     className="autocomplete"
-                                     value={this.state.profesor._id}
-                                     options={this.state.profesor}
-                                     onChange={this.onTagsChange}
-                                     getOptionLabel={(option) => option.nombre+" " + option.apellido1 + " " + option.apellido2 + "  <" + option.email +"> "}
-                                     style={{ width: 750 }}
-                                     renderInput={(params) => <TextField {...params} />}
-                                 />
-                                    }
-                                    {this.state.identity.tipo==="profesor "&&
-                                       <Autocomplete
-                                       className="autocomplete"
-                                       value={this.state.usuario._id}
-                                       options={this.state.usuario}
-                                       onChange={this.onTagsChange}
-                                       getOptionLabel={(option) => option.nombre+" " + option.apellido1 + " " + option.apellido2 + "  <" + option.email +"> "}
-                                       style={{ width: 750 }}
-                                       renderInput={(params) => <TextField {...params} />}
-                                   />
-                                   
-                                   }
-                                   
+                        {this.state.status == 'sucess' &&
+                            <div className="alert alert-success">
+
+                                <strong>¡Correo enviado correctamente!</strong>
+                                <button classsName="close" data-dismiss="alert"> <span>&times;</span></button>
+                            </div>
+
+                        }
+                        {this.state.status == 'failed' &&
+                            <div className="alert alert-danger">
+
+                                <strong>¡Error!</strong> El correo no se pudo enviar correctamente
+                            <button classsName="close" data-dismiss="alert"> <span>&times;</span></button>
+                            </div>
+                        }
+
+                        {/* <h3 className="title-pantalla-mensaje">{this.state.title} </h3>*/}
+
+                        <div>
+                            <form onSubmit={this.addMessage} className="form-mensajeria">
+                                <div className="mensaje-estilo-uno">
+                                    <p>
+                                        <label>Remitente</label>
+                                        <label id="remitente">{this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2 + " <" + this.state.identity.email + "> "}</label>
+                                    </p>
+                                    <div className="destinatario">
+                                        <label>Para</label>
+                                        {this.state.identity.tipo == "Alumno" &&
+                                            <Autocomplete
+                                                className="autocomplete"
+                                                value={this.state.profesor._id}
+                                                options={this.state.profesor}
+                                                onChange={this.onTagsChange}
+                                                getOptionLabel={(option) => option.nombre + " " + option.apellido1 + " " + option.apellido2 + "  <" + option.email + "> "}
+                                                style={{ width: 750 }}
+                                                renderInput={(params) => <TextField {...params} />}
+                                            />
+                                        }
+                                        {this.state.identity.tipo == "profesor" &&
+                                            <Autocomplete
+                                                className="autocomplete"
+                                                value={this.state.usuarios._id}
+                                                options={this.state.usuarios}
+                                                onChange={this.onTagsChange}
+                                                getOptionLabel={(option) => option.nombre + " " + option.apellido1 + " " + option.apellido2 + "  <" + option.email + "> "}
+                                                style={{ width: 750 }}
+                                                renderInput={(params) => <TextField {...params} />}
+                                            />
+
+                                        }
+
+                                    </div>
+
+                                    <p>
+                                        <label>Asunto</label>
+                                        <input type="text" onChange={this.handleChange('asunto')} ref={this.asuntoRef} id="asunto" value={this.state.asunto}></input>
+                                    </p>
                                 </div>
+                                <div className="mensaje-estilo-dos">
+                                        {this.props.location.state!=null 
+                                           ?  <textarea type="text" name="text" onChange={this.handleChange('texto')} ref={this.mensajeRef} value={this.state.texto} placeholder="Escribe tu mensaje" className="textarea-mensaje">     {this.texto}</textarea>
+                                            : <textarea type="text" name="text" onChange={this.handleChange('texto')} ref={this.mensajeRef} value={this.state.texto} placeholder="Escribe tu mensaje" className="textarea-mensaje"> </textarea>
+                                        }
+                                </div>
+                                <input type="submit" value="ENVIAR" className="btn-enviar" ></input>
+                            </form>
+                        </div>
 
-                                <p>
-                                    <label>Asunto</label>
-                                    <input type="text" onChange={this.handleChange('asunto')} ref={this.asuntoRef} id="asunto"></input>
-                                </p>
-                            </div>
-                            <div className="mensaje-estilo-dos">
-
-                                <textarea type="text" name="text" onChange={this.handleChange('texto')} ref={this.mensajeRef} placeholder="Escribe tu mensaje" className="textarea-mensaje"></textarea>
-
-                            </div>
-                            <input type="submit" value="ENVIAR" className="btn-enviar" ></input>
-                        </form>
                     </div>
-
                 </div>
-            </div>
             </div>
 
         );

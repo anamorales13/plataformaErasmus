@@ -579,9 +579,11 @@ var controllers = {
 
         var image_file = req.params.imageFile;
         var path_file = './upload/users/' + image_file;
-
+      
+        
         fss.exists(path_file, (exists) => {
             if (exists) {
+             
                 res.sendFile(path.resolve(path_file));
             } else {
                 res.status(200).send({
@@ -784,9 +786,11 @@ var controllers = {
         var file = req.params.image;
         var path_file = './upload/users/documentos/' + file;
 
+        console.log(file)
         fss.exists(path_file, (exists) => {
 
             if (exists) {
+                console.log("existe");
                 return res.sendFile(path.resolve(path_file));
             } else {
                 return res.status(404).send({

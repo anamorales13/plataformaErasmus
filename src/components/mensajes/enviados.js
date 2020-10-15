@@ -74,6 +74,7 @@ class enviados extends Component {
                                         <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                                     </div>
                                     <Card.Text className="mensaje-texto">
+                                    <strong>{mensajes.asunto}       </strong>
                                         {mensajes.texto}
                                     </Card.Text>
                                     <Card.Link href={'/mensajes/' + mensajes._id} className="mensaje-enlace">ver mensaje</Card.Link>

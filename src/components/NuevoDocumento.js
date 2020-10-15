@@ -173,8 +173,10 @@ class NuevoDocumento extends Component {
         console.log("id: " + this.props.type);
 
         console.log("upload")
+        console.log("nombre: " + this.state.nombre)
         // VENTANA ALUMNO
-        if (this.props.type == null) {
+        if (this.props.type ==="nuevo") {
+            console.log("1");
             axios.put(this.urldocoficial + 'upload-image/' + this.state.identity._id + '/' + this.state.nombre, formDatadoc)
                 .then(res => {
                     if (res.data.userUpdate) {
@@ -211,7 +213,7 @@ class NuevoDocumento extends Component {
                 });
             //VENTANA PROFESOR
         } else {
-
+            console.log("2");
             axios.put(this.urldocoficial + 'upload-image/' + this.props.type + '/' + this.state.nombre, formDatadoc)
                 .then(res => {
                     if (res.data.userUpdate) {
@@ -253,19 +255,19 @@ class NuevoDocumento extends Component {
 
     notificarProfesor = () => {
         var mensaje = {
-            asunto: 'Nueva notificación Plataforma Erasmus+',
+            asunto: 'Modificación del documento '+  this.state.nombre  ,
             texto: 'El documento ' +  this.state.nombre  + ' se ha subido por parte del alumno ' + this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2
                 + '  Puede obtener más información en el apartado de ALUMNOS. ',
-            emisor: { profesor: '5f7307f18ffed90f8c503a91'},
+            emisor: { profesor: '5f7c4c32fceb54223c41cf44'},
             receptor: { profesor: this.state.identity.profesor }
         }
 
         var mensaje2 = {
-            asunto: 'Nueva notificación Plataforma Erasmus+',
+            asunto: 'Modificación del documento '+  this.state.nombre,
             texto: 'El documento ' + this.state.nombre + ' se ha subido por parte del alumno ' + this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2
                 + 'Puede obtener más información en el apartado de ALUMNOS',
                
-            emisor: { profesor: '5f7307f18ffed90f8c503a91'},
+            emisor: { profesor: '5f7c4c32fceb54223c41cf44'},
             receptor: { profesor: this.state.identity.coordinador }
         }
 
@@ -301,10 +303,10 @@ class NuevoDocumento extends Component {
 
     notificarAlumno=()=>{
         var mensaje = {
-            asunto: 'Nueva notificación Plataforma Erasmus+',
+            asunto: ' Modificación del documento '+  this.state.nombre,
             texto: 'El documento ' +  this.state.nombre  + ' se ha subido por parte del profesor ' + this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2
                 + '  Puede obtener más información en el apartado de DOCUMENTOS. ',
-            emisor: { profesor: '5f7307f18ffed90f8c503a91'},
+            emisor: { profesor: '5f7c4c32fceb54223c41cf44'},
             receptor: { alumno: this.props.type }
         }
 

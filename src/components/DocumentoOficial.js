@@ -123,10 +123,10 @@ class DocumentoOficial extends Component {
     
     notificarAlumno=()=>{
         var mensaje = {
-            asunto: 'Nueva notificación Plataforma Erasmus+',
+            asunto: 'Modificación documento '+this.nombre ,
             texto: 'El estado del documento ' +  this.nombre + ' ha sido modificado por el profesor ' + this.state.identity.nombre + " " + this.state.identity.apellido1 + " " + this.state.identity.apellido2
                 + '  Puede obtener más información en el apartado de DOCUMENTOS. ',
-            emisor: { profesor: '5f7307f18ffed90f8c503a91'},
+            emisor: { profesor: '5f7c4c32fceb54223c41cf44'},
             receptor: { alumno: this.props.match.params.id  }
         }
 
@@ -192,7 +192,7 @@ class DocumentoOficial extends Component {
 
                                                 {this.state.alumno[0].documentos[0].estado === 'En tramite' &&
 
-                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'blue' }}>En tramite</strong>
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'blue' }}>En trámite</strong>
                                                         <button onClick={() => this.openModal('CPRA')} id="edit-style" style={this.props.match.params.id ? { color: 'blue' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
                                                 }
                                                 {this.state.alumno[0].documentos[0].estado === 'Aceptado' &&
@@ -213,8 +213,11 @@ class DocumentoOficial extends Component {
 
                                                 {this.state.alumno[0].documentos[0].estado != 'No Presentado' &&
                                                     <div>
-                                                        <a id="link-doc" target="_blank" href={this.url + '/get-image/' + this.state.alumno[0].documentos[0].url}>
-                                                            <span className="glyphicon glyphicon-download-alt"></span>
+                                                        <a id="link-doc" target="_blank" href={this.url+'/get-image/' + this.state.alumno[0].documentos[0].url}>
+                                                            <span className="glyphicon glyphicon-download-alt">
+                                                            
+                                                            </span>
+
                                                         </a>
                                                         <h5 id="estado-doc" style={{fontSize:'16px'}}>Ultima modificación:  <Moment format="DD-MM-YYYY">{this.state.alumno[0].documentos[0].fecha}</Moment></h5>
                                                     </div>
@@ -234,7 +237,7 @@ class DocumentoOficial extends Component {
                                             <div>
                                                 <h3 id="title-doc"> Learning Agreement </h3>
                                                 {this.state.alumno[0].documentos[1].estado === 'En tramite' &&
-                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'blue' }}>En tramite</strong>
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'blue' }}>En trámite</strong>
                                                         <button onClick={() => this.openModal('Learning_Agreement')} id="edit-style" style={this.props.match.params.id ? { color: 'blue' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
 
                                                 }
@@ -284,7 +287,7 @@ class DocumentoOficial extends Component {
                                                 <h3 id="title-doc"> Modificación CPRA </h3>
 
                                                 {this.state.alumno[0].documentos[2].estado === 'En tramite' &&
-                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'blue' }}>En tramite</strong>
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'blue' }}>En trámite</strong>
                                                         <button onClick={() => this.openModal('Modificación_CPRA')} id="edit-style" style={this.props.match.params.id ? { color: 'blue' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
 
                                                 }
@@ -323,7 +326,7 @@ class DocumentoOficial extends Component {
                                             <div>
                                                 <h3 id="title-doc"> Modificación LA </h3>
                                                 {this.state.alumno[0].documentos[3].estado === 'En tramite' &&
-                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'blue' }}>En tramite</strong>
+                                                    <h5 id="estado-doc">Estado : <strong style={{ color: 'blue' }}>En trámite</strong>
                                                         <button onClick={() => this.openModal('Modificación_LA')} id="edit-style" style={this.props.match.params.id ? { color: 'blue' } : { display: 'none' }}> <span className="glyphicon glyphicon-pencil"></span></button></h5>
 
                                                 }
@@ -373,7 +376,7 @@ class DocumentoOficial extends Component {
                                                 <option selected value=""></option>
                                                 <option value="No Aceptado">No Aceptado</option>
                                                 <option value="Aceptado">Aceptado</option>
-                                                <option value="En tramite">En tramite</option>
+                                                <option value="En tramite">En trámite</option>
 
                                             </select>
 

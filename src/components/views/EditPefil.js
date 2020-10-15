@@ -291,12 +291,12 @@ class EditPerfil extends Component {
                                         {this.validator.message('usuario', this.state.alumno.usuario, 'required', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
-                                        <label className="form-edit-value-title">email</label>
+                                        <label className="form-edit-value-title">Email</label>
                                         <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.email} ref={this.emailRef}></input>
                                         {this.validator.message('email', this.state.alumno.email, 'required', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
-                                        <label className="form-edit-value-title">telefono</label>
+                                        <label className="form-edit-value-title">Teléfono</label>
                                         <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.telefono} ref={this.telefonoRef}></input>
                                         {this.validator.message('telefono', this.state.alumno.telefono, 'phone', { className: 'text-danger' })}
                                     </div>
@@ -363,7 +363,7 @@ class EditPerfil extends Component {
                                         {this.validator.message('email', this.state.profesor.email, 'required', { className: 'text-danger' })}
                                     </div>
                                     <div className="form-edit">
-                                        <label className="form-edit-value-title">Telefono</label>
+                                        <label className="form-edit-value-title">Teléfono</label>
                                         <input className="form-edit-value" onChange={this.changeStateProfesor} type="text" defaultValue={this.state.identity.telefono} ref={this.telefonoRef}></input>
                                         {this.validator.message('telefono', this.state.profesor.telefono, 'phone', { className: 'text-danger' })}
                                     </div>

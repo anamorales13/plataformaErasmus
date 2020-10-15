@@ -59,14 +59,14 @@ export class FormDatosErasmus extends Component {
             asunto: 'Nueva notificación Plataforma Erasmus+',
             texto: 'Se ha añadido un nuevo alumno'
                 + '  Puede obtener más información en el apartado de ALUMNOS. ',
-            emisor: { profesor: '5f7307f18ffed90f8c503a91' },
+            emisor: { profesor: '5f7c4c32fceb54223c41cf44' },
             receptor: { profesor: profesor }
         }
         var mensaje2={
             asunto: 'Nueva notificación Plataforma Erasmus+',
             texto: 'Se ha añadido un nuevo alumno'
                 + '  Puede obtener más información en el apartado de ALUMNOS. ',
-            emisor: { profesor: '5f7307f18ffed90f8c503a91' },
+            emisor: { profesor: '5f7c4c32fceb54223c41cf44' },
             receptor: { profesor: coordinador }
         }
 
@@ -114,10 +114,10 @@ export class FormDatosErasmus extends Component {
     notificarProfesor = (prof) => {
 
         var mensaje = {
-            asunto: 'Nueva notificación Plataforma Erasmus+',
+            asunto: 'Alta de un nuevo alumno',
             texto: 'Se ha añadido un nuevo alumno'
                 + '  Puede obtener más información en el apartado de ALUMNOS. ',
-            emisor: { profesor: '5f7307f18ffed90f8c503a91' },
+            emisor: { profesor: '5f7c4c32fceb54223c41cf44' },
             receptor: { profesor: prof }
         }
 

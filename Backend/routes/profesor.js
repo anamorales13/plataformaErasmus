@@ -16,6 +16,8 @@ router.put('/update-user/:id', ProfesorController.setprofesor);
 router.put('/saveAlumnos/:id', ProfesorController.setAlumno);
 router.get('/profesor/:id', ProfesorController.getprofesor);
 router.get('/alumnos/:id', ProfesorController.getAlumnos);
+router.post('/compararPassword/:id', ProfesorController.comparePassword);
+router.put('/update-password/:id', ProfesorController.updatePassword);
 
 
 router.post('/upload-image-user/:id',/* [md_auth.ensureAuth,*/ md_uploadd, ProfesorController.uploadImage);

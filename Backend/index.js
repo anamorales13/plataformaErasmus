@@ -5,7 +5,8 @@
 var mongoose = require('mongoose');
 
 var app=require('./app');
-var port= 3900;
+app.set('port', process.env.PORT || 3900);
+//var port= 3900;
 
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
@@ -14,7 +15,7 @@ mongoose.connect('mongodb://localhost:27017/baseerasmus',{ useUnifiedTopology: t
         .then(()=>{
             console.log('La conexion a la BD se ha realizado con exito');
 
-            app.listen(port, ()=> {
+            app.listen(app.get('port'), ()=> {
                 console.log('servidor corriendo en http://localhost:'+port);
     
             });

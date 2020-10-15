@@ -4,6 +4,7 @@ import "../../assets/css/MiPerfil.css";
 import { NavLink } from 'react-router-dom';
 import Global from '../../Global';
 import ReactDOM from 'react-dom';
+import swal from 'sweetalert';
 import "../../assets/css/Password.css";
 import MenuPerfil from './MenuPerfil';
 import SimpleReactValidator from 'simple-react-validator';
@@ -12,21 +13,24 @@ var bcrypt = require('bcrypt-nodejs');
 
 class PasswordEdit extends Component {
 
-    passwordNuevaDos = React.createRef();
+  /*  passwordNuevaDos = React.createRef();
     passwordNueva = React.createRef();
     passwordActual = React.createRef();
-
+*/
 
 
     url = Global.url;
+    urlprofesor=Global.urlprofesor;
 
     constructor(props) {
         super(props);
         this.state = {
             identity: null,
             alumno: {},
+            passwordNueva:"",
             passwordNuevaDos: "",
-            passwordActual: {},
+            passwordActual:"",
+           /* passwordActual: {},*/
             errores: {
                 actual: null,
                 nueva: null,
@@ -37,6 +41,7 @@ class PasswordEdit extends Component {
         }
 
     }
+
 
 
 
@@ -80,6 +85,11 @@ class PasswordEdit extends Component {
 
     }
 
+    handleChange = input => e => {
+        this.setState({ [input]: e.target.value });
+
+    }
+
     cambiarError(name) {
         document.getElementById(name).style.borderColor = 'rgb(251,13,13,1)';
 
@@ -90,18 +100,28 @@ class PasswordEdit extends Component {
     updatePassword = (e) => {
         e.preventDefault();
 
-        this.changeState();
+        var currentlypassword={
+            password: this.state.passwordActual
+        }
 
+        var nueva={
+            password: this.state.passwordNueva
+        }
 
+        console.log(currentlypassword);
+        console.log(nueva);
 
-        if (this.state.alumno.password != "" && this.state.passwordNuevaDos != "" && this.state.passwordActual.password != "") {
+        if(this.state.identity==='Alumno'){
+        if (this.state.passwordActual != "" && this.state.passwordNuevaDos != "" && this.state.passwordNueva != "") {
             if (this.validator.fieldValid('min')) {
                 /* if(this.validator.allValid()){*/
-                axios.post(this.url + 'compararPassword/' + this.state.identity._id, this.state.passwordActual)
+                   
+                axios.post(this.url + 'compararPassword/' + this.state.identity._id, currentlypassword)
                     .then(res => {
                         if (res.data.status == 'sucess') {
-                            if (this.state.alumno.password == this.state.passwordNuevaDos) {
-                                axios.put(this.url + 'update-password/' + this.state.identity._id, this.state.alumno)
+                            if (this.state.passwordNueva == this.state.passwordNuevaDos) {
+                                
+                                axios.put(this.url + 'update-password/' + this.state.identity._id, nueva)
                                     .then(res => {
                                         if (res.data.alumno) {
                                             this.setState({
@@ -147,36 +167,89 @@ class PasswordEdit extends Component {
         } else {
             this.validator.showMessages();
 
-           /* if (this.state.alumno.password == undefined) {
+        }
+    }else{
+        console.log("profesor")
+        if (this.state.passwordActual != null && this.state.passwordNuevaDos != null && this.state.passwordNueva != null) {
+           // if (this.validator.fieldValid('min')) {
+                console.log("no estan vacias");
+                /* if(this.validator.allValid()){*/
+                axios.post(this.urlprofesor + 'compararPassword/' + this.state.identity._id, currentlypassword)
+                    .then(res => {
+                        console.log("2");
+                        if (res.data.status == 'sucess') {
+                            if (this.state.passwordNueva == this.state.passwordNuevaDos) {
+                                console.log("son iguales");
+                                axios.put(this.urlprofesor + 'update-password/' + this.state.identity._id, nueva)
+                                    .then(res => {
+                                        if (res.data.profesor) {
+                                            this.setState({
+                                                alumno: res.data.profesor,
+                                                status: 'sucess'
+                                            });
 
-                this.cambiarError('input-error2')
+                                            swal({
+                                                title: 'Documento creado con exito',
+                                                text: "El documento ha sido creado correctamente",
+                                                icon: "sucess",
+                                                buttons: true,
+                                            })
+                                        } else {
+                                            this.setState({
+                                                status: 'failed'
+                                            });
+                                        }
+                                    });
+                            } else {
+                                this.setState({
+                                    errores: {
+                                        nueva: 'No coinciden las contraseñas',
+                                        nuevarep: 'No coinciden las contraseñas'
+                                    },
+                                    
+                                });
+                               /* this.cambiarError('input-error2');
+                                this.cambiarError('input-error3');*/
+                            }
+                        } else //no son iguales
+                        {
+                            this.setState({
+                                errores: {
+                                    actual: 'Contraseña incorrecta'
+                                },
+                                
 
-            }
-            if (this.state.alumno.password == "") {
-                this.cambiarError('input-error2');
-            }
+                            });
+                           /* this.cambiarError('input-error')*/
 
-            if (this.state.passwordActual.password == "" || this.state.passwordActual.password == undefined) {
-                console.log("error2")
-                this.cambiarError('input-error')
-
-            }
-
-            if (this.state.passwordNuevaDos == "") {
-                console.log("error3")
-                this.cambiarError('input-error3')
-
+                            console.log("error");
+                        }
+                    });
+           /* } else {
+                console.log("no");
+                this.validator.showMessages();
+                this.forceUpdate();
             }*/
-
-
+        } else {
+            console.log("no2")
+            this.validator.showMessages();
 
         }
 
+    }
 
         this.forceUpdate();
+        this.formularioEnBlanco();
 
     }
 
+    formularioEnBlanco=()=>{
+        this.setState({
+            passwordActual:"",
+            passwordNueva:"",
+            passwordNuevaDos:""
+        })
+    }
 
     render() {
         this.validator.purgeFields();
@@ -192,9 +265,9 @@ class PasswordEdit extends Component {
                         <form className="elemt-form-passw" onSubmit={this.updatePassword} noValidate>
                             <div className="form-edit">
                                 <label className="form-editpassw-value-title">Contraseña actual</label>
-                                <input id="input-error" className="form-editpassw-value" name="actual" onChange={this.changeState} type="password" ref={this.passwordActual} required></input>
+                                <input id="input-error" className="form-editpassw-value" name="actual" value={this.state.passwordActual} onChange={this.handleChange('passwordActual')} type="password" ref={this.passwordActual} required></input>
                                 <div className="error" >
-                                    {this.validator.message('actual', this.state.passwordActual.password, 'required')}
+                                    {this.validator.message('actual', this.state.passwordActual, 'required')}
                                 </div>
 
                                 {this.state.errores.actual != undefined &&
@@ -205,9 +278,9 @@ class PasswordEdit extends Component {
                             </div>
                             <div className="form-edit">
                                 <label className="form-editpassw-value-title">Nueva contraseña</label>
-                                <input id="input-error2" className="form-editpassw-value" name="nueva" onChange={this.changeState} type="password" ref={this.passwordNueva} required></input>
+                                <input id="input-error2" className="form-editpassw-value" name="nueva" value={this.state.passwordNueva}  onChange={this.handleChange('passwordNueva')} type="password" ref={this.passwordNueva} required></input>
                                 <div className="error">
-                                    {this.validator.message('nueva', this.state.alumno.password, 'required|min:8')}
+                                    {this.validator.message('nueva', this.state.passwordNueva, 'required|min:8')}
                                 </div>
                                 {this.state.errores.nueva != undefined &&
                                     <label className="error"> {this.state.errores.nueva.toString()}</label>
@@ -215,7 +288,7 @@ class PasswordEdit extends Component {
                             </div>
                             <div className="form-edit">
                                 <label className="form-editpassw-value-title">Vuelve a escribir la nueva contraseña</label>
-                                <input id="input-error3" className="form-editpassw-value" name="nuevarep" onChange={this.changeState} type="password" ref={this.passwordNuevaDos} required></input>
+                                <input id="input-error3" className="form-editpassw-value" name="nuevarep" value={this.state.passwordNuevaDos}  onChange={this.handleChange('passwordNuevaDos')} type="password" ref={this.passwordNuevaDos} required></input>
                                 <div className="error">
                                     {this.validator.message('nuevarep', this.state.passwordNuevaDos, 'required|min:8')}
                                 </div>

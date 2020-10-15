@@ -65,22 +65,17 @@ class mensaje extends Component {
         var listarmensajes = this.state.mensaje.map((mensajes) => {
 
             return (
-                <div>
-                    <Breadcrumb>
+                <div >
+                    <Breadcrumb >
                         <Breadcrumb.Item href="/inicio">Home</Breadcrumb.Item>
                         <Breadcrumb.Item href="/mensajes">
                             Bandeja de entrada
                         </Breadcrumb.Item>
                         <Breadcrumb.Item active>ver mensaje</Breadcrumb.Item>
                     </Breadcrumb>
-
-
-                    <button type="button" href={'/enviar/' + mensajes._id} className="btn-default btn-lg btn-left" aria-label="Left Align" name="volver atrás" placeholder="volver">
-                        responder
-                    </button>
-                    <Link to={'/mensajes/enviar'} params={{ mensajeId: mensajes._id }} className="btn btn-warning ">RESPONDER</Link>
                     <hr className="linea-bajo"></hr>
-                    <Card style={{ width: '70em' }} className="card-mensajes-individual row no-gutters ">
+
+                    <Card style={{ width: '70em' }} className="card-mensajes-individual row no-gutters " >
 
                         {mensajes.emisor.profesor != null &&
                             <Card.Img variant="left" src={'http://localhost:3900/apiErasmus/get-image-user/' + mensajes.emisor.profesor.image} className="image-user" />
@@ -105,20 +100,34 @@ class mensaje extends Component {
                                 <h6 className="fecha"> <Moment format="DD-MM-YYYY">{mensajes.fecha}</Moment></h6>
                             </div>
                             {mensajes.emisor.profesor != null &&
-                                <h5> {"    <" + mensajes.emisor.profesor.email + ">"} </h5>
+                                <h5  > {"    <" + mensajes.emisor.profesor.email + ">"} </h5>
 
                             }
                             {mensajes.emisor.alumno != null &&
-                                <h5> {"    <" + mensajes.emisor.alumno.email + ">"} </h5>
+                                <h5 > {"    <" + mensajes.emisor.alumno.email + ">"} </h5>
 
                             }
 
                             <br></br>
-                            <strong>{mensajes.asunto}</strong>
+                            <hr></hr>
+                            <div className="pruebaresponder">
+                                <strong style={{ fontSize: '16px' }}>{mensajes.asunto}</strong>
+                                {mensajes.emisor.profesor != null &&  
+                                    <Link to={'/mensajes/enviar'} params={{ mensajeId: mensajes._id, emisor: mensajes.emisor.profesor.email, texto:mensajes.texto }} className="responder" title="responder"><span className="glyphicon glyphicon-share-alt" style={{fontSize:'19px'}}> </span></Link>
+                                 }
+                                {mensajes.emisor.alumno != null &&
+                                    <Link to={'/mensajes/enviar'} params={{ mensajeId: mensajes._id, emisor: mensajes.emisor.alumno.email, texto: mensajes.texto  }} className="responder" title="responder"><span className="glyphicon glyphicon-share-alt" style={{fontSize:'19px'}}> </span></Link>
+
+                                }
+
+                               
+                            </div>
+
 
                             <Card.Text >
                                 <br></br>
-                                {mensajes.texto}
+                                <label className="textarea-mostrarmensaje" readonly>{mensajes.texto}</label>
+
                             </Card.Text>
 
                         </Card.Body>

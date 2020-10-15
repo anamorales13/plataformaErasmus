@@ -67,7 +67,7 @@ export class FormDatosPersonales extends Component {
             errors.email2 = "Campo obligatorio";
         }
 
-        
+
         if (this.props.values.email1 != this.props.values.email2) {
             errors.email1 = "Los correos electrónicos deben de coincidir"
             errors.email2 = "Los correos electrónicos deben de coincidir"
@@ -195,26 +195,37 @@ export class FormDatosPersonales extends Component {
                                                 type="email"
                                                 placeholder="Correo electrónico *"
                                                 name="email1" />
-                                           
+                                            {tipo == "alumno" &&
+                                                < div className="input-group-append">
+                                                <span className="input-group-text" style={{ fontSize: '14px', border: 'solid 1px rgb(153, 153, 153)' }}>@alu.uhu.es</span>
+                                            </div>
+                                            }
+
 
                                         </InputGroup>
-                                        {this.state.errors.email1 && <Form.Label style={{ color: 'red', fontSize: '12px' }}>{this.state.errors.email1}</Form.Label>}
+
+                                    {this.state.errors.email1 && <Form.Label style={{ color: 'red', fontSize: '12px' }}>{this.state.errors.email1}</Form.Label>}
 
                                     </Form.Group>
-                                    <Form.Group as={Col} >
-                                        <InputGroup>
-                                            <Form.Control
-                                                onChange={handleChange('email2')}
-                                                defaultValue={values.email2}
-                                                type="email"
-                                                placeholder="Repetir correo electrónico*"
-                                                name="email2" />
-                                           
-                                        </InputGroup>
-                                        {this.state.errors.email2 && <Form.Label style={{ color: 'red', fontSize: '12px' }}>{this.state.errors.email2}</Form.Label>}
-                                    </Form.Group>
+                                <Form.Group as={Col} >
+                                    <InputGroup>
+                                        <Form.Control
+                                            onChange={handleChange('email2')}
+                                            defaultValue={values.email2}
+                                            type="email"
+                                            placeholder="Repetir correo electrónico*"
+                                            name="email2" />
+                                         {tipo == "alumno" &&
+                                                < div className="input-group-append">
+                                                <span className="input-group-text" style={{ fontSize: '14px', border: 'solid 1px rgb(153, 153, 153)' }}>@alu.uhu.es</span>
+                                            </div>
+                                            }
+
+                                    </InputGroup>
+                                    {this.state.errors.email2 && <Form.Label style={{ color: 'red', fontSize: '12px' }}>{this.state.errors.email2}</Form.Label>}
+                                </Form.Group>
                                 </Form.Row>
-
+                            {tipo == 'alumno' &&
                                 <Form.Group >
 
                                     <Form.Control
@@ -225,26 +236,27 @@ export class FormDatosPersonales extends Component {
                                         placeholder="Teléfono" />
                                     {this.state.errors.telefono && <Form.Label style={{ color: 'red', fontSize: '12px' }}>{this.state.errors.telefono}</Form.Label>}
                                 </Form.Group>
+                            }
 
-                                <button
-                                    label="continue"
-                                    className="btn-continue form-login"
-                                    style={styles.button}
-                                    onClick={this.continue}
-                                >   CONTINUAR </button>
+                            <button
+                                label="continue"
+                                className="btn-continue form-login"
+                                style={styles.button}
+                                onClick={this.continue}
+                            >   CONTINUAR </button>
                             </Form>
 
-                            <br></br>
+                        <br></br>
 
 
                         </Card>
 
-                    </div>
-
-
                 </div>
 
+
             </div>
+
+            </div >
         );
     }
 }

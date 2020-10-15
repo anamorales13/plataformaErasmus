@@ -56,6 +56,10 @@ class Dropbox extends Component {
         this.getDocumentos();
     }
 
+    componentDidMount(){
+        this.getDocumentos();
+    }
+
 
     getDocumentos() {
 
@@ -174,7 +178,7 @@ class Dropbox extends Component {
 
                                     </td>
                                     <td className="th-pequeño">
-                                        <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas segudo de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
+                                        <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas seguro de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
                                             className="btn-delete" startIcon={<DeleteIcon />}></ButtonIcon>
                                     </td>
 
@@ -229,7 +233,7 @@ class Dropbox extends Component {
 
                                     </td>
                                     <td className="th-pequeño">
-                                        <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas segudo de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
+                                        <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas seguro de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
                                             className="btn-delete" startIcon={<DeleteIcon />}></ButtonIcon>
                                     </td>
 
@@ -334,7 +338,7 @@ class Dropbox extends Component {
 
                                     </td>
                                     <td className="th-pequeño">
-                                        <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas segudo de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
+                                        <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas seguro de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
                                             className="btn-delete" startIcon={<DeleteIcon />}></ButtonIcon>
                                     </td>
 
@@ -427,7 +431,7 @@ class Dropbox extends Component {
 
                                     </td>
                                     <td className="th-pequeño">
-                                        <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas segudo de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
+                                        <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas seguro de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
                                             className="btn-delete" startIcon={<DeleteIcon />}></ButtonIcon>
                                     </td>
 
