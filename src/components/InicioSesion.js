@@ -150,7 +150,7 @@ class InicioSesion extends Component {
                         <div className="grid-logo-inicio">
                             <div className="inicio-logo">
 
-                                <h3 id="header-boton"> ALUMNOSss </h3>
+                                <h3 id="header-boton"> ALUMNOSs </h3>
                                 <Link to={{
                                     pathname: '/inicioSesion',
                                     state: {
