@@ -13,11 +13,13 @@ const DocumentosSchema = Schema({
     tipoDocumento:String,
     comentario: String, 
     date: {type:Date, default: Date.now},
+    link:String,
     /*alumno: {
        type: Schema.Types.ObjectId,
        ref: "Alumno"
     }*/
-    alumnoNombre: String,
+    alumno: {type: Schema.ObjectId, ref: 'Alumno'},
+    profesor: {type: Schema.ObjectId, ref: 'Profesor'},
  });
 
 

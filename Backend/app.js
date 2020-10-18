@@ -11,9 +11,12 @@ var app= express(); //esto va a ser la app en si, es lo que
                     // luego exportaremos.
 
 // 3- Cargar ficheros rutas
-var alumnos_routes= require('./routes/alumno');
+var alumno_routes= require('./routes/alumno');
 var documentos_routes=require('./routes/documento');
-var oficialDocumento_routes=require('./routes/oficialDocument');
+var profesor_routes= require('./routes/profesor');
+var destino_routes=require('./routes/destinos');
+var mensaje_routes=require('./routes/mensaje');
+
 //var documento_routes=require('./routes/documento');
 
 // 4- cargar middlewares: siempre se ejecuta antes de 
@@ -36,9 +39,13 @@ app.use((req, res, next) => {
 
 
 // 6 -añadir prefijos a rutas / Cargar rutas
- app.use('/apiErasmus', alumnos_routes);
+ app.use('/apiErasmus', alumno_routes);
  app.use('/apiDocumentos', documentos_routes);
- app.use('/apiOficial', oficialDocumento_routes);
+ app.use('/apiProfesor', profesor_routes);
+ app.use('/apiDestino', destino_routes);
+ app.use('/api',mensaje_routes );
+ 
+ 
  //app.use('/apiErasmusDoc', documento_routes);
 
 
