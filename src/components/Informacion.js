@@ -83,6 +83,7 @@ class Informacion extends Component {
 
 
 
+
             </div>
 
         );
