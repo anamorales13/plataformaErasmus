@@ -13,7 +13,8 @@ mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
 
 
-mongoose.connect('mongodb+srv://anamorales13:13Abril04a@plataforma.2cxua.mongodb.net/test',{ useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify:false, useCreateIndex: true})
+
+mongoose.connect('mongodb+srv://anamorales13:13Abril04a>@plataforma.2cxua.mongodb.net/<dbname>?retryWrites=true&w=majority',{ useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify:false, useCreateIndex: true})
         .then(()=>{
             console.log('La conexion a la BD se ha realizado con exito');
 
