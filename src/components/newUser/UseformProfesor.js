@@ -49,7 +49,7 @@ export class Useform extends Component {
 
     nextStep = e => {
         const { step } = this.state;
-     
+        console.log("pasos:"+ step);
        
             this.setState({
                 step: step + 1

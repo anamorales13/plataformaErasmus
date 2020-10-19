@@ -75,6 +75,7 @@ export class FormDatosPersonales extends Component {
 
         //TELEFONO
 
+        if(this.props.tipo=='alumno'){
         if (!this.props.values.telefono) {
             errors.telefono = "Campo obligatorio";
         }
@@ -83,7 +84,9 @@ export class FormDatosPersonales extends Component {
                 errors.telefono = "Número no valido";
             }
         }
+    }
 
+        console.log(errors);
 
         return errors;
     }
