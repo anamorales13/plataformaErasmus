@@ -12,9 +12,10 @@ const PORT = process.env.PORT || 3900;
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
 
-require('dotenv').config();
 
-mongoose.connect('${process.env.MONGODB_URI}',{ useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify:false, useCreateIndex: true})
+const MONGODB_URI='mongodb+srv://anamorales13:hNcazIGjCMBPeZPl@plataforma.2cxua.mongodb.net/test'
+
+mongoose.connect(MONGODB_URI,{ useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify:false, useCreateIndex: true})
         .then(()=>{
             console.log('La conexion a la BD se ha realizado con exito');
 
