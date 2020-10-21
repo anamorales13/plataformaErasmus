@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3900;
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
 
-const MONGODB_URI="mongodb+srv://anamorales13:hNcazIGjCMBPeZPl@plataforma.2cxua.mongodb.net/<dbname>?retryWrites=true&w=majority"
+const MONGODB_URI="mongodb+srv://anamorales13:hNcazIGjCMBPeZPl@plataforma.2cxua.mongodb.net/plataforma?retryWrites=true&w=majority"
 
 
 app.set('port', process.env.PORT);
