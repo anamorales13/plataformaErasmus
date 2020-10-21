@@ -150,7 +150,7 @@ class InicioSesion extends Component {
                         <div className="grid-logo-inicio">
                             <div className="inicio-logo">
 
-                                <h3 id="header-boton"> ALUMNOSs </h3>
+                                <h3 id="header-boton"> ALUMNOS </h3>
                                 <Link to={{
                                     pathname: '/inicioSesion',
                                     state: {
@@ -170,7 +170,7 @@ class InicioSesion extends Component {
                                         state: {
                                             tipo: 'profesor'
                                         }
-                                    }} className="link-nuevoUsuario" > Registrarsee</Link>
+                                    }} className="link-nuevoUsuario" > Registrarse</Link>
 
                                 </div>
                                 <Form onSubmit={this.getProfesor} >

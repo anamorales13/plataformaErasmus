@@ -13,12 +13,13 @@ const PORT = process.env.PORT || 3900;
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
 
+const MONGODB_URI="mongodb+srv://anamorales13:hNcazIGjCMBPeZPl@plataforma.2cxua.mongodb.net/<dbname>?retryWrites=true&w=majority"
 
 
 app.set('port', process.env.PORT);
 console.log(PORT);
 
-mongoose.connect("mongodb+srv://anamorales13:hNcazIGjCMBPeZPl@plataforma.2cxua.mongodb.net/<dbname>?retryWrites=true&w=majority",{ useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify:false, useCreateIndex: true})
+mongoose.connect(MONGODB_URI || "mongodb://localhost:27017/baseerasmus",{ useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify:false, useCreateIndex: true})
         .then(()=>{
             console.log('La conexion a la BD se ha realizado con exito');
 
@@ -28,3 +29,8 @@ mongoose.connect("mongodb+srv://anamorales13:hNcazIGjCMBPeZPl@plataforma.2cxua.m
             });
         })
         .catch((err) => console.log(err));
+
+
+        mongoose.connection.on('connected', ()=>{
+            console.log('mongoose is connected!!')
+        });
