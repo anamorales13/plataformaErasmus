@@ -170,7 +170,7 @@ class InicioSesion extends Component {
                                         state: {
                                             tipo: 'profesor'
                                         }
-                                    }} className="link-nuevoUsuario" > Registrarse</Link>
+                                    }} className="link-nuevoUsuario" > Registrarsee</Link>
 
                                 </div>
                                 <Form onSubmit={this.getProfesor} >
