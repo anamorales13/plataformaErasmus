@@ -19,7 +19,7 @@ const MONGODB_URI="mongodb+srv://anamorales13:hNcazIGjCMBPeZPl@plataforma.2cxua.
 app.set('port', process.env.PORT);
 console.log(PORT);
 
-mongoose.connect(MONGODB_URI ,{ useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify:false, useCreateIndex: true})
+mongoose.connect("mongodb+srv://anamorales13:hNcazIGjCMBPeZPl@plataforma.2cxua.mongodb.net/plataforma?retryWrites=true&w=majority" ,{ useUnifiedTopology: true, useNewUrlParser: true, useFindAndModify:false, useCreateIndex: true})
         .then(()=>{
             console.log('La conexion a la BD se ha realizado con exito');
 
