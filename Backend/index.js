@@ -10,14 +10,14 @@ var app=require('./app');
 //variables de entorno locales
 require('dotenv').config({path: 'variables.env'});
 
-console.log(process.env.DB_URL);
+console.log(process.env.MONGO_URI);
 
 
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
 
  
-mongoose.connect(process.env.DB_URL,{ useUnifiedTopology: true, useNewUrlParser: true})
+mongoose.connect(process.env.MONGO_URI,{ useUnifiedTopology: true, useNewUrlParser: true})
         .then(()=>{
             console.log('La conexion a la BD se ha realizado con exito');
 
