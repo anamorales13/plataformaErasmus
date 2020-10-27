@@ -1,5 +1,5 @@
 var GlobalProfesor={
-    url: 'https://plataforma-erasmus.herokuapp.com/apiProfesor/'
+    url: 'http://localhost:3900/apiProfesor/'
 };
 
 
