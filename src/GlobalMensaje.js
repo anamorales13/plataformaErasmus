@@ -1,7 +1,7 @@
 
 
 var GlobalMensaje={
-    url: 'https://plataforma-erasmus.herokuapp.com/api/'
+    url: 'http://localhost:3900/api/'
 };
 
 

@@ -1,8 +1,8 @@
 
 var Global={
 
-    url: 'https://plataforma-erasmus.herokuapp.com/apiErasmus/',
-    urlprofesor: 'https://plataforma-erasmus.herokuapp.com/apiProfesor/'
+    url: 'http://localhost:3900/apiErasmus/',
+    urlprofesor: 'http://localhost:3900/apiProfesor/'
     
 };
 

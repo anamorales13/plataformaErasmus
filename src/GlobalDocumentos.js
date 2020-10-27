@@ -1,6 +1,6 @@
 
 var GlobalDocumentos={
-    url: 'https://plataforma-erasmus.herokuapp.com/apiDocumentos/'
+    url: 'http://localhost:3900/apiDocumentos/'
 };
 
 
