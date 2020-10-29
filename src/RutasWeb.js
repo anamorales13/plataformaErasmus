@@ -17,6 +17,7 @@ import enviados from './components/mensajes/enviados';
 import mensaje from './components/mensajes/mensaje'
 import Alumnos from './components/Alumnos';
 
+
 class Rutas extends Component {
 
     render() {
@@ -41,6 +42,7 @@ class Rutas extends Component {
                             <Route exact path="/mensajes/:id" component={mensaje}></Route>
                             <Route exact path="/enviados" component={enviados}/>
                             <Route exact path="/Alumnos" component={Alumnos} />
+                           
                            
                             <RutasInicio />
                             {/*  <Route exact path="/" component={InicioSesion}/> */}
