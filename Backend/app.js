@@ -12,7 +12,7 @@ const cors = require('cors');
 var app= express(); //esto va a ser la app en si, es lo que 
                     // luego exportaremos.
 
-                    app.use(cors());
+app.use(cors());
 
 // 3- Cargar ficheros rutas
 var alumno_routes= require('./routes/alumno');
@@ -31,7 +31,7 @@ app.use(bodyParser.json()); //convertir cualquier peticion que me llege a json.
 
 
 // 5 -CORS : permitir peticiones desde front-end
-
+/*
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000'); 
 
@@ -42,7 +42,7 @@ app.use((req, res, next) => {
     next();
 });
 
-
+*/
 
 
 // 6 -añadir prefijos a rutas / Cargar rutas

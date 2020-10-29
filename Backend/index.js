@@ -11,11 +11,13 @@ const client= require('socket.io').listen(3900).sockets;
 const {addUser, removeUser, getUser, getUserInRoom} =require('./controllers/user');
 
 
+
+
 //variables de entorno locales
 require('dotenv').config({path: 'variables.env'});
 
 console.log(process.env.MONGO_URI);
-
+ 
 
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
