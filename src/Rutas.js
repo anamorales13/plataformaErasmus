@@ -7,8 +7,12 @@ import InicioAdministrador from './components/InicioAdministrador';
 import pantallaInicial from './components/pantallaInicial';
 import Userform from './components/newUser/Userform';
 import UseformProfesor from './components/newUser/UseformProfesor';
+<<<<<<< HEAD
 import Chat from './components/chat/Chat';
 import Join from './components/chat/Join';
+=======
+
+>>>>>>> master
 
 
 class Rutas extends Component{
@@ -22,8 +26,12 @@ class Rutas extends Component{
                     <Route exact path="/nuevoUsuario" component={Userform}/>
                     <Route exact path='/nuevoProfesor' component={UseformProfesor}/>
                     <Route exact path='/inicioAdministrador' component={InicioAdministrador}/>
+<<<<<<< HEAD
                     <Route exact path="/chat" component={Chat} />
                     <Route exact path="/join" component={Join} />     
+=======
+                        
+>>>>>>> master
                 
                     <RutasWeb/>
 

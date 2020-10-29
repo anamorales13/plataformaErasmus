@@ -30,4 +30,8 @@ class Inicio extends Component {
     }
 }
 
+<<<<<<< HEAD
 export default Inicio;
+=======
+export default Inicio;
+>>>>>>> master

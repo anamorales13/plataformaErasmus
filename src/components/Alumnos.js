@@ -184,4 +184,8 @@ class Alumnos extends Component {
 
 }
 
+<<<<<<< HEAD
 export default Alumnos
+=======
+export default Alumnos
+>>>>>>> master

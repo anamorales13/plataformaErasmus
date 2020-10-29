@@ -16,7 +16,10 @@ import recibidos from './components/mensajes/recibidos';
 import enviados from './components/mensajes/enviados';
 import mensaje from './components/mensajes/mensaje'
 import Alumnos from './components/Alumnos';
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 
 class Rutas extends Component {
 
@@ -43,7 +46,10 @@ class Rutas extends Component {
                             <Route exact path="/enviados" component={enviados}/>
                             <Route exact path="/Alumnos" component={Alumnos} />
                            
+<<<<<<< HEAD
                            
+=======
+>>>>>>> master
                             <RutasInicio />
                             {/*  <Route exact path="/" component={InicioSesion}/> */}
                             {/*} <Route exact path="/inicioSesion" component={InicioSesion}/>*/}

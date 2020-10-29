@@ -3,4 +3,8 @@ var GlobalProfesor={
 };
 
 
+<<<<<<< HEAD
 export default GlobalProfesor;
+=======
+export default GlobalProfesor;
+>>>>>>> master

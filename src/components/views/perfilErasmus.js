@@ -206,4 +206,9 @@ class MiPerfil extends Component {
 
 }
 
+<<<<<<< HEAD
 export default MiPerfil;
+=======
+export default MiPerfil;
+
+>>>>>>> master

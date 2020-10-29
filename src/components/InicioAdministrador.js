@@ -13,7 +13,11 @@ import '../assets/css/InicialScreen.css';
 import Form from 'react-bootstrap/Form';
 
 
+<<<<<<< HEAD
 class InicioSesion extends Component {
+=======
+class InicioAdministrador extends Component {
+>>>>>>> master
 
     
     gettoken = true;
@@ -158,4 +162,8 @@ class InicioSesion extends Component {
     }
 }
 
+<<<<<<< HEAD
 export default InicioSesion;
+=======
+export default InicioAdministrador;
+>>>>>>> master

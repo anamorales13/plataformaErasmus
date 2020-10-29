@@ -19,4 +19,8 @@ var destinosSchema=Schema ({
 
 
 
+<<<<<<< HEAD
 module.exports= mongoose.model('Destino', destinosSchema);
+=======
+module.exports= mongoose.model('Destino', destinosSchema);
+>>>>>>> master

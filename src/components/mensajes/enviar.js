@@ -256,4 +256,8 @@ class enviar extends Component {
 }
 
 
+<<<<<<< HEAD
 export default enviar;
+=======
+export default enviar;
+>>>>>>> master

@@ -135,4 +135,8 @@ class enviados extends Component {
 }
 
 
+<<<<<<< HEAD
 export default enviados;
+=======
+export default enviados;
+>>>>>>> master

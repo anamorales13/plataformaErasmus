@@ -167,4 +167,9 @@ class recibidos extends Component {
 }
 
 
+<<<<<<< HEAD
 export default recibidos;
+=======
+export default recibidos;
+
+>>>>>>> master

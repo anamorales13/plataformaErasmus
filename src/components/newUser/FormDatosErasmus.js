@@ -252,4 +252,8 @@ const styles = {
     button: { margin: 15 }
 }
 
+<<<<<<< HEAD
 export default FormDatosErasmus;
+=======
+export default FormDatosErasmus;
+>>>>>>> master
