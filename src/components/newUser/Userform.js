@@ -161,8 +161,4 @@ export class Useform extends Component {
     }
 }
 
-<<<<<<< HEAD
 export default Useform;
-=======
-export default Useform;
->>>>>>> master

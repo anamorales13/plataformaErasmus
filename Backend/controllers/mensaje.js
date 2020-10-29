@@ -233,8 +233,4 @@ var controllers = {
 
 };
 
-<<<<<<< HEAD
 module.exports = controllers;
-=======
-module.exports = controllers;
->>>>>>> master

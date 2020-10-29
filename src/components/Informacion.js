@@ -81,10 +81,6 @@ class Informacion extends Component {
                 </div>
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 
 
             </div>

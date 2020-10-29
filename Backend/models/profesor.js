@@ -25,8 +25,4 @@ var ProfesorSchema=Schema ({
 
 
 
-<<<<<<< HEAD
 module.exports= mongoose.model('Profesor', ProfesorSchema);
-=======
-module.exports= mongoose.model('Profesor', ProfesorSchema);
->>>>>>> master

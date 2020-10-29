@@ -24,8 +24,4 @@ router.post('/upload-image-user/:id',/* [md_auth.ensureAuth,*/ md_uploadd, Profe
 router.get('/get-image-user/:imageFile', ProfesorController.getImageFile);
 router.delete('/delete-image/:id', md_uploadd, ProfesorController.deleteImageFile);
 
-<<<<<<< HEAD
 module.exports = router;
-=======
-module.exports = router;
->>>>>>> master

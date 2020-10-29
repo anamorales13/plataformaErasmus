@@ -62,8 +62,4 @@ const styles = {
     button: { margin: 15 }
 }
 
-<<<<<<< HEAD
 export default Sucess;
-=======
-export default Sucess;
->>>>>>> master

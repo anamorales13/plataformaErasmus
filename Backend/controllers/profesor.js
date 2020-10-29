@@ -635,8 +635,4 @@ console.log(passwString);
     }
 }
 
-<<<<<<< HEAD
 module.exports = controllers;
-=======
-module.exports = controllers;
->>>>>>> master

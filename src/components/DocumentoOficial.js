@@ -426,8 +426,4 @@ class DocumentoOficial extends Component {
 
 }
 
-<<<<<<< HEAD
 export default DocumentoOficial;
-=======
-export default DocumentoOficial;
->>>>>>> master

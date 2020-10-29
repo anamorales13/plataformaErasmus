@@ -46,10 +46,6 @@ class Rutas extends Component {
                             <Route exact path="/enviados" component={enviados}/>
                             <Route exact path="/Alumnos" component={Alumnos} />
                            
-<<<<<<< HEAD
-                           
-=======
->>>>>>> master
                             <RutasInicio />
                             {/*  <Route exact path="/" component={InicioSesion}/> */}
                             {/*} <Route exact path="/inicioSesion" component={InicioSesion}/>*/}

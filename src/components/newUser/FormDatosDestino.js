@@ -168,8 +168,4 @@ const styles = {
     button: { margin: 15 }
 }
 
-<<<<<<< HEAD
 export default FormDatosUniversidad;
-=======
-export default FormDatosUniversidad;
->>>>>>> master

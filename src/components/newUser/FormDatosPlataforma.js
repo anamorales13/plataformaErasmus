@@ -173,8 +173,4 @@ const styles = {
     button: { margin: 15 }
 }
 
-<<<<<<< HEAD
 export default FormDatosPlataforma;
-=======
-export default FormDatosPlataforma;
->>>>>>> master

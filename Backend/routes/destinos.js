@@ -15,8 +15,4 @@ router.get('/buscar',DestinoController.buscar );
 router.get('/destinos' , DestinoController.getDestinos);
 router.get('/destino/:id' , DestinoController.getdestino);
 
-<<<<<<< HEAD
 module.exports= router;
-=======
-module.exports= router;
->>>>>>> master

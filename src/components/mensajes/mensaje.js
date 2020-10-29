@@ -152,8 +152,4 @@ class mensaje extends Component {
 }
 
 
-<<<<<<< HEAD
 export default mensaje;
-=======
-export default mensaje;
->>>>>>> master

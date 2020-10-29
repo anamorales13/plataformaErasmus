@@ -118,8 +118,4 @@ class pantallaInicial extends Component {
     }
 }
 
-<<<<<<< HEAD
 export default pantallaInicial;
-=======
-export default pantallaInicial;
->>>>>>> master
