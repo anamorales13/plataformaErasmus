@@ -268,8 +268,4 @@ const styles = {
     button: { margin: 15 }
 }
 
-<<<<<<< HEAD
 export default FormDatosPersonales;
-=======
-export default FormDatosPersonales;
->>>>>>> master

@@ -16,10 +16,6 @@ import recibidos from './components/mensajes/recibidos';
 import enviados from './components/mensajes/enviados';
 import mensaje from './components/mensajes/mensaje'
 import Alumnos from './components/Alumnos';
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 
 class Rutas extends Component {
 

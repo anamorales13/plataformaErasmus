@@ -7,12 +7,8 @@ import InicioAdministrador from './components/InicioAdministrador';
 import pantallaInicial from './components/pantallaInicial';
 import Userform from './components/newUser/Userform';
 import UseformProfesor from './components/newUser/UseformProfesor';
-<<<<<<< HEAD
 import Chat from './components/chat/Chat';
 import Join from './components/chat/Join';
-=======
-
->>>>>>> master
 
 
 class Rutas extends Component{
