@@ -21,6 +21,7 @@ class NuevoDocumento extends Component {
     nombreRef = React.createRef();
     fileRef = React.createRef();
     contentRef = React.createRef();
+    descripcionRef=React.createRef();
 
     url = GlobalDocumentos.url;
     urldocoficial = Global.url;
@@ -59,6 +60,7 @@ class NuevoDocumento extends Component {
                 nombre: this.state.identity._id,
                 tipoDocumento: null,
                 tipousuario: this.state.identity.tipo,
+                descripcion:this.descripcionRef.current.value
             }
         });
     }
@@ -362,9 +364,14 @@ class NuevoDocumento extends Component {
                         <Modal.Body>
                             <form onSubmit={this.saveDocument} className="nuevo-doc">
                                 <div >
-                                    {/*<label for="tittle">Titulo:</label>*/}
+                                   
                                     <input type="text" id="tittle" name="tittle" ref={this.titleRef} placeholder="Titulo" className="form-input-nuevo" />
                                     {this.validator.message('tittle', this.state.documento.title, 'required')}
+                                </div>
+                                <div >
+                                    
+                                    <input type="text-area" id="descripcion" name="descripcion" ref={this.descripcionRef} placeholder="Descripcion (opcional)" className="form-input-nuevo" />
+                                    
                                 </div>
                                 <div id="div_file" >
                                     {/*} <label htmlFor="file0"> URL: </label>*/}

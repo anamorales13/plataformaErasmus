@@ -131,7 +131,10 @@ class Header extends Component {
                                     <NavLink to="/documentos" activeClassName="active"> DOCUMENTOS </NavLink >
                                 </li>
                                 <li>
-                                    <NavLink to="/dropbox" activeClassName="active">  DROPBOX </NavLink >
+                                    <NavLink to="/dropbox" activeClassName="active">  NUBE COMPARTIDA </NavLink >
+                                </li>
+                                <li>
+                                    <NavLink to="/mydropbox" activeClassName="active">  NUBE PARTICULAR </NavLink >
                                 </li>
                                 {/*<li>
                                     <NavLink to="/mensaje" activeClassName="active"> <span className="glyphicon glyphicon-envelope" > </span>   </NavLink >
@@ -142,12 +145,12 @@ class Header extends Component {
                                 label="Mensajes"
                                 variant="primary"
                                 className="notificacion-mensajes"
-                                
+
                                 to={
                                     '/mensajes'
                                 }
-                            ><span className="glyphicon glyphicon-envelope" style={{color:'black'}}></span> <Badge variant="light" >{this.state.noleidos}</Badge> </Link>
-                            
+                            ><span className="glyphicon glyphicon-envelope" style={{ color: 'black' }}></span> <Badge variant="light" >{this.state.noleidos}</Badge> </Link>
+
 
                             {JSON.parse(localStorage.getItem('user')) != null &&
                                 <div className="perfil-header">
@@ -185,6 +188,9 @@ class Header extends Component {
                                 <li>
                                     <NavLink to="/Alumnos" activeClassName="active"> ALUMNOS </NavLink >
                                 </li>
+                                <li>
+                                    <NavLink to="/mydropbox" activeClassName="active">  NUBE PARTICULAR </NavLink >
+                                </li>
 
 
                             </ul>
@@ -193,19 +199,19 @@ class Header extends Component {
                                 label="Mensajes"
                                 variant="primary"
                                 className="notificacion-mensajes"
-                                
+
                                 to={
                                     '/mensajes'
                                 }
-                            > <span className="glyphicon glyphicon-envelope" style={{color:'black'}}></span> <Badge variant="light" >{this.state.noleidos}</Badge> </Link>
+                            > <span className="glyphicon glyphicon-envelope" style={{ color: 'black' }}></span> <Badge variant="light" >{this.state.noleidos}</Badge> </Link>
                             {JSON.parse(localStorage.getItem('user')) != null &&
                                 <div className="perfil-header">
-                                    
+
                                     <img src={this.url + '/get-image-user/' + JSON.parse(localStorage.getItem('user')).image} className="mini-avatar" ></img>
                                     <h1>{JSON.parse(localStorage.getItem('user')).nombre}</h1>
                                     <DropdownButton id="dropdown-basic-button" style={{ left: "auto" }, { rigth: '85%' }} className="dropdown-menu.show">
                                         <Dropdown.Item href="/user/profile">Perfil</Dropdown.Item>
-                                        <Dropdown.Item  href="/user/edit">Editar Perfil</Dropdown.Item>
+                                        <Dropdown.Item href="/user/edit">Editar Perfil</Dropdown.Item>
                                         <Dropdown.Item href="/user/seguridad">Constraseña</Dropdown.Item>
                                         <Dropdown.Item href="#">Ayuda</Dropdown.Item>
                                         <Dropdown.Item onClick={() => this.setState({ navigate: true })}>Cerrar Sesion</Dropdown.Item>

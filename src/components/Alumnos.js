@@ -118,7 +118,7 @@ class Alumnos extends Component {
                             Documentos
                          </Link>
                         <Link size="small" color="primary" style={{color: 'rgb(39,149,192)'}} to={"/dropbox/" + alumno._id + "/" + alumno.nombre+ "/" + alumno.apellido1 + "/" + alumno.apellido2}>
-                            Dropbox
+                            Nube Compartida
                          </Link>
 
                         
@@ -161,7 +161,7 @@ class Alumnos extends Component {
                             Documentos
                          </Link>
                         <Link size="small" color="primary" style={{color: 'rgb(39,149,192)'}} to={"/dropbox/" + alumno._id + "/" + alumno.nombre+ "/" + alumno.apellido1 + "/" + alumno.apellido2}>
-                            Dropbox
+                            Nube compartida
                          </Link>
 
                         

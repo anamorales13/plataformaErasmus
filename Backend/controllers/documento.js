@@ -125,12 +125,15 @@ var controllers = {
     getDocumentosAlumnos: (req, res) => {
 
         var userId = req.params.id;
-        
+        var tipo="compartida"
         console.log(userId);
-
+       
         
-        
-            Documento.find({ alumno: { $eq: userId } }).populate('alumno', 'nombre apellido1 apellido2')
+            Documento.find({
+                $and: [
+                    { alumno: { $eq: userId } },
+                    { tipo_nube: { $eq: tipo } }]
+            }).populate('alumno', 'nombre apellido1 apellido2')
                 .exec((err, documento) => {
 
                     if (err) {
@@ -161,8 +164,13 @@ var controllers = {
 
     getDocumentosProfesor: (req, res) =>{
         var userId=req.params.id;
+        var tipo="compartida";
         
-        Documento.find({ profesor: { $eq: userId } }).populate('profesor', 'nombre apellido1 apellido2')
+    Documento.find({
+            $and: [
+                { alumno: { $eq: userId } },
+                { tipo_nube: { $eq: tipo } }]
+        }).populate('profesor', 'nombre apellido1 apellido2')
                 .exec((err, documento) => {
 
                     if (err) {

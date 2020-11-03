@@ -65,7 +65,7 @@ body{
 }
 
 .form-edit-value-title{
-    letter-spacing: .0727272727em;
+    letter-spacing: .0527272727em;
     font-family: Roboto,Arial,sans-serif;
     font-size: 1.5599812rem;
     font-weight: 500;
@@ -76,6 +76,22 @@ body{
     margin-left:50px;
     padding:0;
    
+}
+.form-edit-value-textarea{
+  
+        float: right;
+        letter-spacing: .0727272727em;
+        font-family: Roboto,Arial,sans-serif;
+        font-size:1.5598812rem;
+        font-weight: 500;
+        line-height: 1.45rem;
+        word-break: break-word;
+        color:black;
+        margin-right:50px;
+        padding:2px 2px 2px 2px;
+        width: 50%;
+        border: 1px solid #ccc;
+      
 }
 
 .form-editImage-value-title{
@@ -139,17 +155,18 @@ transition: 0.3s;
 
   .form-edit-value{
     float: right;
-    letter-spacing: .0727272727em;
+    letter-spacing: .0627272727em;
     font-family: Roboto,Arial,sans-serif;
     font-size:1.5598812rem;
     font-weight: 500;
-    line-height: 1.45rem;
+    line-height: 1.55rem;
     word-break: break-word;
     color:black;
     margin-right:50px;
     padding:2px 2px 2px 2px;
     width: 50%;
     border: 1px solid #ccc;
+    
   }
 
   .form-editImage-value{

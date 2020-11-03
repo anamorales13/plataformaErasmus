@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NuevoDocumento from './NuevoDocumento';
 
 import GlobalDocumentos from '../GlobalDocumentos';
-import '../assets/css/NuevoUsuario.css';
+import '../assets/css/dropbox.css';
 import Documentos from './Documentos';
 import Spinner from 'react-bootstrap/Spinner';
 import '../assets/css/dropbox.css';
@@ -56,7 +56,7 @@ class Dropbox extends Component {
         this.getDocumentos();
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getDocumentos();
     }
 
@@ -143,41 +143,46 @@ class Dropbox extends Component {
                         <table aria-rowcount={this.state.documentos.length} className="table-dropbox">
                             <tbody>
                                 <tr>
-                                    <td >
-                                        <div>
+                                    <td style={{width:'22%'}}>
+                                        <div style={{ marginLeft: '20px', display: 'flex' }}>
+                                            <div>
 
-                                            {
-                                                documentos.tipoDocumento == "word.png" ? (
-                                                    <img src={btn1} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "pdf.png" ? (
-                                                    <img src={btn2} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "powerpoint.jpg" ? (
-                                                    <img src={btn3} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "imagen" ? (
-                                                    <img src={this.url + 'get-image/' + documentos.url} alt={documentos.title} className="image-wrap" />
-                                                ) :
-                                                                (
-                                                                    <img src={btn4} alt="prueba" className="image-wrap" />
-                                                                )
-                                            }
+                                                {
+                                                    documentos.tipoDocumento == "word.png" ? (
+                                                        <img src={btn1} alt="prueba" className="image-wrap" />
+                                                    ) : documentos.tipoDocumento == "pdf.png" ? (
+                                                        <img src={btn2} alt="prueba" className="image-wrap" />
+                                                    ) : documentos.tipoDocumento == "powerpoint.jpg" ? (
+                                                        <img src={btn3} alt="prueba" className="image-wrap" />
+                                                    ) : documentos.tipoDocumento == "imagen" ? (
+                                                        <img src={this.url + 'get-image/' + documentos.url} alt={documentos.title} className="image-wrap" />
+                                                    ) :
+                                                                    (
+                                                                        <img src={btn4} alt="prueba" className="image-wrap" />
+                                                                    )
+                                                }
 
+                                            </div>
+                                            <div>
+                                                <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
-                                        </div>
-                                    </td>
-                                    <td>
+                                    </td >
+                                    <td style={{width:'22%'}}>
                                         {documentos.alumno.nombre + " " + documentos.alumno.apellido1 + " " + documentos.alumno.apellido2}
                                     </td>
+                                    <td style={{width:'22%'}}>
+                                        {documentos.descripcion}
+                                    </td>
 
-                                    <td>
+                                    <td style={{width:'22%'}}>
                                         <spain>
                                             <Moment format="DD-MM-YYYY">{documentos.date}</Moment>
                                         </spain>
 
 
                                     </td>
-                                    <td className="th-pequeño">
+                                    <td className="th-pequeño" >
                                         <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas seguro de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
                                             className="btn-delete" startIcon={<DeleteIcon />}></ButtonIcon>
                                     </td>
@@ -198,41 +203,46 @@ class Dropbox extends Component {
                         <table aria-rowcount={this.state.documentos.length} className="table-dropbox" >
                             <tbody>
                                 <tr>
-                                    <td >
-                                        <div>
+                                    <td  style={{width:'22%'}}>
+                                        <div style={{ marginLeft: '20px', display: 'flex' }}>
+                                            <div>
 
-                                            {
-                                                documentos.tipoDocumento == "word.png" ? (
-                                                    <img src={btn1} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "pdf.png" ? (
-                                                    <img src={btn2} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "powerpoint.jpg" ? (
-                                                    <img src={btn3} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "imagen" ? (
-                                                    <img src={this.url + 'get-image/' + documentos.url} alt={documentos.title} className="image-wrap" />
-                                                ) :
-                                                                (
-                                                                    <img src={btn4} alt="prueba" className="image-wrap" />
-                                                                )
-                                            }
+                                                {
+                                                    documentos.tipoDocumento == "word.png" ? (
+                                                        <img src={btn1} alt="prueba" className="image-wrap" />
+                                                    ) : documentos.tipoDocumento == "pdf.png" ? (
+                                                        <img src={btn2} alt="prueba" className="image-wrap" />
+                                                    ) : documentos.tipoDocumento == "powerpoint.jpg" ? (
+                                                        <img src={btn3} alt="prueba" className="image-wrap" />
+                                                    ) : documentos.tipoDocumento == "imagen" ? (
+                                                        <img src={this.url + 'get-image/' + documentos.url} alt={documentos.title} className="image-wrap" />
+                                                    ) :
+                                                                    (
+                                                                        <img src={btn4} alt="prueba" className="image-wrap" />
+                                                                    )
+                                                }
 
-                                        </div>
-                                        <div>
-                                            <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
+                                            </div>
+                                            <div>
+                                                <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
+                                            </div>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td style={{width:'22%'}}>
                                         {documentos.profesor.nombre + " " + documentos.profesor.apellido1 + " " + documentos.profesor.apellido2}
                                     </td>
+                                    <td style={{width:'22%'}}>
+                                        {documentos.descripcion}
+                                    </td>
 
-                                    <td>
+                                    <td style={{width:'22%'}}>
                                         <spain>
                                             <Moment format="DD-MM-YYYY">{documentos.date}</Moment>
                                         </spain>
 
 
                                     </td>
-                                    <td className="th-pequeño">
+                                    <td className="th-pequeño" >
                                         <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas seguro de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
                                             className="btn-delete" startIcon={<DeleteIcon />}></ButtonIcon>
                                     </td>
@@ -270,10 +280,11 @@ class Dropbox extends Component {
 
                                 <table className="table-dropbox dropbox-cabecera">
                                     <thead >
-                                        <tr>
-                                            <th >Nombre</th>
-                                            <th >Subido por:</th>
-                                            <th>Fecha de subida</th>
+                                        <tr >
+                                            <th style={{width:'22%'}}>Nombre</th>
+                                            <th style={{width:'22%'}}>Subido por:</th>
+                                            <th style={{width:'22%'}}>Descrpcion</th>
+                                            <th style={{width:'22%'}}>Fecha de subida</th>
                                             <th className="th-pequeño"></th>
 
                                         </tr>
@@ -303,41 +314,46 @@ class Dropbox extends Component {
                         <table aria-rowcount={this.state.documentos.length} className="table-dropbox" >
                             <tbody>
                                 <tr>
-                                    <td >
-                                        <div>
+                                    <td  style={{width:'22%'}}>
+                                        <div style={{ marginLeft: '20px', display: 'flex' }}>
+                                            <div>
 
-                                            {
-                                                documentos.tipoDocumento == "word.png" ? (
-                                                    <img src={btn1} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "pdf.png" ? (
-                                                    <img src={btn2} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "powerpoint.jpg" ? (
-                                                    <img src={btn3} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "imagen" ? (
-                                                    <img src={this.url + 'get-image/' + documentos.url} alt={documentos.title} className="image-wrap" />
-                                                ) :
-                                                                (
-                                                                    <img src={btn4} alt="prueba" className="image-wrap" />
-                                                                )
-                                            }
+                                                {
+                                                    documentos.tipoDocumento == "word.png" ? (
+                                                        <img src={btn1} alt="prueba" className="image-wrap" />
+                                                    ) : documentos.tipoDocumento == "pdf.png" ? (
+                                                        <img src={btn2} alt="prueba" className="image-wrap" />
+                                                    ) : documentos.tipoDocumento == "powerpoint.jpg" ? (
+                                                        <img src={btn3} alt="prueba" className="image-wrap" />
+                                                    ) : documentos.tipoDocumento == "imagen" ? (
+                                                        <img src={this.url + 'get-image/' + documentos.url} alt={documentos.title} className="image-wrap" />
+                                                    ) :
+                                                                    (
+                                                                        <img src={btn4} alt="prueba" className="image-wrap" />
+                                                                    )
+                                                }
 
+                                            </div>
+                                            <div>
+                                                <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
-                                        </div>
-                                    </td>
-                                    <td>
+                                    </td >
+                                    <td style={{width:'22%'}}>
                                         {documentos.alumno.nombre + "  " + documentos.alumno.apellido1 + " " + documentos.alumno.apellido2}
                                     </td>
+                                    <td style={{width:'22%'}}>
+                                        {documentos.descripcion}
+                                    </td>
 
-                                    <td>
+                                    <td style={{width:'22%'}}>
                                         <spain>
                                             <Moment format="DD-MM-YYYY">{documentos.date}</Moment>
                                         </spain>
 
 
                                     </td>
-                                    <td className="th-pequeño">
+                                    <td className="th-pequeño" >
                                         <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas seguro de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
                                             className="btn-delete" startIcon={<DeleteIcon />}></ButtonIcon>
                                     </td>
@@ -365,10 +381,11 @@ class Dropbox extends Component {
                                 <table className="table-dropbox dropbox-cabecera">
                                     <thead >
                                         <tr>
-                                            <th >Nombre</th>
-                                            <th >Subido por:</th>
-                                            <th>Fecha de Subida</th>
-                                            <th className="th-pequeño"></th>
+                                            <th style={{width:'22%'}} >Nombre</th>
+                                            <th  style={{width:'22%'}}>Subido por:</th>
+                                            <th style={{width:'22%'}}>Descripción</th>
+                                            <th style={{width:'22%'}}>Fecha de Subida</th>
+                                            <th  className="th-pequeño"></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -396,41 +413,47 @@ class Dropbox extends Component {
                         <table aria-rowcount={this.state.docprofesor.length} className="table-dropbox">
                             <tbody>
                                 <tr>
-                                    <td  >
-                                        <div>
+                                    <td style={{width:'22%'}}>
+                                        <div style={{ marginLeft: '20px', display: 'flex' }}>
+                                            <div>
 
-                                            {
-                                                documentos.tipoDocumento == "word.png" ? (
-                                                    <img src={btn1} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "pdf.png" ? (
-                                                    <img src={btn2} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "powerpoint.jpg" ? (
-                                                    <img src={btn3} alt="prueba" className="image-wrap" />
-                                                ) : documentos.tipoDocumento == "imagen" ? (
-                                                    <img src={this.url + 'get-image/' + documentos.url} alt={documentos.title} className="image-wrap" />
-                                                ) :
-                                                                (
-                                                                    <img src={btn4} alt="prueba" className="image-wrap" />
-                                                                )
-                                            }
+                                                {
+                                                    documentos.tipoDocumento == "word.png" ? (
+                                                        <img src={btn1} alt="prueba" className="image-wrap" />
+                                                    ) : documentos.tipoDocumento == "pdf.png" ? (
+                                                        <img src={btn2} alt="prueba" className="image-wrap" />
+                                                    ) : documentos.tipoDocumento == "powerpoint.jpg" ? (
+                                                        <img src={btn3} alt="prueba" className="image-wrap" />
+                                                    ) : documentos.tipoDocumento == "imagen" ? (
+                                                        <img src={this.url + 'get-image/' + documentos.url} alt={documentos.title} className="image-wrap" />
+                                                    ) :
+                                                                    (
+                                                                        <img src={btn4} alt="prueba" className="image-wrap" />
+                                                                    )
+                                                }
 
-                                        </div>
-                                        <div>
-                                            <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
+                                            </div>
+                                            <div>
+                                                <a target="_blank" href={this.url + '/get-image/' + documentos.url}>{documentos.title}</a>
+                                            </div>
                                         </div>
                                     </td>
-                                    <td >
+                                    <td  style={{width:'22%'}}>
                                         {documentos.profesor.nombre + "  " + documentos.profesor.apellido1 + " " + documentos.profesor.apellido2}
                                     </td>
+                                    <td style={{width:'22%'}}>
+                                        {documentos.descripcion}
+                                    </td>
 
-                                    <td >
+
+                                    <td style={{width:'22%'}} >
                                         <spain>
                                             <Moment format="DD-MM-YYYY">{documentos.date}</Moment>
                                         </spain>
 
 
                                     </td>
-                                    <td className="th-pequeño">
+                                    <td className="th-pequeño" >
                                         <ButtonIcon onClick={() => { if (window.confirm('\n' + 'Estas seguro de eliminar el archivo ' + documentos.title + '?')) this.delete(documentos.title); }}
                                             className="btn-delete" startIcon={<DeleteIcon />}></ButtonIcon>
                                     </td>
@@ -460,10 +483,11 @@ class Dropbox extends Component {
                                     <thead className="dropbox-cabecera">
                                         <tr >
 
-                                            <th >Nombre</th>
-                                            <th >Subido por:</th>
-                                            <th >Fecha de subida</th>
-                                            <th className="th-pequeño"></th>
+                                            <th style={{width:'22%'}}>Nombre</th>
+                                            <th style={{width:'22%'}} >Subido por:</th>
+                                            <th style={{width:'22%'}}>Descripción</th>
+                                            <th style={{width:'22%'}} >Fecha de subida</th>
+                                            <th  className="th-pequeño"></th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -504,7 +528,7 @@ class Dropbox extends Component {
 
                         </div>
                         <div className="btn-docOficial">
-                            <NuevoDocumento type="documento"  />
+                            <NuevoDocumento type="documento" />
                         </div>
 
                     </div>

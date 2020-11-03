@@ -1,0 +1,54 @@
+  <article className="elemt-one">
+
+                                <form className="elemt-form" onSubmit={this.updateUser}>
+                                    <div className="form-edit">
+                                        <label className="form-edit-value-title">Nombre </label>
+                                        <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.nombre} ref={this.nombreRef}></input>
+                                        {this.validator.message('nombre', this.state.alumno.nombre, 'required|alpha_space', { className: 'text-danger' })}
+                                    </div>
+                                    <div className="form-edit">
+                                        <label className="form-edit-value-title">Primer apellido</label>
+                                        <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.apellido1} ref={this.apellido1Ref}></input>
+                                        {this.validator.message('apellido1', this.state.alumno.apellido1, 'required|alpha_space', { className: 'text-danger' })}
+                                    </div>
+                                    <div className="form-edit">
+                                        <label className="form-edit-value-title">Segundo apellido</label>
+                                        <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.apellido2} ref={this.apellido2Ref}></input>
+                                        {this.validator.message('apellido2', this.state.alumno.apellido2, 'required|alpha_space', { className: 'text-danger' })}
+                                    </div>
+                                    <div className="form-edit">
+                                        <label className="form-edit-value-title">Usuario</label>
+                                        <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.usuario} ref={this.usuarioRef}></input>
+                                        {this.validator.message('usuario', this.state.alumno.usuario, 'required', { className: 'text-danger' })}
+                                    </div>
+                                    <div className="form-edit">
+                                        <label className="form-edit-value-title">Email</label>
+                                        <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.email} ref={this.emailRef}></input>
+                                        {this.validator.message('email', this.state.alumno.email, 'required', { className: 'text-danger' })}
+                                    </div>
+                                    <div className="form-edit">
+                                        <label className="form-edit-value-title">Teléfono</label>
+                                        <input className="form-edit-value" onChange={this.changeState} type="text" defaultValue={this.state.identity.telefono} ref={this.telefonoRef}></input>
+                                       {/* {this.validator.message('telefono', this.state.alumno.telefono, 'phone', { className: 'text-danger' })}*/ }
+                                    </div>
+
+                                   
+
+
+                                    <input type="submit" value="ACTUALIZAR" className="btn-update" ></input>
+                                </form>
+
+
+                            </article>
+
+                            <article className="elemt-one">
+                                <form className="elemt-formImage" onSubmit={this.updateImage}>
+                                    <div className="form-editImage">
+                                        <label className="form-editImage-value-title">Imagen de perfil</label>
+                                        <br />
+                                        <input className="form-editImage-value" type="file" name="file0" onChange={this.fileChange} required />
+
+                                    </div>
+                                    <input type="submit" value="ACTUALIZAR" className="btn-update" ></input>
+                                </form>
+                            </article>

@@ -40,3 +40,4 @@ const getUserInRoom=(room)=> users.filter((user)=>user.room===room);
 
 
 module.exports={addUser, removeUser, getUser, getUserInRoom};
+ 

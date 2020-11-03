@@ -1,15 +1,14 @@
 /******* CONEXION A LA BASE DE DATOS ***** */
-
 'use strict'
 
 
 var mongoose = require('mongoose');
 var app=require('./app');
+const socketio = require('socket.io')
+const http = require('http')
 
 
-const client= require('socket.io').listen(3900).sockets;
-const {addUser, removeUser, getUser, getUserInRoom} =require('./controllers/user');
-
+var port=3900;
 
 
 
@@ -29,25 +28,26 @@ mongoose.connect('mongodb://localhost:27017/baseerasmus',{ useUnifiedTopology: t
         .then(()=>{
             console.log('La conexion a la BD se ha realizado con exito');
 
-           
+            /*app.listen(port, ()=> {
+                console.log('servidor corriendo en http://localhost:'+port );
+            
+            });*/
         });
 
     
 
-//LEER LOCAL HOST DE VARIABLE Y PUERTOS
-
-const host= process.env.HOST || '0.0.0.0';
-const port=  3900 ;
-
-
-
-app.listen(port, host, ()=> {
-    console.log('servidor corriendo en http://localhost:'+port + " " + host);
-
-});
-
-
 //Connect socket
+/*
+const client= require('socket.io').listen(3100).sockets;*/
+const server = http.createServer(app);//creando el server con http y express como handle request
+const client = socketio(server);
+
+const {addUser, removeUser, getUser, getUserInRoom} =require('./controllers/user');
+
+
+server.listen(port, () => {
+    console.log("Server running in http://localhost:"+port)
+  })
 
 client.on('connection', (socket) => {
    
